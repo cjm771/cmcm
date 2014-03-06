@@ -1,0 +1,120 @@
+{
+  "mediaFolder": "images/",
+  "title": "My Projects",
+  "subtitle": "Bob Somebody",
+  "description": "These are my projects",
+  "sortBy": "",
+  "thumb": {
+    "max_width": 200,
+    "max_height": "*",
+    "crop": 0
+  },
+  "template": {
+    "project": {
+      "id": {
+        "type": "int",
+        "required": 1,
+        "protected": 1,
+        "auto_increment": 1,
+        "counter": 22,
+        "hidden": 1
+      },
+      "cleanUrl": {
+        "type": "string",
+        "required": 1,
+        "protected": 1,
+        "hidden": 1
+      },
+      "published": {
+        "type": "bool",
+        "required": 1,
+        "protected": 1,
+        "def": 1
+      },
+      "added": {
+        "type": "timestamp",
+        "required": 1,
+        "protected": 1
+      },
+      "title": {
+        "type": "string",
+        "required": 1,
+        "protected": 1
+      },
+      "coverImage": {
+        "type": "string",
+        "protected": 1,
+        "hidden": 1
+      },
+      "year": {
+        "type": "int",
+        "required": 1
+      },
+      "description": {
+        "type": "text",
+        "required": 1
+      }
+    },
+    "media": {
+      "src": {
+        "type": "string",
+        "required": 1,
+        "protected": 1
+      },
+      "visible": {
+        "type": "bool",
+        "required": 1,
+        "protected": 1,
+        "def": 1
+      },
+      "type": {
+        "type": "choice-image,video",
+        "required": 1,
+        "protected": 1,
+        "hidden": 1
+      },
+      "caption": {
+        "type": "text",
+        "required": 0
+      }
+    }
+  },
+  "projects": {
+    "PROJ_21": {
+      "published": 1,
+      "added": "23 February 2014 - 06:35 pm",
+      "title": "Yo my first project",
+      "year": "2014",
+      "description": "Hey this is a project",
+      "media": {
+        "aW1hZ2UtMDAzICgxKS5qcGc-": {
+          "src": "images/image-003 (1).jpg",
+          "visible": "1",
+          "type": "image",
+          "caption": ""
+        },
+        "aW1hZ2UtMDA1ICgyKS5qcGc-": {
+          "src": "images/image-005 (2).jpg",
+          "visible": "1",
+          "type": "image",
+          "caption": ""
+        },
+        "aW1hZ2UtMDA0ICgyKS5qcGc-": {
+          "src": "images/image-004 (2).jpg",
+          "visible": "1",
+          "type": "image",
+          "caption": ""
+        },
+        "aW1hZ2UtMDA2ICgyKS5qcGc-": {
+          "src": "images/image-006 (2).jpg",
+          "visible": "1",
+          "type": "image",
+          "caption": ""
+        }
+      },
+      "coverImage": "aW1hZ2UtMDA2ICgyKS5qcGc-",
+      "id": 21,
+      "cleanUrl": "yo-my-first-project"
+    }
+  }
+}

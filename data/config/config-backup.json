@@ -1,0 +1,10 @@
+{
+"src" : "data.json",
+"loginEnabled": 1,
+"setupMode": 0,
+"users": {
+		"cjm771" : {
+			"password" : "cb638938c12bd436ec376ec6344565aa"
+		}
+	}
+}
