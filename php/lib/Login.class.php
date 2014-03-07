@@ -217,6 +217,13 @@ class Login{
 		}
 		return $obj;
 	}
+	public static function inSetupMode($dir=""){
+		$config = self::loadConfig();
+		if (!isset($config->setupMode))
+			return 0;
+		else
+			return $config->setupMode;
+	}
 	
 	public static function editConfig($newContent, $dir=""){
 		$data = self::loadConfig($dir);

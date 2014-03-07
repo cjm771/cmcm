@@ -1,7 +1,7 @@
 {
   "src": "data.json",
   "loginEnabled": 1,
-  "setupMode": 1,
+  "setupMode": 0,
   "users": {
     "zanzibar": {
       "password": "bce7b475429889c212eef207c3e7eaf9"

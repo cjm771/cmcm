@@ -653,8 +653,6 @@
 		
 		.media-dropdown{
 			display: inline-block;
-	
-			
 		}
 		
 		
@@ -673,6 +671,7 @@
 			font-size: 12px;
 			margin-left: -12px;
 			margin-bottom: 5px;
+			min-width: 240px;
 		}
 		.media-dropdown .dropdown-menu input,textarea{
 			border: 1px solid #c0c0c0;
@@ -793,6 +792,10 @@
 		#config_mediaUtils_content{
 			display: none;
 			padding-bottom: 80px;
+			max-width: 750px;
+		}
+		textarea.hundredHeight{
+			height: 100px !important;
 		}
 		#config_mediaUtils_content table{
 			width: 100%;

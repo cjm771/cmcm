@@ -126,57 +126,76 @@
 					break;
 				case "getUnconsolidatedFiles":
 					$fileAtts = $this->file_atts;
-					$data = Jdat::get($_GET['f']);
-					$data->mediaFolder = trim($data->mediaFolder);
-					$unconsolidated = array();
-					foreach ($data->projects as $projId=>$proj){
-						//lets look for files
-						$count=0;
-						foreach ($proj->media as $mediaId=>$media){
-							//lets look at atts associated with files 
-							$count++;
-							foreach ($fileAtts as $key){
-								if (trim($media->$key)!=""){
-									if (strpos($media->$key, $data->mediaFolder) === false || strpos($media->$key, $data->mediaFolder) !=0){
-										if (file_exists(Jdat::ROOT_DIR.$media->$key))
-											$unconsolidated[] = array("file" =>$media->$key, "key" =>$key,"mediaId"=> $mediaId, "mediaIndex"=>$count, "projId" => $projId);
-									}
-								}
-							}
-						}
-					}
+					$unconsolidated = Jdat::getUnconsolidatedFiles($_GET['f'], $fileAtts);
 					$this->throwSuccess($unconsolidated);
+					break;
+				case "consolidateFiles":
+					// recv : string (filename) for consol all or arr (fileobj) for individual
+					 if (!$this->dataPosted())
+						return false;
+					$fileData = json_decode($this->urlDecode($_POST['data']));
+					$ret = Jdat::consolidateFiles($_GET['f'], $fileData, $this->file_atts);
+					$this->throwSuccess($ret, array("success_msg"=>"File(s) consolidated."));
 					break;
 				case "getUnlinkedFiles":
 					$fileAtts = $this->file_atts;
-					$data = Jdat::get($_GET['f']);
 					$unlinked=array();
-					//value 1 is for keeping directory with file
-					if (file_exists(Jdat::ROOT_DIR.$data->mediaFolder)){
-						$mediaFiles = Jdat::getFileList(Jdat::ROOT_DIR.$data->mediaFolder, 1,1);
-					/*
-						if (file_exists(Jdat::ROOT_DIR.$data->mediaFolder."thumbnail/"))
-							$thumbs = Jdat::getFileList(Jdat::ROOT_DIR.$data->mediaFolder."thumbnail/", 1);
-						else
-							$thumbs = array();
-							
-						$unlinked = array_merge($mediaFiles, $thumbs);
-					*/
-						$unlinked = $mediaFiles;
-						
-						foreach ($data->projects as $projId=>$proj){
-							//lets look for files
-							foreach ($proj->media as $mediaId=>$media){
-								//lets look at atts associated with files 
-								foreach ($fileAtts as $key){
-									if ($index = array_search(Jdat::ROOT_DIR.$media->$key, $unlinked)){
-										unset($unlinked[$index]);
-									}
-								}
+					$mediaFolders = array();
+					$dataFiles =Jdat::getFileList(Jdat::DATA_DIR."/", 1,1);
+					$folderIgnore = array("config");
+					foreach ($dataFiles as $index=>$file){
+						foreach ($folderIgnore as $folder){
+							if (strpos($file, Jdat::DATA_DIR."/".$folder)!== false && strpos($file, Jdat::DATA_DIR."/".$folder)==0)
+								unset($dataFiles[$index]);
+						}	
+					}
+					//first assemble all media files
+					foreach ($dataFiles as $file){
+						//@flag = 1 : use file as full path
+						$data = Jdat::get($file, 1);
+						if ($data){
+							if (file_exists(Jdat::ROOT_DIR.$data->mediaFolder)){
+								if (!in_array($data->mediaFolder, $mediaFolders))
+									$mediaFolders[] = $data->mediaFolder;
 							}
 						}
 					}
-					$this->throwSuccess($unlinked);
+					foreach ($mediaFolders as $folder){
+					$mediaFiles = Jdat::getFileList(Jdat::ROOT_DIR.$folder, 1,1);
+					$unlinked = array_merge($unlinked, $mediaFiles);
+					}
+					
+					//now filter out ones not in any of the files..
+					foreach ($dataFiles as $file){
+						//@flag = 1 : use file as full path
+						$data = Jdat::get($file, 1);
+						if ($data){
+						//value 1 is for keeping directory with file		
+							foreach ($data->projects as $projId=>$proj){
+								//lets look for files
+								foreach ($proj->media as $mediaId=>$media){
+									//lets look at atts associated with files 
+									foreach ($fileAtts as $key){
+										if (isset($media->$key)){
+											$index = Jdat::jdat_array_search(Jdat::ROOT_DIR.$media->$key, $unlinked);
+											if ($index!=-1)
+												unset($unlinked[$index]);	
+										}
+									}
+								}
+							}
+							
+						}
+					}
+					//remove root dir from beginning
+					foreach ($unlinked as $i=>$file){
+						$unlinked[$i] = substr($file, strlen(Jdat::ROOT_DIR));
+					}
+					$this->throwSuccess(array(
+						"unlinked" => $unlinked,
+						"dataFiles" => $dataFiles,
+						"mediaFolders" => $mediaFolders
+					));
 					break;
 				case "getFileList":
 					$data = json_decode($this->urlDecode($_POST['data']));
@@ -365,6 +384,14 @@
 					$this->saveData($_GET['f'], json_encode($data),array(
 						"success_msg" => "Templates saved."
 					));
+					break;
+				case "deleteFiles":
+					// recv : [file1, file2]
+					 if (!$this->dataPosted())
+						return false;
+					$files = json_decode($this->urlDecode($_POST['data']));
+					$ret = Jdat::deleteFiles($files);
+					$this->throwSuccess($ret, array("success_msg"=>"Unlinked File(s) removed."));
 					break;
 				case "deleteMediaAttributes":
 					/* recv
@@ -585,7 +612,7 @@
 							$data->projects[$projId] = $project;
 							//save
 							$this->saveData($_GET['f'], json_encode($data),array(
-								"project_id" => $id
+								"project_id" => $proj->id
 							));
 							$found = 1;
 						}	
@@ -642,15 +669,17 @@
 					//grab config file..
 					$config = Login::loadConfig(Jdat::ROOT_DIR, 1);
 					if (!$config || !isset($config->src)){
-						$this->throwError("Could not load config file.");
+						$this->throwError("Could not load config file. Make sure you have a valid configuration file at <b>data/config/config.json</b>.");
 						return false;
 					}
 					//now get data file..
 					$data = Jdat::get($config->src);
 					if ($data)
 						$this->throwSuccess(array("data" => $data, "config" => $config));
+					else if (file_exists(Jdat::DATA_DIR."/".$config->src))
+						$this->throwError("Could not load data file: <b>data/".$config->src."</b>. <br><br>It appears it exists, but could not be parsed. To find the error in the file, copy the text within the file and paste into an <a href='http://jsonlint.com/' target='blank'>online JSON validator</a>..");
 					else
-						$this->throwError("Could not load data file.");
+						$this->throwError("Could not load data file: <b>data/".$config->src."</b>. <br><br>To resolve, first check your <b>data/</b> directory in your cmcm root to see if this file exists. If not, you can manually change your configuration file's source at <b>data/config/config.json</b>.");
 					break;
 				default:
 					$this->throwError("Action ({$_GET['a']}) does not exist.");

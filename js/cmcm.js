@@ -164,7 +164,7 @@
 						obj.tmpl, - template obj
 						obj.el - future jquery el
 						*/
-						ta =  $("<textarea class='form-control attr-input'></textarea>");
+						ta =  $("<textarea class='form-control attr-input hundredHeight'></textarea>");
 						ta.val(obj.value);
 						if (obj.onChange){
 							ta.on("keyup change", function(e){
@@ -1002,7 +1002,7 @@
 				that.serverBrowser($("[data-attr=\"mediaFolder\"]"), {folderSelectMode : 1});
 				
 				$("#config_mediaUtils_button").closest("tr").find(".name").append("<span class='hint glyphicon glyphicon-question-sign has_tooltip' title='"+hints.config.mediaUtils+"'></span>");
-				
+				//CONFIG EDIT MODE
 				//handle basic value stuff
 				$.each(this.configRelations, function(k,v){
 					$("["+v.attr+"]").each(function(index, el){
@@ -1038,11 +1038,11 @@
 								//define def
 								def = (eval(v.obj+"."+att)!=undefined) ? eval(v.obj+"."+att) : "";
 								//dom def
-								$(el).val(def);
+								$(el).val(that.unHtmlEntities(def));
 								//add listener
 								$(el).on("keyup change", function(){
 									cinfo = that.getConfigInfo(this);
-									def = $(this).val();
+									def = that.htmlEntities($(this).val());
 									eval("that.configDraft."+cinfo.k+"."+cinfo.att+"= def");
 									
 								});
@@ -1326,20 +1326,49 @@
 
 					el = $('#config_mediaUtils_content');
 					el.empty();
-					el.append("<h5>Purge Files<span class='glyphicon glyphicon-question-sign hint has_tooltip' title='Below are all of the files that are  in your current media folder: "+that.data.mediaFolder+", but not found as attributes in any of your projects. To preserve space and clean up your media folder, you can purge them.<br><br> You can choose to remove these files individually, or all at once by clicking the <span class=\"glyphicon glyphicon-remove\"></span> icon.'></h5><div class='errorBox'></div><div class='successBox'></div><div class='loadingBox' style='display:block'><div class='loading'></div> Analyzing. Please Wait..</div>").slideDown();
+					el.append("<h5>"+
+								"Purge Files"+
+								"<span class='glyphicon glyphicon-question-sign hint has_tooltip' title='Below are all of the files that are not referenced in any of your projects (including backups, defaults, and other data files). To preserve space and clean up your media folder(s), you can purge them.<br><br> You can choose to remove these files individually, or all at once by clicking the <span class=\"glyphicon glyphicon-remove\"></span> icon.'></span>"+
+								" <span style='font-size:10px' id='config_purge_analysisInfo'></span>"+
+							"</h5>"+
+							"<div class='errorBox'></div><div class='successBox'></div>"+
+							"<div class='loadingBox' style='display:block'><div class='loading'></div> Analyzing. Please Wait..</div>").slideDown();
 					that.saveFile(that.src,{
 						"action" : "getUnlinkedFiles",
 						noSuccessIndicator: 1,
 						onSuccess : function(respObj){
-						//	el.find(".successBox").html("<pre>"+JSON.stringify(respObj,null, 4)+"</pre>").show();
-							if (!$.isEmptyObject(respObj.data)){
+							//update analysis
+							$("#config_purge_analysisInfo").html("(Data Files: "+Object.keys(respObj.data.dataFiles).length+
+							"<span class='glyphicon glyphicon-question-sign hint has_tooltip' title='Below are files we scanned. "+that._simpleList(respObj.data.dataFiles)+"'></span>"+
+							", Media Folders: "+respObj.data.mediaFolders.length+
+							"<span class='glyphicon glyphicon-question-sign hint has_tooltip' title='Below are media folders we scanned. "+that._simpleList(respObj.data.mediaFolders)+"'></span>"+
+							")");
+							//navigate through unlinked files
+							if (!$.isEmptyObject(respObj.data.unlinked)){
 								table = $("<table class='cmcm_table'></table>");
-								table.append("<th colspan=2 style='text-align: right'><span class='glyphicon glyphicon-remove icon has_tooltip' title='Remove All'></span> Unlinked Files ("+Object.keys(respObj.data).length+")</th>");
+								table.append("<th colspan=2 style='text-align: right'> Unlinked Files (<span id='config_unlinkCount'>"+Object.keys(respObj.data.unlinked).length+"</span>)</th>");
 								
-								$.each(respObj.data, function(k,v){
+								removeAll = $("<span class='glyphicon glyphicon-remove icon has_tooltip' title='Remove All'></span>");
+								removeAll.on("click", function(){
+										el.find(".errorBox, .successBox").hide();
+										files = [];
+										el.find(".unlinked_file").each(function(){
+											files.push($(this).attr("data-file"));
+										});
+										that._removeUnlinkedFiles(el, files);
+								});
+								
+								table.find("th").prepend(removeAll);
+								
+								$.each(respObj.data.unlinked, function(k,v){
 									tr = $("<tr></tr>");
-									v =  (typeof v == "string") ? v.substring(3) : v;
-									tr.append("<td>"+k+"</td><td>"+v+"</td><td><div class='actionPanel'><span class='glyphicon glyphicon-remove icon has_tooltip' title='Remove'></span></div></td>");
+									remove = $("<span class='glyphicon glyphicon-remove icon has_tooltip' title='Remove'></span>");
+									remove.on("click", function(){
+										el.find(".errorBox, .successBox").hide();
+										file = $(this).closest("tr").find(".unlinked_file").attr("data-file");
+										that._removeUnlinkedFiles(el, [file]);
+									});
+									tr.append("<td>"+k+"</td><td class='unlinked_file' data-file='"+v+"'>"+v+"</td><td><div class='actionPanel'></div></td>").find(".actionPanel").append(remove);
 									tr.on("mouseover", function(){
 										$(this).find(".actionPanel").show();
 									});
@@ -1377,11 +1406,34 @@
 						//	el.find(".successBox").html("<pre>"+JSON.stringify(respObj,null, 4)+"</pre>").show();
 							if (!$.isEmptyObject(respObj.data)){
 								table = $("<table class='cmcm_table'></table>");
-								table.append("<th colspan=2 style='text-align: right'><span class='glyphicon glyphicon-log-in icon has_tooltip' title='Move All to current media folder: "+that.data.mediaFolder+"'></span> UnConsolidated Files ("+Object.keys(respObj.data).length+")</th>");
+								table.append("<th colspan=2 style='text-align: right'> UnConsolidated Files (<span id='config_consolCount'>"+Object.keys(respObj.data).length+"</span>)</th>");
+								consolAll = $("<span class='glyphicon glyphicon-log-in icon has_tooltip' title='Move All to current media folder: "+that.data.mediaFolder+"'></span>");
+								consolAll.on("click", function(){
+									el.find(".errorBox, .successBox").hide();
+									files = [];
+									el.find(".uconsol_file").each(function(){
+										files.push($(this).attr("data-file"));
+									});
+									that._consolFiles(el, that.src);
+								});
+								table.find("th").prepend(consolAll);
 								
 								$.each(respObj.data, function(k,v){
 									tr = $("<tr></tr>");
-									tr.append("<td style='font-size: 10px'>"+v.projId+" [Media #"+v.mediaIndex+", attr: "+v.key+"]</td><td>"+v.file+"</td><td><div class='actionPanel'><span class='glyphicon glyphicon-log-in icon has_tooltip' title='Move to current Media folder: "+that.data.mediaFolder+"'></span></div></td>");
+									consol = $("<span class='glyphicon glyphicon-log-in icon has_tooltip' title='Move to current Media folder: "+that.data.mediaFolder+"'></span>");
+									consol.on("click", function(){
+										el.find(".errorBox, .successBox").hide();
+										td =  $(this).closest("tr").find(".unconsol_file");
+										file = {
+											file : td.attr("data-file"),
+											projId : td.attr("data-projId"),
+											mediaId :  td.attr("data-mediaId"),
+											key :  td.attr("data-key")
+										};
+										that._consolFiles(el, file);
+									
+									});
+									tr.append("<td style='font-size: 10px'>"+v.projId+" [Media #"+v.mediaIndex+", attr: "+v.key+"]</td><td class='unconsol_file'   data-mediaId='"+v.mediaId+"'  data-projId='"+v.projId+"'  data-key='"+v.key+"' data-file='"+v.file+"'>"+v.file+"</td><td><div class='actionPanel'></div></td>").find(".actionPanel").append(consol);
 									tr.on("mouseover", function(){
 										$(this).find(".actionPanel").show();
 									});
@@ -2202,7 +2254,7 @@
 									if (that.data.template.media[k]){
 										tmpl = that.data.template.media[k];
 										v = (typeof v == "string")? v.trim() : v;
-										if (tmpl.required && v==""){
+										if (tmpl.required && v=="" && isNaN(v)){
 											errors.push("<b>[Image "+mediaCount+"] "+k+": </b> Field is required.");
 											$(".media_wpr[data-id='"+mediaId+"']").addClass('validate-error');
 											$(".media_wpr[data-id='"+mediaId+"'] [data-attr='"+k+"']").find('.attr-input').addClass('validate-error');
@@ -2231,7 +2283,7 @@
 							if (that.data.template.project[k]){
 								tmpl = that.data.template.project[k];
 								v = (typeof v == "string") ? v.trim() : v;
-								if (tmpl.required && v==""){
+								if (tmpl.required && v=="" && isNaN(v)){
 									errors.push("<b>"+k+": </b> Field is required.");
 									$("#proj_info [data-attr='"+k+"']").find('.attr-input').addClass('validate-error');
 								}else{
@@ -2663,6 +2715,87 @@
 				
 			},
 			//<------REUSED OBJS------------------->//
+			_consolFiles : function(el, files){
+				var that  = this;
+				console.log(files);
+				el.find(".errorBox, .successBox").hide();
+				//file = $(this).closest("tr").find(".unlinked_file").attr("data-file");
+				this.saveFile(that.src, {
+					action : "consolidateFiles",
+					data : files,
+					onSuccess : function(respObj){
+						console.log(respObj);
+						if (respObj.data.error){
+							//some files could not be removed
+							el.find(".errorBox").html("Some files couldn't be moved: "+that._simpleList(respObj.data.error)).show();
+							setTimeout(function(){
+								el.find(".errorBox").hide("slow");
+							}, 2000);
+						}else if (respObj.data.success){
+								el.find(".successBox").html(respObj.data.success.length+" File(s) moved").show();
+							setTimeout(function(){
+								el.find(".successBox").hide("slow");
+							}, 2000);
+						}
+						if (respObj.data.success!=undefined){
+							$.each(respObj.data.success, function(i,v){
+								el.find(".unconsol_file[data-file=\""+v+"\"]").closest("tr").remove();
+								$("#config_consolCount").html(parseInt($("#config_consolCount").html())-1);	
+							});
+						}
+						
+					},
+					onError : function(msg){
+						//none for this
+					}
+				});
+
+			},
+			_removeUnlinkedFiles : function(el, files){
+				var that  = this;
+				console.log(files);
+				el.find(".errorBox, .successBox").hide();
+				//file = $(this).closest("tr").find(".unlinked_file").attr("data-file");
+				this.saveFile("xxx", {
+					action : "deleteFiles",
+					data : files,
+					onSuccess : function(respObj){
+						
+						if (respObj.data.error){
+							//some files could not be removed
+							el.find(".errorBox").html("Some files couldn't be removed: "+that._simpleList(respObj.data.error)).show();
+							setTimeout(function(){
+								el.find(".errorBox").hide("slow");
+							}, 2000);
+						}else if (respObj.data.success){
+								el.find(".successBox").html(respObj.data.success.length+" File(s) removed").show();
+							setTimeout(function(){
+								el.find(".successBox").hide("slow");
+							}, 2000);
+						}
+						if (respObj.data.success!=undefined){
+							console.log(respObj.data.success);
+							$.each(respObj.data.success, function(i,v){
+								el.find(".unlinked_file[data-file=\""+v+"\"]").closest("tr").remove();
+								$("#config_unlinkCount").html(parseInt($("#config_unlinkCount").html())-1);	
+							});
+							
+						}
+						
+					},
+					onError : function(msg){
+						//none for this
+					}
+				});
+
+			},
+			_simpleList : function(obj){
+				ul = $("<ul></ul>");
+				$.each(obj, function(k,v){
+					ul.append("<li>"+v+"</li>");
+				});
+				return ul.html();
+			},
 			_projectRow : function( k, v){
 					/*
 						ex. title : "my name is chris"
@@ -2710,7 +2843,7 @@
 						if (type.edit){
 							val = type.edit({
 								key : k,
-								value : v,
+								value : that.unHtmlEntities(v),
 								tmpl : tmpl,
 								el : "#tr-"+k+" .val",
 								onChange : function(o){
@@ -3350,6 +3483,7 @@
 											};
 										switch (k){
 											case 'visible':
+												//set visible on change
 												onChangeFunc = function(o){
 												onChangeFunc_def(o);
 												mWpr = $(o.el).closest(".media_wpr");
@@ -3362,6 +3496,16 @@
 												
 												};
 												break;	
+											case 'thumb':
+												//change thumb src on change
+												onChangeFunc = function(o){
+													console.log("hi");
+													onChangeFunc_def(o);
+													mWpr = $(o.el).closest(".media_wpr");
+													console.log(that.draft.media[mWpr.attr("data-id")]);
+													mWpr.find("img").attr('src', that.draft.media[mWpr.attr("data-id")][k]);
+												};
+												break;
 											default:
 												onChangeFunc = function(o){
 												onChangeFunc_def(o);
@@ -3372,7 +3516,7 @@
 										//initialize edit mode
 										val = type.edit({
 											key : k,
-											value : v,
+											value : that.unHtmlEntities(v),
 											tmpl : tmpl,
 											el : "#tr-"+k+" .val",
 											onChange : onChangeFunc
@@ -3389,7 +3533,7 @@
 		
 						       sli.append(val);
 						       //custom edit modes..manipulate sli
-
+						       
 						       switch (k){
 						       	case "thumb":
 						       	case "src":
@@ -3412,6 +3556,7 @@
 									}
 						       		break;
 						       }
+						       
 						       settingsMenu.append(sli);
 					       }
 				       });
@@ -4242,7 +4387,13 @@
 						afterLoad();
 					},
 					error : function(msg){
+						that.src = "Not Found";
+						that.data = {};
 						that.errorHandler(msg);
+						that.modal({
+							subject : "Fatal Error",
+							description : $("<p>Error: "+msg+"</p>")
+						});
 					}
 				});
 				
@@ -4471,5 +4622,12 @@
 					str = String(str).replace(/'/g, '&#039;');
 				}
 				return String(str).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
+			},
+			unHtmlEntities : function(str, single_quote) {
+				if (single_quote){
+					str = String(str).replace(/&#039;/g, '\'');
+				}
+				return String(str).replace(/(?:&amp;)/g, '&').replace(/(?:&lt;)/g, '<').replace(/(?:&gt;)/g, '>').replace(/(?:&quot;)/g, '"');
 			}
+			
 		}

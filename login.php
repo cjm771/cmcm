@@ -1,4 +1,13 @@
-<?php require_once("chunks/authenticate.php")?>
+<?php 
+//authenticate
+require_once("chunks/authenticate.php");
+//check setup mode
+if (Login::inSetupMode()){
+	//include setup assets
+	require_once("chunks/setup.php");
+	$CMCM_SETUP = new CMCMSetup();
+}
+?>
 <!DOCTYPE html>
 <html>
 <head>
@@ -40,6 +49,7 @@
 			float: left;
 		}
 	</style>
+	<?php if (isset($CMCM_SETUP)) $CMCM_SETUP->css() ?>
 	<script>
 			
 		//initiate
@@ -51,13 +61,14 @@
 			});
 		});
 	</script>
-	
+	<?php if (isset($CMCM_SETUP)) $CMCM_SETUP->js() ?>
 </head>
 <body>
 	<div id="container">
-	
+		
 		<?php include("chunks/header.html")?>
 		
+		<?php if (!isset($CMCM_SETUP)){ ?>
 		<div class='loginBox'>
 		<div id='login_errorBox' class='errorBox'>
 			</div>
@@ -65,7 +76,7 @@
 			</div>
 			<form role="form">
 			  <div class="form-group">
-				<input type="email" class="form-control" id="login_username" placeholder="Username">
+				<input type="text" class="form-control" id="login_username" placeholder="Username">
 			  </div>
 			  <div class="form-group">
 				<input type="password" class="form-control" id="login_pw" placeholder="Password">
@@ -73,6 +84,16 @@
 			  <div id="login_submit" class='button'>Login</div>
 			</form>
 		</div>
+		<?php 
+		
+		}else{ 
+			
+			$CMCM_SETUP->html();
+		
+		}
+		?>
+		
+		
 		
 		<?php include("chunks/footer.html")?>
 	</div>

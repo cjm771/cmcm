@@ -137,7 +137,7 @@ class Jdat{
 
 	}
 	
-	//delete media 
+	//!!!!!delete media @$files = mediaObj, not filepath
 	public static function deleteMedia($files, $otherSizes=false){	
 		if (!is_array($files))
 			$files = array($files);
@@ -178,6 +178,102 @@ class Jdat{
 	
 	}
 	
+	public static function getUnconsolidatedFiles($f, $fileAtts, $root=self::ROOT_DIR){
+		$data = self::get($f);
+		$data->mediaFolder = trim($data->mediaFolder);
+		$unconsolidated = array();
+		foreach ($data->projects as $projId=>$proj){
+			//lets look for files
+			$count=0;
+			foreach ($proj->media as $mediaId=>$media){
+				//lets look at atts associated with files 
+				$count++;
+				foreach ($fileAtts as $key){
+					if (trim($media->$key)!=""){
+						if (strpos($media->$key, $data->mediaFolder) === false || strpos($media->$key, $data->mediaFolder) !=0){
+							if (file_exists($root.$media->$key))
+								$unconsolidated[] = array("file" =>$media->$key, "key" =>$key,"mediaId"=> $mediaId, "mediaIndex"=>$count, "projId" => $projId);
+						}
+					}
+				}
+			}
+		}
+		return $unconsolidated;
+
+	}
+	
+	
+	public static function consolidateFiles($fileSrc, $data, $fileAtts, $root=self::ROOT_DIR){
+		$unconsolidated = array();
+		if (!is_string($data)){
+			/*
+			 * recv: mediaId, projId, key
+			 */	
+			 $unconsolidated[] = $data;
+			 $data = self::get($fileSrc);
+		}else{
+			$data = self::get($fileSrc);
+			$unconsolidated = self::getUnconsolidatedFiles($fileSrc, $fileAtts, $root);
+		}
+		$ret = array(); 
+		foreach ($unconsolidated as $i=>$f){
+			/*
+			 * recv: file: src, key: thumb or src, mediaId: mediaId, mediaIndex : count, projId : x
+			 */
+			 
+			 $f =  (object) $f;
+			 $key = $f->key;
+			 $mediaId = $f->mediaId;
+			 $projId = $f->projId;
+			 
+			 $mediaDir = ($key == "thumb") ?  $data->mediaFolder."thumbnail/" : $data->mediaFolder;
+			 
+			 $dest =  self::getUnique($root.$mediaDir.basename($f->file));
+			 //if move set in thing
+			 if (@copy($root.$f->file, $dest)){
+			 	@unlink($root.$f->file);
+			 	$data->projects->$projId->media->$mediaId->$key = $mediaDir.basename($dest);
+		 		if (!isset($ret["success"]))
+					$ret["success"] = array();
+				$ret["success"][] = $f->file;
+			}else{
+				if (!isset($ret["error"]))
+						$ret["error"] = array();
+					$ret["error"][] = $root.$f->file." to ".$dest;
+			}
+			
+		}
+		if (!self::set($fileSrc, json_encode($data), 0, $root."data/")){
+			if (!isset($ret["error"]))
+				$ret["error"] = array();
+			$ret["error"][] = "Also could not save data file.";
+		}
+			
+		return $ret;
+	}
+	
+	
+	//simple delete file function
+	public static function deleteFiles($files, $root=self::ROOT_DIR){
+		$ret = array();
+		foreach ($files as $i=>$f){
+			if (file_exists($root.$f)){
+				if (@unlink($root.$f)){
+					if (!isset($ret["success"]))
+						$ret["success"] = array();
+					$ret["success"][] = $f;
+				}
+				else{
+					if (!isset($ret["error"]))
+						$ret["error"] = array();
+					$ret["error"][] = $f;
+				}
+			}
+		}
+		return $ret;
+	}	
+	
+	
 	//search keys to get unique
 	public static function getUniqueStr($str, $search_arr){
 		$count = 0;
@@ -201,6 +297,25 @@ class Jdat{
 		return $res;
 	}
 
+	//get unique filename given desired path
+	public static function getUnique($f){
+		
+		$dirPath = dirname($f);
+		$orig = basename($f);
+		$count = 0;
+		$f = $orig;
+		$count_max=1000;
+		while (file_exists($dirPath."/".$f)){
+			$count++;
+			$prefix = "($count)";
+			$f = $prefix.$orig;
+			if ($count>$count_max)
+				return false;
+		}
+		$f = $dirPath."/".$f;
+		return $f;
+	}
+	
 	//clean up json string	
 	public static function sanitize($content){
 
@@ -252,9 +367,12 @@ class Jdat{
 	public static function exists($f){
 		return file_exists(self::DATA_DIR."/".$f);
 	}
-	//retrieve file (load)
+	//retrieve file (load) $dir=directory or 1 for $f=full path
 	public static function get($f, $dir=self::DATA_DIR){
-		$path = $dir."/".$f;
+		if ($dir==1)
+			$path = $f;
+		else
+			$path = $dir."/".$f;
 		if (!file_exists($path)){
 			return false;
 		}else{
@@ -262,6 +380,13 @@ class Jdat{
 			//convert to array
 			return json_decode($data);
 		}
+	}
+	public static function jdat_array_search($search, $arr){
+		foreach($arr as $key=>$value){
+			if (trim($search)==trim($value))
+				return $key;
+		}
+		return -1;
 	}
 	//pretty print, for readable json
 	public function pretty_print($json)
