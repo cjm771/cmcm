@@ -533,7 +533,7 @@
 					afterLoad();
 					//debugging
 				//	if (that.$_GET("debug")!="off")
-						that.renderDebugBox();
+					//	that.renderDebugBox();
 					//tooltips
 					that.updateTooltip();
 					//save/loading dialog
