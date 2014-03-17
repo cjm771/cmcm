@@ -1,5 +1,5 @@
 {
-  "src": "test_new.json",
+  "src": "data.json",
   "loginEnabled": 1,
   "setupMode": 0,
   "users": {

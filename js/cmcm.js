@@ -2,7 +2,7 @@
 		var cmcm = {
 			editMode : 0,
 			unsavedChanges : 0,
-			debug : 0,
+			debug : 1,
 			src : '',
 			endpoint : 'php/ajax.php',
 			filesAllowed : ["image/jpeg", "image/jpg", "image/gif", "image/png"],
@@ -255,9 +255,10 @@
 			 mediaTypes : {
 				image : {
 					preview : function(mediaObj){
+						console.log(mediaObj);
 						contents = $("<div class='media_crop' style='cursor:pointer'></div>");
 				     	if (mediaObj.thumb && mediaObj.thumb!="false"){
-					     	contents.append("<img>").find('img').attr("src", mediaObj.thumb);  	
+					     contents.append("<img>").find('img').attr("src", mediaObj.thumb);  	
 					    }else if (mediaObj.src){
 						   contents.append("<img>").find('img').attr("src", mediaObj.src);  	 
 					    }else
@@ -550,7 +551,7 @@
 					afterLoad();
 					//debugging
 				//	if (that.$_GET("debug")!="off")
-						//that.renderDebugBox();
+					that.renderDebugBox();
 					that.updateKelly();
 					//ie placeholder fix
 					$("input, textarea").placeholder();
@@ -585,11 +586,12 @@
 			renderDebugBox : function(){
 				if (this.debug!=0){
 					var that = this;
+					toShow = that.draft; 
 					box = $("<pre class='debug' id='debugBox'></pre>");
-					box.append(JSON.stringify(that.draft, null, 4));
+					box.append(JSON.stringify(toShow, null, 4));
 					$("body").append(box);
 					this.debugInterval = setInterval(function(){
-						$("#debugBox").html(JSON.stringify(that.draft,null, 4));
+						$("#debugBox").html(JSON.stringify(toShow,null, 4));
 					}, 500);
 				}
 			},
@@ -657,7 +659,7 @@
 				//required
 				$.each(validators.required, function(k,v){
 					$.each(v, function(index, attr){
-						if (that.trim(data[k][attr])==""){
+						if (that.trim(data[k][attr])===""){
 							errors.push("<b>"+attr+"</b>: Field is Required.");
 							rel = that.configRelations[k];
 							$("["+rel.attr+"=\""+attr+"\"]").addClass("validate-error");
@@ -845,7 +847,7 @@
 					tr.find(".errorBox").hide();
 					$(".validate-error").removeClass("validate-error");
 					$.each(args, function(k,v){
-						if (that.trim(v.val())==""){
+						if (that.trim(v.val())===""){
 							v.addClass("validate-error");
 							tr.find(".errorBox").html("No fields can be blank").show();
 							error = true;
@@ -1002,7 +1004,7 @@
 				that._inputValidator("#setup_username", function(val){
 					resp = {};
 					val = that.trim(val);
-					if (val==""){
+					if (val===""){
 						//resp.error = "Field is required";
 						//clear errors
 						$("#setup_pw, #setup_pw_confirm").removeClass("error");
@@ -1027,13 +1029,13 @@
 						$("#setup_pw, #setup_pw_confirm").trigger("change");
 				});
 				that._inputValidator("#setup_pw", function(val){
-					if (that.trim($("#setup_username").val())==""){ 
+					if (that.trim($("#setup_username").val())===""){ 
 						resp.success = 1; 
 						return resp;
 					 }
 					$("#setup_pw_confirm").trigger("change");	
 					resp = {};
-					if (that.trim(val)=="")
+					if (that.trim(val)==="")
 						resp.error = "Field is required";
 					else if (val.length<settings.loginSettings.password_min){
 						resp.error = "Password must be at "+settings.loginSettings.password_min+" least Characters";
@@ -1046,12 +1048,12 @@
 				});
 				
 				that._inputValidator("#setup_pw_confirm", function(val){
-					if (that.trim($("#setup_username").val())==""){ 
+					if (that.trim($("#setup_username").val())===""){ 
 						resp.success = 1; 
 						return resp;
 					 }
 					resp = {};
-					if (that.trim(val)=="")
+					if (that.trim(val)==="")
 						resp.error = "Field is required";
 					else if (val!=$("#setup_pw").val()){
 						resp.error = "Password and Confirm Password do not match";
@@ -1067,7 +1069,7 @@
 				that._inputValidator("#setup_filename_input", function(val){
 					resp = {};
 					val = that.trim(val);
-					if (that.trim(val)=="")
+					if (that.trim(val)==="")
 						resp.error = "Field is required";
 					else if (!val.match(that.regex.filename.regex)){
 						resp.error = that.regex.filename.error;
@@ -1289,7 +1291,7 @@
 									filename = $("#config_new_fileInput").val();
 									defaultTemplate = "defaults/default.json";
 									//preval
-									if (that.trim(filename)=="")
+									if (that.trim(filename)==="")
 										$(me.el).find(".errorBox").html("Filename must be filled.").show();
 									else if (!filename.match(/^[A-Za-z0-9_.]+$/gi))
 										$(me.el).find(".errorBox").html("Filename must be made up of only alphanumeric, dots, and underscores.").show();
@@ -1434,7 +1436,7 @@
 									$(me.el).find(".errorBox,.successBox").hide();
 									filename = $("#config_saveas_fileInput").val();
 									//preval
-									if (that.trim(filename)=="")
+									if (that.trim(filename)==="")
 										$(me.el).find(".errorBox").html("Filename must be filled.").show();
 									else if (!filename.match(/^[A-Za-z0-9_.]+$/gi))
 										$(me.el).find(".errorBox").html("Filename must be made up of only alphanumeric, dots, and underscores.").show();
@@ -1955,7 +1957,7 @@
 				
 				if ($(".wpr_group").hasClass('ui-sortable'))
 					$(".wpr_group").sortable("destroy");
-				if (str==undefined || str==""){
+				if (str==undefined || str===""){
 					$(".img_grid").html(" ");
 					this.renderProjectsGrid();
 					return false;
@@ -2032,7 +2034,7 @@
 				if (that.data.sort.mode=="list")
 					$(".img_grid").addClass("listMode");
 				//JUST BOXES	
-				if (this.trim(this.data.sort.by)==""){
+				if (this.trim(this.data.sort.by)===""){
 					group_wpr = $("<div class='wpr_group'></div>");
 					$(".img_grid").empty().append(group_wpr);
 					$.each(this.data.projects, function(k,project){
@@ -2153,7 +2155,7 @@
 						opt = $("<option></option>");
 						opt.append("--");
 						opt.attr("value", "");
-						if (that.data.sort.by=="")
+						if (that.data.sort.by==="")
 							opt.prop("selected", true);
 						res.append(opt);
 						//other sort options
@@ -2555,7 +2557,8 @@
 									if (that.data.template.media[k]){
 										tmpl = that.data.template.media[k];
 										v = (typeof v == "string")? v.trim() : v;
-										if (tmpl.required && v=="" && isNaN(v)){
+										console.log(k+"= string? "+(isNaN(v) ? "yeah" : "nah" ));
+										if (tmpl.required && v===""){
 											errors.push("<b>[Image "+mediaCount+"] "+k+": </b> Field is required.");
 											$(".media_wpr[data-id='"+mediaId+"']").addClass('validate-error');
 											$(".media_wpr[data-id='"+mediaId+"'] [data-attr='"+k+"']").find('.attr-input').addClass('validate-error');
@@ -2584,7 +2587,8 @@
 							if (that.data.template.project[k]){
 								tmpl = that.data.template.project[k];
 								v = (typeof v == "string") ? v.trim() : v;
-								if (tmpl.required && v=="" && isNaN(v)){
+								console.log(k+"= string? "+(isNaN(v) ? "yeah" : "nah" ));
+								if (tmpl.required && v==="" ){
 									errors.push("<b>"+k+": </b> Field is required.");
 									$("#proj_info [data-attr='"+k+"']").find('.attr-input').addClass('validate-error');
 								}else{

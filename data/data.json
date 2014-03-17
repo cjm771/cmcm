@@ -6,7 +6,7 @@
 		"sort": {
 				"by": "",
 				"direction": "descending",
-				"mode": "list"
+				"mode": "grid"
 		},
 		"thumb": {
 				"max_width": "200",
