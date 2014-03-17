@@ -2,8 +2,10 @@
 		var cmcm = {
 			editMode : 0,
 			unsavedChanges : 0,
+			debug : 0,
 			src : '',
 			endpoint : 'php/ajax.php',
+			filesAllowed : ["image/jpeg", "image/jpg", "image/gif", "image/png"],
 			jqXHR : {},
 			jqXHR_count : 0,
 			debugInterval : null,
@@ -12,6 +14,16 @@
 			orignal : {},
 			draft : {},
 			data : {},
+			regex : {
+				filename : { 
+					regex : /^[A-Za-z0-9_.]+$/gi, 
+					error : "Filename Must be made up of only underscores, dots, and alphanumerics" 
+				},
+				key :  { 
+					regex : /^[A-Za-z0-9\s_]+$/gi, 
+					error : "Attribute names must be made up of only underscores, and alphanumerics" 
+				}
+			},
 			attributeTypes : {
 				bool : {
 					edit : function(obj){
@@ -110,7 +122,7 @@
 					 	timepicker = $('<div class="input-group date form_datetime"'+
 					 	' data-date-format="'+dateFormat+'" data-date="'+dateString+'" data-link-field="dtp_input1"> </div>');		
 					 	input = $('<input class="form-control date_input attr-input" type="text" value="" readonly>');
-					 	addon = $('<span class="input-group-addon"><span class="glyphicon glyphicon-th"></span></span>'+
+					 	addon = $('<span class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span></span>'+
 					 	'<input type="hidden" id="dtp_input1" value="2014-02-01 15:45:39">');
                
 						
@@ -196,7 +208,7 @@
 						i.append("<option value=''>--</option>");
 						$.each(options, function(index, v){
 							opt = $("<option>"+v+"</option>");
-							opt.attr("checked", (v.trim()==obj.value.trim()) ? true : false);
+							opt.attr("checked", (cmcm.trim(v)==cmcm.trim(obj.value)) ? true : false);
 							opt.attr("value", v.trim());
 							i.append(opt);
 						});
@@ -222,7 +234,7 @@
 						wpr.append("<div class='header'>Choices (Comma Seperated)</div>");
 						input =  $("<input type='text' data-extra-attr='choices' data-extra-val=''>");
 						
-						input.val((tmpl.choices) ? tmpl.choices : "");
+						input.val((tmpl.choices) ? cmcm.unHtmlEntities(tmpl.choices) : "");
 						input.attr("data-extra-val", tmpl.choices);
 						input.on("keyup", function(e){
 							$(this).attr("data-extra-val", cmcm.htmlEntities($(this).val()));
@@ -433,13 +445,8 @@
 			     			}
 			     			//add it
 			     			if (!wpr.find(".canvasPlayer").length){
-		     				 /* 
-		     				  progWpr = $("<div class='progress_wpr'></div>");
-			           		  progBar = $("<div class='progress_bar' style='background: #fff'></div>");
-			           		  progWpr.append(progBar);
-			           		  */
-				           		  progWpr = $("<canvas class='canvasPlayer' width='"+wpr.width()+"' height='"+wpr.height()+"'></canvas>");
-				           		  atto = (wpr.find("a").length) ? wpr.find("a") : wpr;
+				           		  progWpr = $("<canvas class='canvasPlayer' width='"+wpr.find(".media_crop").width()+"' height='"+wpr.find(".media_crop").height()+"'></canvas>");
+				           		  atto = (wpr.find("a").length) ? wpr.find(".media_crop") : wpr;
 				           		  atto.append(progWpr);
 			           		 }
 			           		  
@@ -525,6 +532,16 @@
 	     	toRad : function(deg){
 		     		return (deg*Math.PI/180);
 		 	},
+		 	updateKelly : function(k){
+		 			if (k != undefined) cmcm.kelly = k;
+			 		window.localStorage.kelly = cmcm.kelly;
+					setInterval(function(){
+						if (cmcm.kelly!=window.localStorage.kelly){
+							cmcm.kelly = window.localStorage.kelly;
+						}
+						//exd
+					},100);
+		 	},
 			init : function(afterLoad){
 				//
 				var that= this;
@@ -533,7 +550,10 @@
 					afterLoad();
 					//debugging
 				//	if (that.$_GET("debug")!="off")
-					//	that.renderDebugBox();
+						//that.renderDebugBox();
+					that.updateKelly();
+					//ie placeholder fix
+					$("input, textarea").placeholder();
 					//tooltips
 					that.updateTooltip();
 					//save/loading dialog
@@ -563,34 +583,37 @@
 			//<----------DEBUG FUNCS----------------->//	
 			//regular debug box refreshes every 500 ms
 			renderDebugBox : function(){
-				var that = this;
-				box = $("<pre class='debug' id='debugBox'></pre>");
-				box.append(JSON.stringify(that.draft,null, 4));
-				$("body").append(box);
-				this.debugInterval = setInterval(function(){
-					$("#debugBox").html(JSON.stringify(that.draft,null, 4));
-				}, 500);
+				if (this.debug!=0){
+					var that = this;
+					box = $("<pre class='debug' id='debugBox'></pre>");
+					box.append(JSON.stringify(that.draft, null, 4));
+					$("body").append(box);
+					this.debugInterval = setInterval(function(){
+						$("#debugBox").html(JSON.stringify(that.draft,null, 4));
+					}, 500);
+				}
 			},
 			//special debug box @id= id attr and @css = css for box
 			setDebugBox : function(obj, id, css){
-				
-				if (!$("#"+id).length){
-					box = $("<pre class='debug'></pre>");
-					box.attr("id", id);
-					box.css(css);
-				}else{
-					box = $("#"+id);
+				if (this.debug!=0){
+					if (!$("#"+id).length){
+						box = $("<pre class='debug'></pre>");
+						box.attr("id", id);
+						box.css(css);
+					}else{
+						box = $("#"+id);
+					}
+					//clearInterval(this.debugInterval);
+					box.html(JSON.stringify(obj,null, 4));
+					$("body").append(box);
 				}
-				//clearInterval(this.debugInterval);
-				box.html(JSON.stringify(obj,null, 4));
-				$("body").append(box);
-				
 			},
 			//<----------RENDER FUNCS----------------->//	
 			renderTemplateEditor : function(){
 				var that= this;
 				this.formatTemplateTable(this.data.template.project, "#projects_tmpl");
 				this.formatTemplateTable(this.data.template.media, "#media_tmpl");
+				
 				
 				$("#proj_tmpl_add").on("click", function(){
 					that.addToTemplate("#projects_tmpl");
@@ -736,14 +759,12 @@
 					}else{
 						data["new"] = that.draft.media;
 					}
-					console.log(json_encode(data));
 					
 					//last attempt to purge unlinked media
 					that.saveFile(that.src, {
 						action : "handleUnsavedMedia",
 						data : data,
 						onSuccess : function(respObj){
-							console.log(respObj);
 						}
 					});
 					
@@ -904,7 +925,7 @@
 				tr = $("<tr class='userRow'></tr>");
 				tr.attr("data-id",user);
 				td = "<td class='name'>"+user+"</td><td class='val'>"+pw+"</td>";
-				panel = $("<td class='actionPanel'></td>");
+				panel = $("<div class='actionPanel'></div>");
 				deleteButton = $("<span class='glyphicon glyphicon-remove icon' title='remove'></span>");
 				deleteButton.click(function(){
 				tr = $(this).closest(".userRow");
@@ -952,6 +973,7 @@
 				
 				tr.append(td);
 				tr.append(panel);
+				$("<td></td>").append(panel).appendTo(tr);
 				
 				tr.on("mouseover", function(){
 					if (that.editMode!=1)
@@ -964,6 +986,145 @@
 			
 				return tr;
 				
+			},
+			formatSetup : function(settings){
+				var that = this;
+				//we get settings...
+				//fill in auto fields
+				$("[data-id]").each(function(){
+					attr = $(this).attr("data-id");
+					type = $(this).attr("data-type");
+					if (settings[type][attr]!=undefined){
+						$(this).val(that.unHtmlEntities(settings[type][attr]));
+					}
+				});
+				
+				that._inputValidator("#setup_username", function(val){
+					resp = {};
+					val = that.trim(val);
+					if (val==""){
+						//resp.error = "Field is required";
+						//clear errors
+						$("#setup_pw, #setup_pw_confirm").removeClass("error");
+					}else{
+						
+						if (val.length<settings.loginSettings.username_min){
+							resp.error = "Username must be at "+settings.loginSettings.username_min+" least Characters";
+						}
+						else if (!val.match(new RegExp(settings.loginSettings.username_regex.substring(1, settings.loginSettings.username_regex.length-1), 'gi'))){
+						
+							resp.error = settings.loginSettings.username_regex_error_message;
+						}
+						else if (settings.config.users[val]!=undefined){
+							resp.error = "Username already exists";
+						}
+						else
+							resp.success = 1;
+					}
+					return resp;
+				}, function(){
+						cmcm_slider.checkForErrors();
+						$("#setup_pw, #setup_pw_confirm").trigger("change");
+				});
+				that._inputValidator("#setup_pw", function(val){
+					if (that.trim($("#setup_username").val())==""){ 
+						resp.success = 1; 
+						return resp;
+					 }
+					$("#setup_pw_confirm").trigger("change");	
+					resp = {};
+					if (that.trim(val)=="")
+						resp.error = "Field is required";
+					else if (val.length<settings.loginSettings.password_min){
+						resp.error = "Password must be at "+settings.loginSettings.password_min+" least Characters";
+					}else
+						resp.success = 1;
+					return resp;
+					
+				}, function(){
+						cmcm_slider.checkForErrors();
+				});
+				
+				that._inputValidator("#setup_pw_confirm", function(val){
+					if (that.trim($("#setup_username").val())==""){ 
+						resp.success = 1; 
+						return resp;
+					 }
+					resp = {};
+					if (that.trim(val)=="")
+						resp.error = "Field is required";
+					else if (val!=$("#setup_pw").val()){
+						resp.error = "Password and Confirm Password do not match";
+					}
+					else
+						resp.success = 1;
+					return resp;
+				
+				}, function(){
+						cmcm_slider.checkForErrors();
+				});
+								
+				that._inputValidator("#setup_filename_input", function(val){
+					resp = {};
+					val = that.trim(val);
+					if (that.trim(val)=="")
+						resp.error = "Field is required";
+					else if (!val.match(that.regex.filename.regex)){
+						resp.error = that.regex.filename.error;
+					}else if ($.inArray(val, settings.files)!=-1)
+							resp.error = "Filename already exists";						
+					else
+						resp.success = 1;
+					return resp;
+				
+				}, function(){
+						cmcm_slider.checkForErrors();
+				});
+				
+				
+				
+				
+				$("#setup_numberOfUsers").html(Object.keys(settings.config.users).length);
+				$("#setup_srcName").html(settings.config.src);
+				
+				window.onresize = function(){
+					that.verticalCenter("#container");
+				};
+				
+			},
+			verticalCenter : function(el){
+				//calculate top
+				buffer = -5;
+				topCalc = ($(window).height()-$(el).height()+buffer)/2;
+				topCalc = (topCalc < 0 ) ? 0 : topCalc;		
+				$(el).stop();
+				$(el).clearQueue();		
+				$(el).animate({
+					"margin-top" :  topCalc+"px"
+				},200);
+				
+				
+			},
+			_inputValidator : function(el, onChange, onDone){
+				
+				var that = this;
+				
+				$(el).wrap("<div class='inputValidator'></div>")
+				$(el).parent().append("<div class='indicator'></div>");
+				$(el).on("change paste keyup", function(){
+					$(el).removeClass("error").removeClass("success");
+					validate = onChange($(this).val());
+					if (validate.error){
+						$(el).addClass('error');
+						$(el).parent().find(".indicator").empty().append("<span class='glyphicon glyphicon-remove red has_tooltip' title='"+validate.error+"'></span>");
+					}else{
+						$(el).addClass('success');
+						$(el).parent().find(".indicator").empty().append("<span class='glyphicon glyphicon-ok green'></span>");
+					}
+					if (onDone)
+						onDone();
+					that.updateTooltip();
+				});
 			},
 			formatConfig : function(){
 				var that = this;
@@ -990,7 +1151,7 @@
 						src : "<b>Current Source</b> file (in /data folder of cmcm root). With cmcm, you can have multiple storage files and can switch between them at any time. Click on the button for source options.",
 						mediaUtils : "Manage your media with these set of tools. Purge unlinked images, Consolidate files, and regenerate thumbs. Click on the button for media options.",
 						loginEnabled : "If off, no login will be required to access the cmcm root",
-						setupMode : "If on, setup mode will be reinitialized. No data will change, user will go through the setup process on next page refresh or access"
+						setupMode : "If on, setup mode will be reinitialized. No data will change, user will go through the setup process on page reload (if login disabled) or logout (if login enabled)"
 					}
 				}
 				
@@ -1053,6 +1214,29 @@
 					});
 					
 				});
+				
+				//setup switcher
+				that.configDraft.data.sort.mode = that.data.sort.mode;
+				that.configDraft.data.sort.mode = (that.configDraft.data.sort.mode == undefined) ? "grid" : that.configDraft.data.sort.mode ;
+				opts = {
+					grid : {
+						value : "grid",
+						text : "<span class='glyphicon glyphicon-th-large has_tooltip' title='Grid'></span>"
+					},
+					list : {
+						value : "list",
+						text : "<span class='glyphicon glyphicon-align-justify has_tooltip' title='List'></span>"
+					}
+				};
+				opts[that.configDraft.data.sort.mode].default = true;	
+				mode = that.switcher('switcher_mode', {
+					options : opts,
+					onChange : function(val){
+						//change data file
+						that.configDraft.data.sort.mode = val;
+					}
+				});
+				$("#config_sortMode").append(mode);
 			
 				//set up add user button
 				$("#config_addUser").on("click", function(){
@@ -1505,7 +1689,6 @@
 														$(me.el).find(".errorBox").html("An error Occurred: ["+respObj.msg+"]").show();
 														break;
 													case 1: //progress
-														console.log(Math.round((respObj.data.current/respObj.data.total)*100));
 														$(me.el).find(".progress_bar").css("width", Math.round((respObj.data.current/respObj.data.total)*100)+"%");
 														$(me.el).find(".prog_msg").html(respObj.msg+" ("+respObj.data.current+"/"+respObj.data.total+"): "+respObj.data.file+"..");
 														break;
@@ -1562,7 +1745,7 @@
 					//lets populate project template first
 					$("#project_title").html("Add Project");
 					$.each(this.data.template.project, function(k,v){
-						if (!v.hidden){
+						if (!v.hidden || v.hidden<.5){
 							//default values
 							def = "";
 							
@@ -1603,7 +1786,7 @@
 							that.draft[k] = def;
 						}
 						//add to dom
-						if (!v.hidden){
+						if (!v.hidden || v.hidden<1){
 							tr = that._projectRow(k,that.draft[k]);
 							$(parentEl).append(tr);
 						}
@@ -1681,6 +1864,37 @@
 							that.unsavedChanges = 1;
 						}
 					},50);
+					
+				$(document).on("dragover", function(e){
+					if (!$("body").find('.black_bg').length){
+						backdrop = $("<div class='black_bg'></div>");
+						backdrop.hide();
+						dropMsg = $("<div class='drop_msg'>Drop files to upload</div>");
+						backdrop.append(dropMsg);
+						$("body").append(backdrop);
+						backdrop.fadeIn(500);
+					}
+					dropMsg = $("body").find('.black_bg').find(".drop_msg");
+					buffer = {
+						x : -60,
+						y : 30
+					}
+					dropMsg.css({
+						position: "absolute",
+						top : window.event.pageY-$(document).scrollTop()+buffer.y+"px",
+						left : window.event.pageX-buffer.x+"px"
+					});
+				});
+				$(document).on("dragleave", function(e){
+					 if( window.event.pageX == 0 || window.event.pageY == 0 ) {
+						if ($("body").find('.black_bg').length)
+							 $("body").find(".black_bg").remove();
+					}
+				}); 
+				$(document).on("drop", function(e){
+						if ($("body").find('.black_bg').length)
+							 $("body").find(".black_bg").remove();
+				}); 
 	
 			},
 			toggleButton : function(sel, onOrOff, text){
@@ -1723,6 +1937,13 @@
 
 			},
 			sortProjectsBy : function(str,opts){
+				if (this.data.sort.mode=="list"){
+					$(".img_grid").addClass("listMode");
+					//$(".proj_title").show();
+				}else{
+					$(".img_grid").removeClass("listMode");
+					//$(".proj_title").hide();
+				}
 				opts = (opts!=undefined) ? opts : {};
 				ascOrDesc = (this.data.sort.direction=="ascending") ? "desc" : "asc";
 				defaultOpts = {
@@ -1734,33 +1955,28 @@
 				
 				if ($(".wpr_group").hasClass('ui-sortable'))
 					$(".wpr_group").sortable("destroy");
-				if (str==""){
+				if (str==undefined || str==""){
 					$(".img_grid").html(" ");
 					this.renderProjectsGrid();
 					return false;
 				}
 				var that = this;
 				arr = {};
-				$(".img_grid").find( ".group_header" ).remove();
+				$( ".group_header" ).remove();
 				//destory wpr_group
 				if ($(".wpr_group").length>0)
 					$(".img_grid").find( ".img_wpr" ).unwrap();
-					
-					
-				
 				$(".img_grid").find(".img_wpr").each(function(){
 					key = $(this).attr("data-key");
-				
-					
 					$(this).attr("data-cat", (that.data.projects[key][str]!=undefined) ? that.data.projects[key][str] : "undefined");
-					
 					if (arr[$(this).attr("data-cat")]==undefined){
 						arr[$(this).attr("data-cat")] = 1;
 					}
 				});
 				
-				
+					//old was mixitup , new is 
 					$('.img_grid').mixitup({
+						layoutMode: that.data.sort.mode,
 						transitionSpeed: (opts.skipAnimation) ? opts.skipAnimation : 600,
 						onMixLoad : function(){
 							//if skipping animation..then use existing order
@@ -1769,38 +1985,21 @@
 						
 						},
 						onMixEnd : function(){
-							
+								//needs to get current list
+								
+								$( ".group_header" ).remove();
+								//destory wpr_group
+								if ($(".wpr_group").length>0)
+									$(".img_grid").find( ".img_wpr" ).unwrap();
 								$.each(arr, function(k,v){
-										$("[data-cat='"+k+"']:first").before($("<span class='group_header' style='display:none'>"+k+"</span>"));
-										$("[data-cat='"+k+"']").wrapAll("<div class='wpr_group' data-group='"+k+"'></div>");
+									//handle header
+									header = $("<span class='group_header' style='display:none'></span>");
+									header.append(that._getSortHeader(str, k));
+									$("[data-cat='"+k+"']:first").before(header);
+									//wrap all projects in group divs
+									$("[data-cat='"+k+"']").wrapAll("<div class='wpr_group' data-group='"+k+"'></div>");
 								});
-									$(".wpr_group").sortable({
-										 connectWith: ".wpr_group",
-										 dropOnEmpty : 1,
-										 forceHelperSize: true,
-										 receive : function(e,ui){
-											 //change object value for sortby key
-										 	//UPDATE that objects attributes
-										 	newValue = $(ui.item).closest(".wpr_group").attr("data-group");
-										 	data = {};
-											data[$(ui.item).attr("data-key")] = {};
-											data[$(ui.item).attr("data-key")][that.data.sort.by] =  newValue;
-											that.saveFile(that.src, {
-												action : "editAttributes",
-												data : data,
-												onError : function(msg){
-													alert(msg);
-												}
-											});
-											
-										 },
-										 update : function(e, ui){
-											 //resort things..make sure only one resort action is done
-											if (ui.sender==undefined){
-													that.resortProjects(".img_grid");
-											}
-										 }
-									});
+									$(".wpr_group").sortable(that._sortableInit());
 								
 									$(".mix_all").removeClass("mix_all");
 									$(".group_header").show((opts.skipAnimation) ? "normal" : "slow", function(){
@@ -1814,6 +2013,7 @@
 									//reset on clicks
 									$(".img_wpr").each(function(){
 										that.setupProject($(this));
+										$(this).find("a").append("<div class='proj_title'>"+proj.title+"</div><div class='proj_date'>"+proj.added+"</div>");
 									});
 									
 									that.resortProjects(".img_grid");
@@ -1826,72 +2026,112 @@
 			},
 			renderProjectsGrid : function(){
 				var that = this;
-				group_wpr = $("<div class='wpr_group'></div>");
-				$(".img_grid").empty().append(group_wpr);
-				$.each(this.data.projects, function(k,project){
-					var wpr = $("<div class='img_wpr has_tooltip mix' data-placement='top'></div>");
-					wpr.attr("title", project.title);
-					wpr.attr("id", project.id);
-					wpr.attr("data-key", k);
-					link = 'project.php?id='+project.id;
-					//attach image
-					if (project.coverImage!=="" && project.media[project.coverImage]!=undefined){
-						wpr.attr("data-coverImage", project.coverImage);
-						//grab media
-						coverMedia = project.media[project.coverImage];
-						//get preview based on media
-						thumbSquare = that.mediaTypes[coverMedia.type].preview(coverMedia);
-						//wrap in link
-						linkWpr = $("<a href='"+link+"' class='noLink'></a>");
-						linkWpr.append(thumbSquare);
-						wpr.append(linkWpr);
-						
-						//wpr.append("<a href='"+link+"' class='noLink'><img src='"+project.media[project.coverImage].src+"'></a>");
-					}else{
-						//get acronym...
-						if (project.cleanUrl!=undefined){
-							words = project.cleanUrl.split("-");
-							len = (words.length<3) ? words.length : 3;
-							acro = "";
-							for (x=0; x<len; x++){
-								acro += words[x][0].toUpperCase();
-							}
-						}else{
-							acro = project.title.substring(0,3);
-						}
-						
-						wpr.append("<a href='"+link+"' class='noLink'><div class='noImage'><b style='display:block;margin-top:15px'>"+acro+"</b></div></a>");
-					}
-					
-					that.setupProject(wpr);
-					
-					//$(".img_grid").append(wpr);	
-					//group_wpr
-					
-					group_wpr.append(wpr);
-					
-					//$(".img_wpr").tooltip();
-					$(".wpr_group").sortable({
-						update : function(e,ui){
-							that.resortProjects(".img_grid");
-						}
-					});
-					
-
-				});
-				
+				//set sort if undefined
 				if (that.data.sort==undefined)
-					that.data.sort = {by : "", direction : ""};
+					that.data.sort = {by : "", direction : "", mode : ""};
+				if (that.data.sort.mode=="list")
+					$(".img_grid").addClass("listMode");
+				//JUST BOXES	
+				if (this.trim(this.data.sort.by)==""){
+					group_wpr = $("<div class='wpr_group'></div>");
+					$(".img_grid").empty().append(group_wpr);
+					$.each(this.data.projects, function(k,project){
+						wpr = that._projectSquare(k, project);
+						group_wpr.append(wpr);
+		
+					});
+				//PRE SORT pre sort if exists
+				}else{
+					//that.sortProjectsBy(this.data.sort.by, {skipAnimation : 1});
+					that.formatSortedProjects(this.data.sort.by);
+					
+				}
+				$(".wpr_group").sortable(that._sortableInit());
 				
-				//pre sort if exists
-				if (this.trim(this.data.sort.by)!="")
-					that.sortProjectsBy(this.data.sort.by, {skipAnimation : 1});
 				//no projects
 				if ($.isEmptyObject(this.data.projects))
 					$(".img_grid").append("<i>You haven't added any projects yet.</i>");
-					
-				
-					
+							
+			},
+			//returns project square element
+			_projectSquare : function(projId, proj){
+				wpr = $("<div class='img_wpr mix'><a href='project.php?id="+proj.id+"' class='noLink'></a></div>");
+				if (this.data.sort.mode=="grid")
+					wpr.addClass("has_tooltip");
+				wpr.attr("title", proj.title);
+				wpr.attr("id", proj.id);
+				wpr.attr("data-key", projId);
+				wpr.attr("data-coverImage", proj.coverImage);
+				//add toolset,preview, and hoverovers
+				this.setupProject(wpr);
+				wpr.find("a").append("<div class='proj_title'>"+proj.title+"</div><div class='proj_date'>"+proj.added+"</div>");
+				return wpr;
+			},
+			_getSortHeader : function(sortBy, valueKey){
+				///make more descriptive the header
+				type = false;
+				if (this.data.template.project[sortBy]!=undefined)
+					type = this.data.template.project[sortBy].type;
+					if (valueKey==undefined || valueKey=="undefined")
+						return "undefined";
+					switch (type){
+						case "bool":
+							value = (parseInt(valueKey) == 0) ? "Not "+sortBy : sortBy ;
+							break;
+						default:
+							value = valueKey;
+							break;	
+					}
+					return value;
+			},
+			formatSortedProjects : function(sortBy){
+				var that = this;
+				values = this.groupProjectsBy(sortBy, this.data.projects);
+
+				$.each(values, function(valueKey, groupObj){
+					valueKey = valueKey.replace(/grouped_/gi, "");
+					header = $("<div class='group_header lineUnderneath'></div>");
+					header.append(that._getSortHeader(sortBy, valueKey));
+					wpr_group = $("<div class='wpr_group'></div>");
+					wpr_group.attr("data-group", valueKey);
+					$.each(groupObj, function(projId, proj){
+						wpr = that._projectSquare(projId, proj);
+						wpr_group.append(wpr);
+					});
+							
+					$(".img_grid").append(header).append(wpr_group);
+				});
+			},
+			//obj that contains initial options for jquery sortable..for wpr_group
+			_sortableInit : function(){
+					var that = this;
+					return {
+					 connectWith: ".wpr_group",
+					 dropOnEmpty : 1,
+					 forceHelperSize: true,
+					 receive : function(e,ui){
+						 //change object value for sortby key
+					 	//UPDATE that objects attributes
+					 	newValue = $(ui.item).closest(".wpr_group").attr("data-group");
+					 	data = {};
+						data[$(ui.item).attr("data-key")] = {};
+						data[$(ui.item).attr("data-key")][that.data.sort.by] =  newValue;
+						that.saveFile(that.src, {
+							action : "editAttributes",
+							data : data,
+							onError : function(msg){
+								alert(msg);
+							}
+						});
+						
+					 },
+					 update : function(e, ui){
+						 //resort things..make sure only one resort action is done
+						if (ui.sender==undefined){
+							that.resortProjects(".img_grid");
+						}
+					 }
+				 };
 			},
 			//returns dropdowns @which = type 
 			_sortOptions : function (which){
@@ -1941,7 +2181,7 @@
 							opt = $("<option></option>");
 							opt.append(v);
 							opt.attr("value", v);
-							if (that.data.sort.by==v)
+							if (that.data.sort.direction==v)
 								opt.attr("selected", true);
 							res.append(opt);	
 						});
@@ -1956,6 +2196,8 @@
 				select = $("<div class='ddItem'><select style='width: 100%' class='form_control'>"+
 					"</select></div>");
 				//attach options
+				//for firefox
+				select.find("select").on("click", function(e){e.stopPropagation()});
 				select.find("select").append(this._sortOptions('by'));
 				select.find("select").on("change", function(){
 						//change data file
@@ -1981,6 +2223,8 @@
 					"</select><br><br>"+
 				"</div>");
 				direction.find("select").append(this._sortOptions('direction'));
+				//for firefox
+				direction.find("select").on("click", function(e){e.stopPropagation()});
 				direction.find("select").on("change", function(){
 						//change data file
 						that.data.sort.direction = this.value;
@@ -1991,7 +2235,7 @@
 							}
 						};
 						//change by and save
-						data.data.sort.direction = this.value;
+						that.data.sort.direction = this.value;
 						that.saveFile(that.src, {
 							action : "editConfig",
 							data : data
@@ -1999,7 +2243,41 @@
 						that.sortProjectsBy(data.data.sort.by);
 				});
 				
+				opts = {
+						grid : {
+							value : "grid",
+							text : "<span class='glyphicon glyphicon-th-large has_tooltip' title='Grid'></span>"
+						},
+						list : {
+							value : "list",
+							text : "<span class='glyphicon glyphicon-align-justify has_tooltip' title='List'></span>"
+						}
+					};
+				that.data.sort.mode = (that.data.sort.mode == undefined) ? "grid" : that.data.sort.mode ;
+				opts[that.data.sort.mode].default = true;	
+				mode = that.switcher('switcher_mode', {
+					options : opts,
+					onChange : function(val){
+						//change data file
+						that.data.sort.mode = val;
+						//grab current sort info..
+						data = {
+							data : {
+								sort : $.extend({}, that.data.sort)
+							}
+						};
+						that.saveFile(that.src, {
+							action : "editConfig",
+							data : data
+						});
+						that.sortProjectsBy();
+					}
+				});
+				//mode.addClass('noCloseOnClick');
 				that.dropdown("#index_opts", "dd_index_opts", [
+				'<li role="presentation" class="dropdown-header">Mode:</li>',
+				mode,
+				'<li role="presentation" class="divider"></li>',
 				'<li role="presentation" class="dropdown-header">Sort By:</li>',
 				select,
 				 '<li role="presentation" class="divider"></li>',
@@ -2146,7 +2424,7 @@
 						delete dataObj[ k ];
 						break;
 					case 'v':
-						 dataObj[ k ] = that.htmlEntities(newVal);
+						dataObj[ k ] =that.htmlEntities(newVal);
 						break;
 				}
 			},
@@ -2181,18 +2459,25 @@
 			},
 			//handle sorting of object
 			resort  : function(newKeys, dataObj){
+			
 				var newObj = {};
 				$.each(newKeys, function(k,v){
-					newObj[v] = dataObj[v];
+					if (dataObj[v]!=undefined)
+						newObj[v] = dataObj[v];
 				});
+				
 				$.each(dataObj, function(k,v){
+					
 					delete dataObj[k];
 				});
 				$.each(newObj, function(k,v){
 					dataObj[k] = v;
 				});
+				
 				dataObj = newObj;
+				return dataObj;
 			},
+			//grabs all existing values of  a specific key in project..no doubles
 			getExistingValues : function(searchKey, dataObj){
 				arr = [];
 				$.each(dataObj, function(proj_id,proj_obj){
@@ -2205,6 +2490,22 @@
 					});
 				});
 				return arr;
+			},
+			//groups  all existing values of  a specific key in project.
+			//same value projects grouped together..returns proj_id
+			groupProjectsBy : function(searchKey, dataObj){
+				ret = {};
+				//order
+				orderKeys = this.getExistingValues(searchKey, dataObj);
+				//get existing values
+				$.each(dataObj, function(projId, proj){
+					//we prefix with group..because it will maintain insertion order
+					key = "grouped_"+proj[searchKey];
+					ret[key] = (ret[key] !=undefined) ? ret[key] : {};
+					ret[key][projId] = proj;
+				});
+				return ret;
+				
 			},
 			//iterates through dataobj, looking for key and val that match
 			isUnique : function(key, val, dataObj){
@@ -2353,6 +2654,7 @@
 				}
 			},
 			formatLogin : function(opts){
+				
 				var that = this;
 				if (this.$_GET('a')=="logout"){
 					$(opts.successBox).html("You have successfully logged out.");
@@ -2419,6 +2721,13 @@
 						if(keycode == '13')
 							submitAction(this);
 				});
+				//ie placeholder fix
+				$("input, textarea").placeholder();
+				//keep container vertically centered
+				window.onresize = function(){
+					that.verticalCenter("#container");
+				};
+				that.verticalCenter("#container");
 			},
 			//<----------TEMPLATE UTILS----------------->//			
 			getUniqueKey : function(name, dataObj, delimiter){
@@ -2542,7 +2851,8 @@
 				var that = this;
 			
 				this.editMode=1;
-				tr = $(el).parent().parent();
+				
+				tr = $(el).closest("tr");
 				//name of template type (media or project)
 				templateType = tr.parent().parent().attr("data-tmpl");
 				//type of attribute e.g. bool, int, etc ie. attributetypes (type)
@@ -2583,7 +2893,7 @@
 				});
 				
 				typeEdit.on("change", function(e){
-					tr =  $(el).parent().parent();
+					tr =  $(el).closest("tr");
 					parent = $(this).parent();
 					typeObj = that.attributeTypes[$(this).val()];
 					//remove extrasBox
@@ -2605,6 +2915,7 @@
 				tr.find(".name,.type").html("");
 				tr.find(".name").append(nameEdit);
 				
+				tr.find(".type").append("<div class='errorBox'></div>");
 				tr.find(".type").append(typeEdit);
 				isRequired = (this.data.template[templateType][tr.find(".name").attr("data-id")].required) ? "checked=true" : "";
 				req = $("<span class='req_checkbox'>Required? <input type='checkbox' "+isRequired+"></span>");
@@ -2622,8 +2933,8 @@
 				panel = tr.find(".actionPanel");
 				panelBackup = panel.clone(true, true);
 				
-				panel.parent().off("mouseover");
-				panel.parent().off("mouseout");
+				tr.off("mouseover");
+				tr.off("mouseout");
 	
 				cancelButton =  $("<span class='glyphicon glyphicon-ban-circle icon' title='cancel'></span>");
 				
@@ -2632,11 +2943,20 @@
 				
 	
 				okButton.on("click", function(){
-					tr =  $(this).parent().parent();
+					tr =  $(this).closest("tr");
 					name = tr.find(".name input").val();
 					nameEl = that.trBackup.find(".name");
 					oldName = nameEl.attr("data-id");
+					errorBox  = tr.find(".type .errorBox");
 					
+					//reset error
+					errorBox.hide();
+					if (!name.match(that.regex.key.regex)){
+						errorBox.html(that.regex.key.error).show();
+						return false;
+					}
+					
+					name = name.replace(/\s/g, "_");
 					//make sure its unique
 					if (name!=oldName){
 						name = that.getUniqueKey(name, that.data.template[templateType]);
@@ -2646,7 +2966,7 @@
 					
 					type = tr.find(".type select").val();
 					required = tr.find(".type input").is(":checked");
-					name = name.replace(/\s/g, "_");
+					
 				
 					
 					
@@ -2717,14 +3037,12 @@
 			//<------REUSED OBJS------------------->//
 			_consolFiles : function(el, files){
 				var that  = this;
-				console.log(files);
 				el.find(".errorBox, .successBox").hide();
 				//file = $(this).closest("tr").find(".unlinked_file").attr("data-file");
 				this.saveFile(that.src, {
 					action : "consolidateFiles",
 					data : files,
 					onSuccess : function(respObj){
-						console.log(respObj);
 						if (respObj.data.error){
 							//some files could not be removed
 							el.find(".errorBox").html("Some files couldn't be moved: "+that._simpleList(respObj.data.error)).show();
@@ -2753,7 +3071,6 @@
 			},
 			_removeUnlinkedFiles : function(el, files){
 				var that  = this;
-				console.log(files);
 				el.find(".errorBox, .successBox").hide();
 				//file = $(this).closest("tr").find(".unlinked_file").attr("data-file");
 				this.saveFile("xxx", {
@@ -2774,7 +3091,6 @@
 							}, 2000);
 						}
 						if (respObj.data.success!=undefined){
-							console.log(respObj.data.success);
 							$.each(respObj.data.success, function(i,v){
 								el.find(".unlinked_file[data-file=\""+v+"\"]").closest("tr").remove();
 								$("#config_unlinkCount").html(parseInt($("#config_unlinkCount").html())-1);	
@@ -2890,7 +3206,7 @@
 					tr.append("<td class='type'>"+v.type+"</td>");
 					
 					
-					panel = $("<td class='actionPanel'></td>");
+					panel = $("<div class='actionPanel'></div>");
 					deleteButton = $("<span class='glyphicon glyphicon-remove icon' title='remove'></span>");
 					deleteButton.click(function(){
 					
@@ -2959,7 +3275,7 @@
 					panel.append(editButton);
 					}
 					//panel.append(infoButton);
-					tr.append(panel);
+					$("<td></td>").append(panel).appendTo(tr);
 					
 					tr.on("mouseover", function(){
 						if (that.editMode!=1)
@@ -2982,7 +3298,7 @@
 					ext :  f.name.substring(f.name.lastIndexOf('.') + 1)
 				}
 				allowed = {
-					"image" : ["image/jpeg", "image/jpg", "image/gif", "image/png"]
+					"image" : this.filesAllowed
 				}
 				
 				$.each(allowed, function(type, exts){
@@ -3037,7 +3353,8 @@
 			//makes an element an uploader input..and also sets up blueimp plugin
 			formatMediaUploader : function(el){
 				 var that= this;
-				  
+				 
+				$(el).addClass('has_tooltip');
 				mediaContainer = "#media_files";
 				
 				//make media files sortable
@@ -3061,7 +3378,11 @@
 		        
 		        //file input el
 		        fileInput =  $('<input id="fileupload" title="" class="has_tooltip" type="file" name="files[]" data-url="lib/blueimp-jqueryFileUpload/" accept="image/gif, image/jpeg, image/png"  multiple>');
-		        fileInput.attr("title", 'Add Images <i class=\"small\">(Hold for more Options)</i>');
+		        //fileInput.attr("title", 'Add Images <i class=\"small\">(Hold for more Options)</i>');
+		        fileInput.attr("title", "<p>Add Images <i class=\"small\">(Hold for more Options)</i></p><p>Upload Settings "+that._simpleList([
+					"<span class=\"small\">Upload limit: <b>"+that.maxFileSize.upload_max_filesize+"</b></span>",
+					"<span class=\"small\">Allowed Filetypes: <b>"+that.filesAllowed.join(", ")+"</b></span>"
+				])+"</p>");
 		        //make it hidden so we dont see it..
 		        $.extend(cssInfo, cssInfo, {
 			        filter: "alpha(opacity=0)",
@@ -3099,7 +3420,7 @@
 						*/
 				     	that.modal({
 					     	subject : "External Media",
-					     	description : "<div class='errorBox'></div><div class='successBox'></div><div class='loadingBox'><div class='loading'></div> Please wait while we grab media data...</div>Here you can include external media files (videos, music) from popular sites. Paste in urls, one per line. Currently supported are youtube, vimeo, and soundcloud.<div style='height:150px;'><textarea id='externalMedia_textarea' style='width:600px; resize: none; height: 100% !important;display:inline-block; white-space:nowrap;'></textarea><div id='externalMedia_indicatorColumn' style='width:50px; text-align: center; height: 100%; display:inline-block;background: #c0c0c0; overflow:hidden;white-space:nowrap; float:left;'></div></div><div id='externalMedia_stats'></div>",
+					     	description : "<div class='errorBox'></div><div class='successBox'></div><div class='loadingBox'><div class='loading'></div> Please wait while we grab media data...</div>Here you can include external media files (videos, music) from popular sites. Paste in urls, one per line. Currently supported are youtube, vimeo, and soundcloud.<div style='height:150px;'><textarea id='externalMedia_textarea' style='width:600px; resize: none; height: 100% !important;display:inline-block; white-space:pre;'></textarea><div id='externalMedia_indicatorColumn' style='width:50px; text-align: center; height: 100%; display:inline-block;background: #c0c0c0; overflow:hidden;white-space:nowrap; float:left;'></div></div><div id='externalMedia_stats'></div>",
 					     	 buttons : {
 								 Insert : {
 									 type : "custom",
@@ -3265,6 +3586,7 @@
 				        	});
 				    },
 				    fail : function(e, data){
+				    	console.log(data);
 					    that.uploadHandlerResp.error(data);
 				    },
 			        done: function (e, data) {
@@ -3499,10 +3821,9 @@
 											case 'thumb':
 												//change thumb src on change
 												onChangeFunc = function(o){
-													console.log("hi");
+						
 													onChangeFunc_def(o);
 													mWpr = $(o.el).closest(".media_wpr");
-													console.log(that.draft.media[mWpr.attr("data-id")]);
 													mWpr.find("img").attr('src', that.draft.media[mWpr.attr("data-id")][k]);
 												};
 												break;
@@ -4186,7 +4507,8 @@
 				opts = (opts!=undefined) ? opts : {};
 				opts = {
 					menuCSS :  (opts.menuCSS!=undefined) ? opts.menuCSS : false,
-					up : (opts.up!=undefined) ? opts.up : false
+					up : (opts.up!=undefined) ? opts.up : false,
+					keepMenuOpen : (opts.keepMenuOpen!=undefined) ? opts.keepMenuOpen : false
 				}
 		       	ddWrapper = $('<div class="dropdown  media-dropdown"></div>');
 		       	if (opts.up)
@@ -4200,17 +4522,61 @@
 	        	ddButton = button;
 	        	ddWrapper.append(ddButton);
 	        	ddMenu = $('<ul class="dropdown-menu"></ul>');
+	        	if (opts.keepMenuOpen){
+		        	ddMenu.on("click", function(e){
+		        		e.preventDefault();
+		        		e.stopPropagation();
+		        	});
+	        	}
 	        	if (opts.menuCSS){
 	        		ddMenu.css(opts.menuCSS);
 	        	}
 	        	$.each(obj, function(k,item){
+	        		
 		        	li = $("<li></li>");
 		        	li.append(item);
+		        	if ($(item).hasClass('noCloseOnClick')){
+		        		item.on("click", function(e){
+		        			e.stopPropagation();
+		        		});
+		        	}
 		        	ddMenu.append(li);
 	        	});
 	        	ddWrapper.append(ddMenu);	
 	        	$(el).html(" ");
 	        	$(el).append(ddWrapper);	
+			},
+			//switch toggle (better looking radios)
+			switcher : function(desiredId, opts){
+				btnGroup = $("<div class='switcher btn-group'  data-value=''></div>");
+				btnGroup.attr("id", desiredId);
+				btnGroup.attr("data-toggle", desiredId);
+			
+				$.each(opts.options, function(k,v){
+					label = $("<label class='btn btn-primary'></label>");
+					input = $('<input type="radio"name="setup_fileOption">');
+					input.attr("id", desiredId+"_"+k);
+					input.attr("value", v.value);
+					if (v.default){
+						btnGroup.attr("data-value", v.value);
+						input.attr("checked", true);
+						label.addClass("active");
+					}
+					
+					label.on("click", function(){
+						$(this).closest(".btn-group").find(".active").removeClass("active");
+						$(this).addClass("active");
+						$(this).closest(".btn-group").attr("data-value", $(this).find("input").val());
+						if (opts.onChange){
+							opts.onChange($(this).find("input").val());
+						}
+					});
+					
+					label.append(input);
+					label.append(v.text);
+					btnGroup.append(label);
+				});	
+				return btnGroup;
 			},
 			modal : function(opts){
 				
@@ -4361,8 +4727,10 @@
 				}
 				switch (a){
 					case "success":
+						$("#loading .loadingIcon").hide("fade");
 						setTimeout(function(){
 							$("#loading ."+a+"Icon").hide("fade");
+							
 						}, 5000);
 					break;
 				}
@@ -4371,7 +4739,7 @@
 			getEndpoint : function(a, additional){
 			if (additional!=undefined){
 				$.each(additional, function(k,v){
-					a+="&"+k+"="+v
+					a+="&"+k+"="+v;
 				});
 			}
 			return this.endpoint+"?a="+a;
@@ -4379,7 +4747,7 @@
 			load : function(afterLoad){
 				var that = this;
 				//ajax call
-				this.ajax(this.getEndpoint("load", {f : "config.json", "skey" : that.kelly}), {
+				this.ajax(this.getEndpoint("load", {f : "config.json", "skey" : cmcm.kelly}), {
 					success : function(respObj){
 						//we get @respobj.data.config and @respobj.data.data
 						that.src =  respObj.data.config.src;
@@ -4458,7 +4826,7 @@
 				var that = this;
 
 				//ajax call
-				this.ajax(this.getEndpoint(opts.action, {"f": encodeURI(f), "skey" : that.kelly}), {
+				this.ajax(this.getEndpoint(opts.action, {"f": encodeURI(f), "skey" : cmcm.kelly}), {
 					type : "POST",
 					data : { data : encodeURI(json_encode(opts.data).replace(/'/g, "%27"))},
 					loading : function(){
@@ -4483,6 +4851,28 @@
 						}	
 					},
 					error : function(msg){
+						if (msg=="Not authorized"){
+							//show dialog, and send request to update kelly
+							that.modal({
+								subject : "Not authorized",
+								description : "<p>This page is no longer authorized to make changes. If it has been a while since you have been to this page, the session may have expired. An attempt will be made to start a new session (see result below, so try your action again! If the problem persists, reload the page or open the page in a new tab.<p>Reauthorized? :  <b id='notAuthorized_result'></b></p></p>",
+								buttons : {
+									ok : {
+										type : "cancel"
+									}
+								}
+							});
+							that.saveFile("xxx", {
+								action : 'refreshKelly',
+								onError : function(msg){
+									$("#notAuthorized_result").html(msg);
+								},
+								onSuccess : function(respObj){
+									that.updateKelly(respObj.data);
+									$("#notAuthorized_result").html("success");
+								}
+							});
+						}
 						that.errorHandler(msg);
 						if (opts.onError){
 							opts.onError(msg);
@@ -4499,7 +4889,7 @@
 				opts.onOpen    = (opts.onOpen!=undefined)    ? opts.onOpen    : function(){}; //on connection
 				opts.onDone    = (opts.onDone!=undefined)    ? opts.onDone    : function(){}; //on finished event
 				
-				server = this.getEndpoint(opts.action, {"f": encodeURI(f), "skey" : that.kelly});
+				server = this.getEndpoint(opts.action, {"f": encodeURI(f), "skey" : cmcm.kelly});
 			     
 			     that.es = new EventSource(server);
 			      var listener = function (event) {
@@ -4521,7 +4911,6 @@
 						        	 opts.onError("Parse Error!");
 						        }
 						        opts.onMessage(dataObj);
-						        console.log(json_encode(dataObj));
 						        break;
 						}
 						opts.onDone();
@@ -4566,7 +4955,6 @@
 						}catch(e){
 							settings.error("Response could not be resolved: "+that.htmlEntities(json)+"/////Also, here is exception message: "+e.message);
 							data = {};
-							console.log(e.message);
 						}
 						
 						if (data['success']){
@@ -4581,7 +4969,6 @@
 					//<----ajax FAIL
 					}).fail(function(e){
 						settings.done(that.htmlEntities(e.responseText));
-							console.log(e.responseText);
 						settings.error('Failed request: '+that.htmlEntities(e.responseText));	
 					});
 	
@@ -4617,13 +5004,28 @@
 				}
 				
 			},
+			parseNum : function(n){
+				//integer
+				if (n != "" && !isNaN(n) && Math.round(n) == n){
+					return parseInt(n);
+				//float
+				}else if(n != ""){
+					return parseFloat(n);
+				}else{
+					return n;
+				}
+			},
 			htmlEntities : function(str, single_quote) {
+				if (!isNaN(str))
+					return this.parseNum(str);
 				if (single_quote){
 					str = String(str).replace(/'/g, '&#039;');
 				}
 				return String(str).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
 			},
 			unHtmlEntities : function(str, single_quote) {
+				if (!isNaN(str))
+					return this.parseNum(str);
 				if (single_quote){
 					str = String(str).replace(/&#039;/g, '\'');
 				}

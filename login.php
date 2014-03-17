@@ -29,7 +29,6 @@ if (Login::inSetupMode()){
 			text-align: left;
 			margin:0px auto;
 			padding-bottom: 30px;
-			margin-top:200px;
 		}
 		#header h1{
 			float:inherit;
@@ -59,6 +58,7 @@ if (Login::inSetupMode()){
 				successBox : "#login_successBox",
 				errorBox : "#login_errorBox"
 			});
+
 		});
 	</script>
 	<?php if (isset($CMCM_SETUP)) $CMCM_SETUP->js() ?>

@@ -2,7 +2,15 @@
 
 class CMCMSetup{
 	
+	private $root = "";
+	private $settings = "";
+	
 	function __construct() {
+		require_once("php/lib/Jdat.class.php");
+		$this->settings = Jdat::getSettings($this->root, 1);
+		$files = Jdat::getFileList($this->root."data/");
+		$this->settings->files = $files;
+		$this->settings->loginSettings = Login::$opts;
 
 	}
 
@@ -12,7 +20,7 @@ class CMCMSetup{
 	#header{
 		padding-left: 60px;
 		vertical-align: middle;
-		margin-top: 150px;
+		margin-top: auto;
 	}
 	#setupSubTitle{
 		font-size: 12px;
@@ -140,7 +148,9 @@ class CMCMSetup{
 	cmcm_slider = {
 		current : 0,
 		total : 0,
+		settings : <?=json_encode($this->settings)?>,
 		init : function(){
+			$("#loginBox").find(".successBox,.errorBox").hide();
 			var that = this;
 			$("#header").find("h1").append(""+
 			"<span id='setupSubTitle'>"+
@@ -156,12 +166,23 @@ class CMCMSetup{
 			});
 			$(".slide_control").find(".next").on("click", function(){
 				that.move(that.current+1);
+				if (that.current==(that.total-1)){
+					//console.log("validating..");
+					//do validation
+					that.saveSetup();
+				}
 			});
 			$("#setup_passwordProtect").find(".btn").on("click", function(){
 				if ($(this).find("input").val()==1){
-					$("#setup_registerUser").slideDown();
+					$("#setup_registerUser").slideDown(function(){
+						cmcm.verticalCenter("#container");
+						that.checkForErrors();
+					});
 				}else{
-					$("#setup_registerUser").slideUp();
+					$("#setup_registerUser").slideUp(function(){
+						cmcm.verticalCenter("#container");
+						that.checkForErrors();
+					});
 					
 				}
 			});
@@ -169,11 +190,17 @@ class CMCMSetup{
 			//	that.updateSlideHeight(1);
 				switch($(this).find("input").val()){	
 					case 0+"":
-						$("#setup_filename").slideUp();
+						$("#setup_filename").slideUp(function(){
+							cmcm.verticalCenter("#container");
+							that.checkForErrors();
+						});
 						break;
 					case 1+"":
 					case 2+"":
-						$("#setup_filename").slideDown();
+						$("#setup_filename").slideDown(function(){	
+							cmcm.verticalCenter("#container");
+							that.checkForErrors();
+						});
 						break;
 					
 				}
@@ -186,12 +213,96 @@ class CMCMSetup{
 			})
 			that.updateSlideHeight(0);
 			this.move(this.current, 1);
+			//disable tab
+			$("body").on("keydown", function(e){
+					
+					if (!$("input,textarea").is(":focus") && e.keyCode == 9)
+						e.preventDefault();
+			});
+			$(".slide").each(function(e){
+				$(this).find("input,textarea").last().on("keydown", function(e){
+					if (e.keyCode == 9){
+						e.preventDefault();	
+						e.stopPropagation();
+					}
+					
+				});
+			});
+		
 			
+		},
+		saveSetup : function(){
+			var that = this;
+			$("#setup_saveSlide").find(".loadingBox, .errorBox, #setup_done").hide();
+			//grab info
+			// password protect?, user data, file rename, new, or keep?, filename, site info
+			data = {
+				enableLogin : $('input[name=setup_passwordProtect]:checked').val(),
+				fileOption :  $('input[name=setup_fileOption]:checked').val(),
+				siteInfo : {
+					title :  cmcm.htmlEntities($("#setup_title").val()),
+					subtitle : cmcm.htmlEntities($("#setup_subtitle").val()),
+					description : cmcm.htmlEntities($("#setup_description").val())
+				}
+			}
+			//add filename
+			if (cmcm.trim($("#setup_filename_input").val())!=""){
+				data.filename = $("#setup_filename_input").val();
+			}
+			//add user
+			if (cmcm.trim($("#setup_username").val())!=""){
+				data.user = {
+					user : $("#setup_username").val(),
+					pw : $("#setup_pw").val(),
+					confirm_pw : $("#setup_pw_confirm").val()
+				}
+			}
+			console.log(data);
+			$("#setup_saveSlide").find(".loadingBox").show();
+			cmcm.saveFile(that.settings.config.src, {
+				action : "saveSetup",
+				data : data,
+				onError : function(msg){
+					$("#setup_saveSlide").find(".errorBox").html(msg).show();
+				},
+				onSuccess : function(respObj){
+					if (respObj.data.config.loginEnabled!=0)
+						$("#setup_saveSlide").find("#setup_done").slideDown();
+					else{
+						$("#setup_saveSlide").find(".successBox").show();
+						window.location.reload();
+					}
+				},
+				onDone : function(){
+					$("#setup_saveSlide").find(".loadingBox").hide();
+				}
+			});
+		},
+		checkForErrors : function(){
+			
+			
+			currentErrors = $(".slide:eq("+this.current+")").find(".inputValidator:visible .error");
+			if (currentErrors.length){
+			
+				if ($(".slide_control").find(".next").is(":visible")){
+					$(".slide_control").find(".next").stop();
+					$(".slide_control").find(".next").clearQueue();
+					$(".slide_control").find(".next").hide("slow");
+				}
+			}else{
+			
+				if (!$(".slide_control").find(".next").is(":visible")){
+					$(".slide_control").find(".next").stop();
+					$(".slide_control").find(".next").clearQueue();
+					$(".slide_control").find(".next").show("slow");
+				}
+			}
+					
 		},
 		updateSlideHeight : function(auto){
 			if (!auto){
 				//set all not current slides to auto
-				$(".slide:not(.slide:eq("+this.current+"))").css("height", "auto" );
+				$(".slide:not(.slide:eq("+this.current+"))").css({"height" : "auto"});
 				//set height to that of current slide
 				$("#cmcm_setup").css("height", $(".slide:eq("+this.current+")").get(0).scrollHeight+"px");
 			//after each move	
@@ -202,7 +313,7 @@ class CMCMSetup{
 				///set height to auto 
 				$("#cmcm_setup").height(false);
 				//set current slide to auto
-				$(".slide:eq("+this.current+")").css("height", "auto" );
+				$(".slide:eq("+this.current+")").css({"height" : "auto"});
 				
 			}
 				
@@ -222,6 +333,10 @@ class CMCMSetup{
 					case 0:
 						$(".slide_control").find(".prev").hide(anim);
 						break;
+					//last input step, on next, verify and show congrats
+					case this.total-2:
+						break;
+					//last slide: finished
 					case this.total-1:
 						$(".slide_control").find(".next").hide(anim);
 						break;
@@ -241,7 +356,11 @@ class CMCMSetup{
 				$("#cmcm_setup").animate({
 					scrollLeft : i*slideWidth,
 					height : $(".slide:eq("+this.current+")").get(0).scrollHeight+"px"
-				}, function(){that.updateSlideHeight(1)});
+				}, function(){
+					that.updateSlideHeight(1);
+					that.checkForErrors();
+					cmcm.verticalCenter("#container");
+				});
 			}
 			this.updateStep();
 			
@@ -249,6 +368,7 @@ class CMCMSetup{
 	};
 	$(document).ready(function(){
 		cmcm_slider.init();
+		cmcm.formatSetup(<?=json_encode($this->settings)?>);
 	});
 	</script>
 	
@@ -264,16 +384,17 @@ class CMCMSetup{
 			  Do you want to password protect your admin panel?
 			  <div class='wpr' id='setup_passwordProtect'> 
 			  <div class="btn-group" data-toggle="buttons">
-				  <label class="btn btn-primary ">
-				    <input type="radio" value=1 name="options" id="option1">Yes
+			  	 <label class="btn btn-primary no active">
+				    <input type="radio" value=0 name="setup_passwordProtect" id="option2" checked="true">No
 				  </label>
-				  <label class="btn btn-primary active">
-				    <input type="radio" value=0 name="options" id="option2">No
+				  <label class="btn btn-primary yes ">
+				    <input type="radio" value=1 name="setup_passwordProtect" id="option1">Yes
 				  </label>
+
 				</div>
 			  </div>
 			  <div class='wpr' id='setup_registerUser'>
-				  <p>Currently there are X Users. Would you like to register a new user?</p>
+				  <p>Currently there are <span id='setup_numberOfUsers'>No</span> Users. Would you like to register a new user? (If no, leave blank)</p>
 				<form role="form">
 				  <div class="form-group">
 					<input type="text" class="form-control" id="setup_username" placeholder="Desired Username">
@@ -289,16 +410,16 @@ class CMCMSetup{
 		</div>
 		<div class='slide noPadding'>
 				<div class='wpr' id='setup_fileHandle'>
-					 <p>Currently the main data file is set to <b>data.json</b></p> 
+					 <p>Currently the main data file is set to <b id='setup_srcName'>data.json</b></p> 
 					 <div class="btn-group" data-toggle="buttons">
 					  <label class="btn btn-primary active">
-					    <input type="radio" value=0 name="options" id="option1">Keep
+					    <input type="radio" value=0 name="setup_fileOption" id="option1" checked="true">Keep
 					  </label>
 					  <label class="btn btn-primary ">
-					    <input type="radio" value=1 name="options" id="option2">Rename
+					    <input type="radio" value=1 name="setup_fileOption" id="option2">Rename
 					  </label>
 					  <label class="btn btn-primary ">
-					    <input type="radio" value=2 name="options" id="option3">New
+					    <input type="radio" value=2 name="setup_fileOption" id="option3">New
 					  </label>
 					</div>
 			  </div>
@@ -306,7 +427,7 @@ class CMCMSetup{
 			 	<p>Filename</p>
 				<form role="form">
 				  <div class="form-group">
-					<input type="text" class="form-control" id="setup_filename_input" placeholder="Example_Filename.json">
+					<input type="text" class="form-control error" id="setup_filename_input" placeholder="Example_Filename.json">
 				  </div>
 				</form>
 			 </div>
@@ -316,23 +437,32 @@ class CMCMSetup{
 				  <p>Your site information (You can change this later at any time)</p>
 				<form role="form">
 				  <div class="form-group">
-					<input type="text" class="form-control" id="setup_username" placeholder="Site Title">
+					<input type="text" class="form-control" data-id='title' id='setup_title' data-type='data' placeholder="Site Title">
 				  </div>
 				  <div class="form-group">
-					<input type="password" class="form-control" id="setup_pw" placeholder="Site Subtitle">
+					<input type="text" class="form-control" data-id='subtitle' id='setup_subtitle' data-type='data'  placeholder="Site Subtitle">
 				  </div>
 				    <div class="form-group">
-					<textarea class="form-control" id="setup_pw_confirm" style='height:100px' placeholder="Description"></textarea>
+					<textarea class="form-control" data-id='description' id='setup_description' data-type='data' style='height:100px' placeholder="Description"></textarea>
 				  </div>
 				</form>
 			  </div>
 		</div>
 
-		<div class='slide noPadding'>
-			
-			<p>Congratulations! Your done with setup. Pat on the back for you! </p><p>If you have more questions after you login, please click <a href="#" class='white'>here</a>.</p>
-			<div class='wpr'>
-			<div class='button' id='setup_doLogin'>Login Now</div>
+		<div class='slide noPadding' id='setup_saveSlide'>
+			<div class='loadingBox'>
+				<div class='loading'></div>Please wait..Setting up your Manager..
+			</div>
+			<div class='errorBox'>
+			</div>
+			<div class='successBox'>
+			<p>Congratulations! Your done with setup. Pat on the back for you! Now redirecting to index. Or click <a href='index.php'>here</a> to reload.</p>
+			</div>
+			<div id='setup_done'>
+				<p>Congratulations! Your done with setup. Pat on the back for you! </p><p>If you have more questions after you login, please click <a href="#" class='white'>here</a>.</p>
+				<div class='wpr'>
+				<div class='button' id='setup_doLogin'>Login Now</div>
+				</div>
 			</div>
 		</div>
 		<div class='loginBox'>
@@ -342,7 +472,7 @@ class CMCMSetup{
 			</div>
 			<form role="form">
 			  <div class="form-group">
-				<input type="email" class="form-control" id="login_username" placeholder="Username">
+				<input type="text" class="form-control" id="login_username" placeholder="Username">
 			  </div>
 			  <div class="form-group">
 				<input type="password" class="form-control" id="login_pw" placeholder="Password">

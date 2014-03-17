@@ -220,7 +220,7 @@ class ExternalMedia{
 	    $headers[] = 'Accept: image/gif, image/x-bitmap, image/jpeg, image/pjpeg';              
 	    $headers[] = 'Connection: Keep-Alive';         
 	    $headers[] = 'Content-type: application/x-www-form-urlencoded;charset=UTF-8';         
-	    $user_agent = 'php';         
+	    $useragent = 'php';         
 	    $process = curl_init($url);         
 	    curl_setopt($process, CURLOPT_HTTPHEADER, $headers);         
 	    curl_setopt($process, CURLOPT_HEADER, 0);         

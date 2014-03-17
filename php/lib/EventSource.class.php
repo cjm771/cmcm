@@ -41,12 +41,6 @@ class EventSource{
 			$this->set(self::ERROR, "No action found");
 			return false;
 		}
-		/*
-		if (!isset($_GET['skey']) || ($_GET['skey']!=md5($_SESSION['skey']))){
-			$this->set(self::ERROR, "Not Authorized");
-			return false;
-		}
-		*/
 		
 		$this->dir = $root;
 		$this->action = $action;

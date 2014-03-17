@@ -592,6 +592,8 @@ class UploadHandler
         if ($orientation < 2 || $orientation > 8) {
             return false;
         }
+        //cmcm edit
+        return false;
         switch ($orientation) {
             case 2:
                 $new_img = $this->gd_imageflip(

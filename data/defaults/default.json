@@ -1,11 +1,12 @@
 {
-		"mediaFolder": "images/",
+		"mediaFolder": "media/",
 		"title": "My Projects",
 		"subtitle": "Bob Somebody",
 		"description": "These are my projects",
 		"sort": {
 				"by": "",
-				"direction": "descending"
+				"direction": "descending",
+				"mode": "grid"
 		},
 		"thumb": {
 				"max_width": 200,
@@ -75,7 +76,7 @@
 								"required": 1,
 								"protected": 1,
 								"hidden": 1,
-								"choices" : "image,sound,video"
+								"choices": "image,sound,video"
 						},
 						"thumb": {
 								"type": "string",

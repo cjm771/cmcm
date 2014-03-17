@@ -10,6 +10,8 @@
 		private $resp = array("error" => "Unknown error occurred");
 		//actions read as streams (not ajax) should be below
 		public  $streamActions = array("regenerateThumbs");
+		//actions not needing a key should be below
+		public static $nonProtectedActions = array("refreshKelly");
 		function __construct() {
 			//make sure action,file,data is set
 			if (!isset($_GET['a'])){
@@ -20,7 +22,8 @@
 				$this->throwError("No file Found");
 				return false;
 			}
-			if (!isset($_GET['skey']) || ($_GET['skey']!=md5($_SESSION['skey']))){
+			if (!in_array($_GET['a'], self::$nonProtectedActions) && (!isset($_GET['skey']) ||  !isset($_COOKIE['skey']) ||  $_GET['skey']!=md5($_COOKIE['skey']))){
+				//$extra = "cookie: ".$_COOKIE['skey']."cookie md5:" .md5($_COOKIE['skey'])." get['skey']: ".$_GET['skey']." a: ".$_GET['a'];
 				$this->throwError("Not authorized");
 				return false;
 			}
@@ -37,6 +40,20 @@
 					//stream event source...to get feedback for perhaps a long process..
 					require_once("lib/EventSource.class.php");
 					$server = new EventSource("regenerateThumbs", Jdat::ROOT_DIR);
+					break;
+				case "refreshKelly":
+					require_once("lib/Login.class.php");
+					//we have to parse the absolute url for cookiepath...to restrict to cmcm root
+					require_once("lib/AbsUrl.class.php");
+					$currentUrl = "http".(!empty($_SERVER['HTTPS'])?"s":"").
+"://".$_SERVER['SERVER_NAME'].$_SERVER['REQUEST_URI'];
+					$cookieUrl = AbsUrl::get($currentUrl, Jdat::ROOT_DIR);
+					$pathParts = parse_url($cookieUrl);
+					$skey = Login::refreshKey($pathParts['path']);
+					if ($skey)
+						$this->throwSuccess($skey, array("success_msg" => "Reauthorized!"));
+					else
+						$this->throwError("Could not Authorize");
 					break;
 				case "srcManager":
 					require_once("lib/Login.class.php");
@@ -122,6 +139,62 @@
 						default:
 							$this->throwError("Could not find action (".$actions->action.")");
 							break;
+					}
+					break;
+				case "saveSetup":
+					require_once("lib/Login.class.php");
+					if (!$this->dataPosted())
+						return false;
+					$data = json_decode($this->urlDecode($_POST['data']));
+					// password protect?, user data, file rename, new, or keep?, filename, site info
+					$login = new Login();
+					$fileSource = (intval($data->fileOption)!=0) ? $data->filename : $_GET['f'];
+					$config = array(
+						"config" => array(
+							"src" => $fileSource,
+							"loginEnabled" => intval($data->enableLogin),
+							"setupMode" => 0
+						), 
+						"data" => array(
+							"title" =>  $data->siteInfo->title,
+							"subtitle" => $data->siteInfo->subtitle,
+							"description" => $data->siteInfo->description	
+						)
+					);
+					if (isset($data->user)){
+						$config['config']['users'] =  array(
+								$data->user->user => array("password" => $login->_encrypt($data->user->pw))
+						);	
+					}
+					
+					switch (intval($data->fileOption)){
+						case 0: //keep
+						default:
+							//do nonthing
+							break;
+						case 1: //rename
+							$fileData = Jdat::get($_GET['f']);
+							$resp =  Jdat::set($data->filename, json_encode($fileData), 0);
+							@unlink(Jdat::DATA_DIR."/".$_GET['f']);
+							break;
+						case 2: //new
+							$fileData = Jdat::get("defaults/default.json");
+							$resp =  Jdat::set($data->filename, json_encode($fileData), 0);
+							break;
+					}
+					
+					//go through config stuff
+					if (!Login::editConfig($config['config'], Jdat::ROOT_DIR)){
+						$this->throwError("Could not save Config file.");
+						return false;
+					}else{
+						//go through data stuff
+						if (!Jdat::edit($fileSource, $config['data'])){
+							$this->throwError("Saved Config, but could not save Data file.");
+							return false;
+						}else{
+							$this->throwSuccess($config, array("success_msg"=>"Saved settings."));
+						}
 					}
 					break;
 				case "getUnconsolidatedFiles":
@@ -220,27 +293,20 @@
 					break;
 				case "editConfig":
 					require_once("lib/Login.class.php");
-					$data = Login::loadConfig(Jdat::ROOT_DIR);
+					//$data = Login::loadConfig(Jdat::ROOT_DIR);
 					$config =  json_decode($this->urlDecode($_POST['data']));
-					$config->data = (array) $config->data;
-					$config->config = (array) $config->config;
-				
-					foreach ($config->data as $key=>$val){
-						
-					}
 					//go through config stuff
-					if (!Login::editConfig($config->config, Jdat::ROOT_DIR)){
+					if (isset($config->config) && !Login::editConfig($config->config, Jdat::ROOT_DIR)){
 						$this->throwError("Could not save Config file.");
 						return false;
 					}else{
 						//go through data stuff
-						if (!Jdat::edit($_GET['f'], $config->data)){
+						if (isset($config->data) && !Jdat::edit($_GET['f'], $config->data)){
 							$this->throwError("Saved Config, but could not save Data file.");
 							return false;
 						}else{
 							$this->throwSuccess($config->data, array("success_msg"=>"Saved settings."));
 						}
-						
 					}	
 					break;
 				case "addExternalMedia":
@@ -302,23 +368,14 @@
 					require_once("lib/Login.class.php");
 					//we recieve ->user
 					$data = json_decode($this->urlDecode($_POST['data']));
-					if (isset($_SESSION['username']) && isset($_SESSION['password'])){
 						//instantiate cred instance
-						$login = new Login($_SESSION['username'], $_SESSION['password'], 0, Jdat::ROOT_DIR);
-						//authenticate
-						if  (!$login->authenticate()){
-							$this->throwError("Could not authenticate your credentials to make changes");
-							return false;
-						}
+						$login = new Login("","", 0, Jdat::ROOT_DIR);
 						//remove user
 						$resp = $login->removeUser($data->user);
-						if ($resp['error'])
+						if (isset($resp['error']))
 							$this->throwError($resp['error']);
 						else
 							$this->throwSuccess($data->user, array("success_msg" => "Deleted User."));
-					}else{
-						$this->throwError("You are not logged in to make changes.");
-					}
 					break;	
 				case "addUser":
 					if (!$this->dataPosted())
@@ -326,25 +383,15 @@
 					require_once("lib/Login.class.php");
 					//we recieve username, confirm_pw, new_pw, is_new
 					$creds =  json_decode($this->urlDecode($_POST['data']));
-					if (isset($_SESSION['username']) && isset($_SESSION['password'])){
-						//instantiate cred instance
-						$login = new Login($_SESSION['username'], $_SESSION['password'], 0, Jdat::ROOT_DIR);
-						//authenticate
-						if  (!$login->authenticate()){
-							$this->throwError("Could not authenticate your credentials to make changes");
-							return false;
-						}
-						//add user
-						$resp = $login->addUser($creds->username, $creds->confirm_pw, $creds->new_pw, $creds->existingUser);
-						
-						//handle response
-						if (isset($resp['error']))
-							$this->throwError($resp['error']);
-						else
-							$this->throwSuccess($resp, array("success_msg" => "Added User."));
-					}else{
-						$this->throwError("You are not logged in to make changes.");
-					}
+					//instantiate cred instance
+					$login = new Login("", "", 0, Jdat::ROOT_DIR);
+					$resp = $login->addUser($creds->username, $creds->confirm_pw, $creds->new_pw, $creds->existingUser);
+					
+					//handle response
+					if (isset($resp['error']))
+						$this->throwError($resp['error']);
+					else
+						$this->throwSuccess($resp, array("success_msg" => "Added User."));
 					break;
 				case "sortProjects":
 					if (!$this->dataPosted())
@@ -674,7 +721,11 @@
 					}
 					//now get data file..
 					$data = Jdat::get($config->src);
-					if ($data)
+					 if (!isset($data->projects))
+						$this->throwError("<b>".$config->src."</b> is an invalid cmcm data file. It is missing the <b>projects</b> attribute. Revert to a different source file by changing your configuration file's source at <b>data/config/config.json</b>");
+					else if (!isset($data->template))
+						$this->throwError("<b>".$config->src."</b> is an invalid cmcm data file. It is missing the <b>template</b> attribute.  Revert to a different source file by changing your configuration file's source at <b>data/config/config.json</b>");
+					else if ($data)
 						$this->throwSuccess(array("data" => $data, "config" => $config));
 					else if (file_exists(Jdat::DATA_DIR."/".$config->src))
 						$this->throwError("Could not load data file: <b>data/".$config->src."</b>. <br><br>It appears it exists, but could not be parsed. To find the error in the file, copy the text within the file and paste into an <a href='http://jsonlint.com/' target='blank'>online JSON validator</a>..");

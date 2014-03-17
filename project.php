@@ -10,6 +10,8 @@
 			cmcm.init(function(){
 				//project info
 				cmcm.formatProject();
+				//max file size
+				cmcm.maxFileSize = <?=json_encode(parse_ini_file("lib/blueimp-jqueryFileUpload/php.ini"))?>;
 				//image uploader
 				cmcm.formatMediaUploader("#proj_tmpl_add");
 				
@@ -21,37 +23,6 @@
 							successBox : '#project_successBox',
 						});	
 					}
-				}); 
-				$(document).on("dragover", function(e){
-					if (!$("body").find('.black_bg').length){
-						backdrop = $("<div class='black_bg'></div>");
-						backdrop.hide();
-						dropMsg = $("<div class='drop_msg'>Drop files to upload</div>");
-						backdrop.append(dropMsg);
-						$("body").append(backdrop);
-						backdrop.fadeIn(500);
-					}
-					dropMsg = $("body").find('.black_bg').find(".drop_msg");
-					buffer = {
-						x : -60,
-						y : 30
-					}
-					dropMsg.css({
-						position: "absolute",
-						top : window.event.pageY-$(document).scrollTop()+buffer.y+"px",
-						left : window.event.pageX-buffer.x+"px"
-					});
-					//console.log(dropMsg.css("top")+" "+ dropMsg.css("left"));
-				});
-				$(document).on("dragleave", function(e){
-					 if( window.event.pageX == 0 || window.event.pageY == 0 ) {
-						if ($("body").find('.black_bg').length)
-							 $("body").find(".black_bg").remove();
-					}
-				}); 
-				$(document).on("drop", function(e){
-						if ($("body").find('.black_bg').length)
-							 $("body").find(".black_bg").remove();
 				}); 
 				  	   	
 			});
@@ -75,7 +46,7 @@
 				</table>
 				<br><br>
 				
-			<h5>Media <span id='proj_tmpl_add' class='glyphicon glyphicon-plus icon add'></span></h5><br>
+			<h5>Media <span id='proj_tmpl_add' class='glyphicon glyphicon-plus icon add '></span></h5><br>
 			<div id='media_box'>
 				<div id='media_files'>
 				</div>				

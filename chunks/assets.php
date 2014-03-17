@@ -16,6 +16,7 @@
 	<script type="text/javascript" src="js/jquery.mixitup.min.js"></script>
 	<script type="text/javascript" src="js/jquery.filetree.js"></script>
 	<script type="text/javascript" src="js/jquery.resize.min.js"></script>
+	<script type="text/javascript" src="js/jquery.placeholder.js"></script>
 	<!-- Bootstrap js -->
 	<script type="text/javascript" src="js/bootstrap.min.js"></script>
 	<!-- Jquery UI custom -->
@@ -34,5 +35,5 @@
 	<script type="text/javascript" src="js/eventsource.js"></script>
 	<!-- CMCM js -->
 	<script type="text/javascript" src="js/cmcm.js"></script>
-	<script type="text/javascript">cmcm.kelly = "<?=md5($_SESSION['skey'])?>"</script>
+	<script type="text/javascript">cmcm.kelly = "<?=md5($_COOKIE['skey'])?>"</script>
 	

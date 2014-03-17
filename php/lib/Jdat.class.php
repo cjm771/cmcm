@@ -32,9 +32,9 @@ class Jdat{
 	}
 	
 	//grabs basic settings..both config and data
-	public static function getSettings($dir=self::ROOT_DIR){
+	public static function getSettings($dir=self::ROOT_DIR, $getUsers=0){
 		require_once($dir."php/lib/Login.class.php");
-		$config = Login::loadConfig($dir,1);
+		$config = Login::loadConfig($dir,!$getUsers);
 		//grab data file in config
 		$data = self::get($config->src, $dir."data");
 		//unset projects and templates

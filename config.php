@@ -73,9 +73,16 @@
 							<td class='name'>Description</td>
 							<td class='val'><textarea class='input form-control' data-attr='description'></textarea></td>
 						</tr>
-						<tr>
+						<tr id='config_sort'>
 							<td class='name'>Sort</td>
-							<td class='val' id='config_sortOptions'>By: <select class='input' data-attr="sort['by']"></select> Direction: <select class='input' data-attr="sort['direction']"></select></td>
+							
+							<td class='val' id='config_sortOptions'>
+							
+							By: <select class='input' data-attr="sort['by']"></select> Direction: <select class='input' data-attr="sort['direction']"></select>
+							<div id='config_sortMode_wpr'>
+							Mode: <div id='config_sortMode' style='display:inline-block'></div>
+							</div>
+							</td>
 						</tr>
 					</table>
 			  </div>
@@ -147,6 +154,7 @@
 									<tr>
 										<th>User</th>
 										<th>Password</th>
+										<th></th>
 									</tr>
 								</table>
 							</td>

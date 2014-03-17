@@ -1,10 +1,9 @@
 <?php
+	header('X-UA-Compatible: IE=edge,chrome=1');
 	session_start();
 	
 	require_once('php/lib/Login.class.php');
-	
-	$_SESSION['skey'] = Login::genHash(10);
-	
+
 	$qs = (!empty($_GET)) ? "?".http_build_query($_GET) : "";
 	$self = basename($_SERVER["SCRIPT_NAME"]);
 	$p =$self.$qs;
@@ -33,7 +32,12 @@
 				}
 			}
 		}
-	}else if ($self=="login.php"){
+	}else if(Login::inSetupMode() && $self!="login.php"){
+		header("location:login.php");
+	}else if (!Login::inSetupMode() && $self=="login.php"){
 		header("location:index.php");
 	}
+	
+	Login::refreshKey();
+
 ?>

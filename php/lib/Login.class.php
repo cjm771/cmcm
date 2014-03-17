@@ -3,8 +3,9 @@ class Login{
 	//<------OPTIONS..ADJUST TO YOUR LIKING ------>//
 	
 	const SALLY = "e3drYcONPx";
+
 	
-	private $opts = array(
+	public static $opts = array(
 		"password_min" => 6,
 		"username_min" => 2,
 		"username_regex" => "/^[A-Za-z0-9_]+$/", //alphanumerics+underscore
@@ -13,6 +14,9 @@ class Login{
 
 	//<-------------DONT EDIT BELOW-------------->//
 	
+	//session life of access token
+	const KLIFE = 3600;
+	
 	//relative to root
 	const CONFIG_FILE = "data/config/config.json";
 	private $username = "";
@@ -20,7 +24,7 @@ class Login{
 	private $dir = "";
 	private $resp = array("error" => "Unknown error occurred.");
 	
-	function __construct($username, $password, $login=false, $dir=false) {
+	function __construct($username=false, $password=false, $login=false, $dir=false) {
 		$username = (!isset($username)) ? "" : trim($username);
 		$password = (!isset($password)) ? "" : $password;
 		$this->username = $username;
@@ -31,6 +35,15 @@ class Login{
 	public function _encrypt($pw){
 		return md5(self::SALLY.$pw);
 	}
+	
+	public static function refreshKey($cookiePath = false){
+		//reset
+		$skey = self::genHash(10);
+		setcookie("skey", $skey, time()+self::KLIFE, $cookiePath); 
+		$_COOKIE['skey'] = $skey;
+		return md5($skey);
+	}
+	
 	public static function genHash($len){
 	  	$characters = 'abcdefghijklmnopqrstuvwxyz0123456789';
 		  $string = '';
@@ -38,7 +51,7 @@ class Login{
 		      $string .= $characters[rand(0, strlen($characters) - 1)];
 		 }
 		 return $string;
-	  }
+	 }
 	
 	public function validate(){
 		//check required
@@ -86,7 +99,7 @@ class Login{
 		//unset user
 		unset($data->users[$username]);
 		//save
-		if (self::saveConfig(self::sanitize(json_encode($data)), $this->dir)){
+		if (!self::saveConfig(self::sanitize(json_encode($data)), $this->dir)){
 			$this->throwError("Could not save configuration file.");
 			return $this->resp;
 		}
@@ -104,18 +117,18 @@ class Login{
 			return $this->resp;
 		}
 		//check if valid username 
-		if (!preg_match($this->opts['username_regex'], $username)){
-			$this->throwError($this->opts['username_regex_error_message']);
+		if (!preg_match(self::$opts['username_regex'], $username)){
+			$this->throwError(self::$opts['username_regex_error_message']);
 			return $this->resp;
 		}		
 		//check if min length username 
-		if (strlen($username)<$this->opts['username_min']){
-			$this->throwError("Username must be at least ".$this->opts['username_min']." characters long");
+		if (strlen($username)<self::$opts['username_min']){
+			$this->throwError("Username must be at least ".self::$opts['username_min']." characters long");
 			return $this->resp;
 		}		
 		//check if min length password
-		if (strlen($new_pw)<$this->opts['password_min']){
-			$this->throwError("Password must be at least ".$this->opts['password_min']." characters long");
+		if (strlen($new_pw)<self::$opts['password_min']){
+			$this->throwError("Password must be at least ".self::$opts['password_min']." characters long");
 			return $this->resp;
 		}
 		
@@ -156,7 +169,7 @@ class Login{
 		
 			
 			//if this is the user, than relogin with updated password
-			if ($existingUser==$_SESSION['username']){
+			if (isset($_SESSION['username']) && $existingUser==$_SESSION['username']){
 				$this->username = $username;
 				$this->password = $user->password;
 				$this->login();
@@ -190,7 +203,7 @@ class Login{
 	
 	public static function loginEnabled(){
 		$data = self::loadConfig();
-		if (!$data || !$data->loginEnabled)
+		if (!$data || !isset($data->loginEnabled) ||  !$data->loginEnabled)
 			return false;
 		else
 			return true;
@@ -228,7 +241,13 @@ class Login{
 	public static function editConfig($newContent, $dir=""){
 		$data = self::loadConfig($dir);
 		foreach ($newContent as $key=>$val){
-			$data->$key = $val;
+			if ($key=="users"){
+				foreach ($val as $userId=>$userData){
+					$data->users[$userId] = $userData;
+				}
+			}else
+				$data->$key = $val;
+			
 		}
 		if (self::saveConfig(self::sanitize(json_encode($data)), $dir))
 			return true;
