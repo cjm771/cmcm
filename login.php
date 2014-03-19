@@ -1,17 +1,17 @@
 <?php 
 //authenticate
-require_once("chunks/authenticate.php");
+require_once("assets/chunks/authenticate.php");
 //check setup mode
 if (Login::inSetupMode()){
 	//include setup assets
-	require_once("chunks/setup.php");
+	require_once("assets/chunks/setup.php");
 	$CMCM_SETUP = new CMCMSetup();
 }
 ?>
 <!DOCTYPE html>
 <html>
 <head>
-	<?php include("chunks/assets.php")?>
+	<?php include("assets/chunks/assets.php")?>
 	<style>
 		body{
 			background: #000;
@@ -66,7 +66,7 @@ if (Login::inSetupMode()){
 <body>
 	<div id="container">
 		
-		<?php include("chunks/header.html")?>
+		<?php include("assets/chunks/header.html")?>
 		
 		<?php if (!isset($CMCM_SETUP)){ ?>
 		<div class='loginBox'>
@@ -95,7 +95,7 @@ if (Login::inSetupMode()){
 		
 		
 		
-		<?php include("chunks/footer.html")?>
+		<?php include("assets/chunks/footer.html")?>
 	</div>
 </body>
 </html>

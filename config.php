@@ -1,8 +1,8 @@
-<?php require_once("chunks/authenticate.php")?>
+<?php require_once("assets/chunks/authenticate.php")?>
 <!DOCTYPE html>
 <html>
 <head>
-	<?php include("chunks/assets.php")?>
+	<?php include("assets/chunks/assets.php")?>
 	<script>
 			
 		//initiate
@@ -24,9 +24,9 @@
 <body>
 	<div id="container">
 	
-		<?php include("chunks/header.html")?>
+		<?php include("assets/chunks/header.html")?>
 	
-		<?php include("chunks/navbar.php")?>
+		<?php include("assets/chunks/navbar.php")?>
 		<h3 id='project_head_wpr'>
 			<div id='project_title'>Configuration</div> 
 			<div id='project_panel'>
@@ -187,7 +187,7 @@
 			  <!--END PANEL-->
 		</div>
 
-		<?php include("chunks/footer.html")?>
+		<?php include("assets/chunks/footer.html")?>
 	</div>
 </body>
 </html>

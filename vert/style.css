@@ -1,0 +1,127 @@
+#body, html{
+	margin: 0px !important;
+	padding: 0;
+	height: 100%;
+	background: #c0c0c0;
+
+}
+#container{
+	overflow: auto;
+	background: #000;
+}
+#menu{
+	display: block;
+	position: fixed;
+	z-index: 10;
+	background: #fff;
+	margin: 0;
+	float: left;
+	padding: 0;
+	height: 100%;
+	width: 300px;
+}
+
+#content{
+	position: absolute;
+	display: block;
+	margin: 0;
+	padding: 0;
+	overflow-x: hidden;
+	background-color: #c0c0c0;
+	width: 100%;
+	
+}
+#header{
+	padding: 20px 40px;
+}
+#header .site_title{
+	font-size: 24px;
+	margin-bottom: 2px;
+}
+#header .site_title a{
+	color: inherit;
+	text-decoration: inherit;
+	
+}
+#header .site_subtitle{
+	font-size: 14px;
+	margin-bottom: 10px;
+}
+#header .site_description{
+	font-size: 10px;
+	color: #999;
+}
+#menu .verticalMenu{
+	padding: 20px 40px;
+	overflow-y: scroll;
+	height: 100%;
+	margin-right: 20px;
+	font-size: 12px;
+}
+#menu .verticalMenu a{
+	display: block;
+	text-transform: capitalize;
+	color: #000;
+	word-break: break-word;
+	padding: 1px 0px 1px 5px;
+	text-decoration: none;
+}
+#menu .verticalMenu a:hover, #menu .verticalMenu a.active{
+	display: block;
+	color: #fff;
+	background: #000;
+	word-break: break-word;
+	text-decoration: none;
+}
+.project_info{
+	position: fixed;
+	right:20px;
+	z-index: 10;
+	top:20px;
+	color: #fff;
+	padding: 30px 40px;
+	background: #000;
+	width: 200px;
+
+	
+}
+.project_info .project_title{
+	text-transform: capitalize;
+	font-weight: bold;
+	vertical-align: bottom;
+	margin-bottom: 20px;
+	word-break: break-word;
+}
+.project_info .project_description{
+	font-size: 10px;
+		word-break: break-word;
+
+}
+.img_slider{
+	overflow-x:hidden;
+	padding: 0;
+	overflow-y: scroll;
+	height: auto;
+	margin-left: 300px;
+}
+.img_wpr{
+
+	position: relative;
+	margin: 0px auto;
+	display: block;
+	padding: 0;
+	height: 100%;
+	overflow: hidden;
+	width: 100%;
+}
+.img_wpr .caption{
+	padding: 5px;
+	 background: #000;
+	 display: inline-block;
+	position: absolute;
+	color: #fff;
+	font-size: 12px;
+	bottom: 20px;
+	left: 20px;
+}
+

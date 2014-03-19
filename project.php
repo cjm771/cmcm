@@ -1,8 +1,8 @@
-<?php require_once("chunks/authenticate.php")?>
+<?php require_once("assets/chunks/authenticate.php")?>
 <!DOCTYPE html>
 <html>
 <head>
-	<?php include("chunks/assets.php")?>
+	<?php include("assets/chunks/assets.php")?>
 	<script>
 			
 		//initiate
@@ -11,7 +11,7 @@
 				//project info
 				cmcm.formatProject();
 				//max file size
-				cmcm.maxFileSize = <?=json_encode(parse_ini_file("lib/blueimp-jqueryFileUpload/php.ini"))?>;
+				cmcm.maxFileSize = <?=json_encode(parse_ini_file("assets/lib/blueimp-jqueryFileUpload/php.ini"))?>;
 				//image uploader
 				cmcm.formatMediaUploader("#proj_tmpl_add");
 				
@@ -33,9 +33,9 @@
 <body>
 	<div id="container">
 	
-		<?php include("chunks/header.html")?>
+		<?php include("assets/chunks/header.html")?>
 	
-		<?php include("chunks/navbar.php")?>
+		<?php include("assets/chunks/navbar.php")?>
 		<h3 id='project_head_wpr'><div id='project_title'></div> <div id='project_panel'><div id='project_save' class='button'>Save</div></div></h3><br><br>
 			<div id='project_errorBox' class='errorBox'>
 			</div>
@@ -52,7 +52,7 @@
 				</div>				
 			</div>
 
-		<?php include("chunks/footer.html")?>
+		<?php include("assets/chunks/footer.html")?>
 	</div>
 </body>
 </html>

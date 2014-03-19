@@ -1,7 +1,7 @@
 {
 		"mediaFolder": "media/",
-		"title": "My site",
-		"subtitle": "Neil Legband",
+		"title": "Alex Atwood",
+		"subtitle": "Architecture   Design",
 		"description": "This is for neils site BLAM!!!",
 		"sort": {
 				"by": "",
@@ -91,79 +91,11 @@
 				}
 		},
 		"projects": {
-				"PROJ_22": {
-						"id": 22,
-						"published": 1,
-						"added": "25 February 2014 - 12:58 pm",
-						"cleanUrl": "fdsfsd",
-						"title": "fdsfsd",
-						"coverImage": "aW1hZ2UtMDAyICgxKS5qcGc-",
-						"year": "2013",
-						"description": "sdasdjkasjkdsadas",
-						"media": {
-								"aW1hZ2UtMDA0ICgxKS5qcGc-": {
-										"src": "media/image-004 (1).jpg",
-										"visible": "1",
-										"type": "image",
-										"caption": "",
-										"thumb": "media/thumbnail/(6)image-004 (1).jpg"
-								},
-								"aW1hZ2UtMDAzICgyKS5qcGc-": {
-										"src": "media/image-003 (2).jpg",
-										"visible": "1",
-										"type": "image",
-										"caption": "",
-										"thumb": "media/thumbnail/(6)image-003 (2).jpg"
-								},
-								"aW1hZ2UtMDAyICgxKS5qcGc-": {
-										"src": "media/image-002 (1).jpg",
-										"visible": "1",
-										"type": "image",
-										"caption": "",
-										"thumb": "media/thumbnail/(6)image-002 (1).jpg"
-								},
-								"aW1hZ2UtMDA1ICgxKS5qcGc-": {
-										"src": "media/image-005 (1).jpg",
-										"visible": "1",
-										"type": "image",
-										"caption": "",
-										"thumb": "media/thumbnail/(6)image-005 (1).jpg"
-								},
-								"aW1hZ2UtMDA2ICgxKS5qcGc-": {
-										"src": "media/image-006 (1).jpg",
-										"visible": "1",
-										"type": "image",
-										"caption": "",
-										"thumb": "media/thumbnail/(6)image-006 (1).jpg"
-								},
-								"Y2hyaXNtYWxjb2xtICgxKS5KUEc-": {
-										"src": "media/chrismalcolm (1).JPG",
-										"visible": 1,
-										"type": "image",
-										"caption": "",
-										"thumb": "media/thumbnail/chrismalcolm (1).JPG"
-								},
-								"U2tldGNoIFNlY3Rpb24uanBn": {
-										"src": "media/Sketch Section.jpg",
-										"visible": 1,
-										"type": "image",
-										"caption": "",
-										"thumb": "media/thumbnail/Sketch Section.jpg"
-								},
-								"TG93ZXIgUGxhbi5qcGc-": {
-										"src": "media/Lower Plan.jpg",
-										"visible": 1,
-										"type": "image",
-										"caption": "",
-										"thumb": "media/thumbnail/Lower Plan.jpg"
-								}
-						}
-				},
 				"PROJ_24": {
 						"id": 24,
-						"cleanUrl": "soundcloud-test",
 						"published": 1,
 						"added": "28 February 2014 - 05:34 pm",
+						"cleanUrl": "soundcloud-test",
 						"title": "Soundcloud test",
 						"coverImage": "aHR0cDovL2FwaS5zb3VuZGNsb3VkLmNvbS90cmFja3MvMTM3MDg1NjY3",
 						"year": "2014",
@@ -187,7 +119,7 @@
 										"src": "media/image-011.jpg",
 										"visible": "1",
 										"type": "image",
-										"caption": "",
+										"caption": "Exterior view 1",
 										"thumb": "media/thumbnail/(6)image-011.jpg"
 								},
 								"aHR0cDovL3lvdXR1LmJlL0xyTlNPblFJVmJJ": {
@@ -215,28 +147,28 @@
 										"src": "media/image-007 (1).jpg",
 										"visible": "1",
 										"type": "image",
-										"caption": "",
+										"caption": "Firestation Exterior view",
 										"thumb": "media/thumbnail/(6)image-007 (1).jpg"
 								},
 								"aW1hZ2UtMDA4ICgxKS5qcGc-": {
 										"src": "media/image-008 (1).jpg",
 										"visible": "1",
 										"type": "image",
-										"caption": "",
+										"caption": "Marketplace underneath",
 										"thumb": "media/thumbnail/(6)image-008 (1).jpg"
 								},
 								"aW1hZ2UtMDA5LmpwZw--": {
 										"src": "media/image-009.jpg",
 										"visible": "1",
 										"type": "image",
-										"caption": "",
+										"caption": "Interior view near the mountians",
 										"thumb": "media/thumbnail/(6)image-009.jpg"
 								},
 								"aW1hZ2UtMDEwLmpwZw--": {
 										"src": "media/image-010.jpg",
 										"visible": "1",
 										"type": "image",
-										"caption": "",
+										"caption": "Exterior view from bay",
 										"thumb": "media/thumbnail/(6)image-010.jpg"
 								},
 								"aHR0cDovL2FwaS5zb3VuZGNsb3VkLmNvbS90cmFja3MvMTMxNTg2NjU-": {
@@ -278,11 +210,11 @@
 				},
 				"PROJ-4": {
 						"id": -4,
-						"cleanUrl": "test-project-4",
 						"published": 1,
 						"added": "28 February 2014 - 05:34 pm",
+						"cleanUrl": "test-project-4",
 						"title": "Test Project",
-						"coverImage": "aHR0cDovL3ZpbWVvLmNvbS84NTAwNDkwNg--",
+						"coverImage": "TGVhdGhlcjAwMzlfMV9TLmpwZw--",
 						"year": "2014",
 						"description": "This is a Description",
 						"media": {
@@ -300,12 +232,122 @@
 										"caption": "",
 										"thumb": "media/thumbnail/(7)sddefault.jpg"
 								},
+								"TGVhdGhlcjAwMzlfMV9TLmpwZw--": {
+										"src": "media/Leather0039_1_S.jpg",
+										"visible": 1,
+										"type": "image",
+										"caption": "",
+										"thumb": "media/thumbnail/Leather0039_1_S.jpg"
+								},
 								"aHR0cDovL3ZpbWVvLmNvbS84NTAwNDkwNg--": {
 										"src": "http://vimeo.com/85004906",
 										"visible": "1",
 										"type": "video",
 										"caption": "",
 										"thumb": "media/thumbnail/(3)462402180_640.jpg"
+								},
+								"aHR0cDovL3d3dy55b3V0dWJlLmNvbS93YXRjaD92PUxyTlNPblFJVmJJ": {
+										"src": "http://www.youtube.com/watch?v=LrNSOnQIVbI",
+										"visible": 1,
+										"type": "video",
+										"caption": "",
+										"thumb": "media/thumbnail/(2)sddefault.jpg"
+								},
+								"aHR0cDovL3ZpbWVvLmNvbS84NTAwNDkwNg--_1": {
+										"src": "http://vimeo.com/85004906",
+										"visible": 1,
+										"type": "video",
+										"caption": "",
+										"thumb": "media/thumbnail/(1)462402180_640.jpg"
+								},
+								"aHR0cDovL3ZpbWVvLmNvbS84NzAyNDYyMQ--": {
+										"src": "http://vimeo.com/87024621",
+										"visible": 1,
+										"type": "video",
+										"caption": "",
+										"thumb": "media/thumbnail/(1)464920662_640.jpg"
+								},
+								"aHR0cDovL2FwaS5zb3VuZGNsb3VkLmNvbS90cmFja3MvMTM3MDkwOTYy": {
+										"src": "http://api.soundcloud.com/tracks/137090962",
+										"visible": 1,
+										"type": "sound",
+										"caption": "",
+										"thumb": "media/thumbnail/(1)artworks-000072109125-znpett-t500x500.jpg"
+								},
+								"aHR0cDovL2FwaS5zb3VuZGNsb3VkLmNvbS90cmFja3MvMTM3MDg1NjY3": {
+										"src": "http://api.soundcloud.com/tracks/137085667",
+										"visible": 1,
+										"type": "sound",
+										"caption": "",
+										"thumb": "media/thumbnail/(2)artworks-000072106204-ea8j6x-t500x500.jpg"
+								}
+						}
+				},
+				"PROJ_22": {
+						"id": 22,
+						"published": 1,
+						"added": "25 February 2014 - 12:58 pm",
+						"cleanUrl": "fdsfsd",
+						"title": "fdsfsd",
+						"coverImage": "aW1hZ2UtMDAyICgxKS5qcGc-",
+						"year": "2013",
+						"description": "sdasdjkasjkdsadas sd sad asd sa dsa asd as\n\n&lt;img src=' media/image-002 (1).jpg'&gt;\n\ndsadsadsadsad\nsdsadsa",
+						"media": {
+								"Y2hyaXNtYWxjb2xtICgxKS5KUEc-": {
+										"src": "media/chrismalcolm (1).JPG",
+										"visible": 1,
+										"type": "image",
+										"caption": "This is a bench made of wood. the idea behind this djsandsakjdjnaskdjksnad.",
+										"thumb": "media/thumbnail/chrismalcolm (1).JPG"
+								},
+								"aW1hZ2UtMDA0ICgxKS5qcGc-": {
+										"src": "media/image-004 (1).jpg",
+										"visible": "1",
+										"type": "image",
+										"caption": "",
+										"thumb": "media/thumbnail/(6)image-004 (1).jpg"
+								},
+								"aW1hZ2UtMDAzICgyKS5qcGc-": {
+										"src": "media/image-003 (2).jpg",
+										"visible": "1",
+										"type": "image",
+										"caption": "",
+										"thumb": "media/thumbnail/(6)image-003 (2).jpg"
+								},
+								"aW1hZ2UtMDAyICgxKS5qcGc-": {
+										"src": "media/image-002 (1).jpg",
+										"visible": "1",
+										"type": "image",
+										"caption": "",
+										"thumb": "media/thumbnail/(6)image-002 (1).jpg"
+								},
+								"aW1hZ2UtMDA1ICgxKS5qcGc-": {
+										"src": "media/image-005 (1).jpg",
+										"visible": "1",
+										"type": "image",
+										"caption": "",
+										"thumb": "media/thumbnail/(6)image-005 (1).jpg"
+								},
+								"aW1hZ2UtMDA2ICgxKS5qcGc-": {
+										"src": "media/image-006 (1).jpg",
+										"visible": "1",
+										"type": "image",
+										"caption": "",
+										"thumb": "media/thumbnail/(6)image-006 (1).jpg"
+								},
+								"U2tldGNoIFNlY3Rpb24uanBn": {
+										"src": "media/Sketch Section.jpg",
+										"visible": 1,
+										"type": "image",
+										"caption": "",
+										"thumb": "media/thumbnail/Sketch Section.jpg"
+								},
+								"TG93ZXIgUGxhbi5qcGc-": {
+										"src": "media/Lower Plan.jpg",
+										"visible": 1,
+										"type": "image",
+										"caption": "",
+										"thumb": "media/thumbnail/Lower Plan.jpg"
 								}
 						}
 				},
@@ -354,6 +396,25 @@
 						"cleanUrl": "test-project-2",
 						"added": "28 February 2014 - 05:34 pm"
 				},
+				"PROJ_20": {
+						"id": 20,
+						"published": "1",
+						"added": "21 February 2014 - 09:02 pm",
+						"cleanUrl": "vxdffxd",
+						"title": "vxdffxd",
+						"coverImage": "Q01DTSAoMSkucG5n",
+						"year": "2013",
+						"description": "sdfsdf",
+						"media": {
+								"Q01DTSAoMSkucG5n": {
+										"src": "media/CMCM.png",
+										"visible": "1",
+										"type": "image",
+										"caption": "",
+										"thumb": "media/thumbnail/(1)CMCM (1).png"
+								}
+						}
+				},
 				"PROJ_23": {
 						"published": "1",
 						"added": "25 February 2014 - 01:06 pm",
@@ -369,9 +430,9 @@
 				},
 				"PROJ-7": {
 						"id": -7,
-						"cleanUrl": "test-project",
 						"published": 1,
 						"added": "January 7, 1988 - 9:00am",
+						"cleanUrl": "test-project",
 						"title": "Test Project",
 						"coverImage": "xx",
 						"year": "2018",
@@ -381,27 +442,8 @@
 										"src": "media/image-007.jpg",
 										"visible": "0",
 										"type": "image",
-										"caption": "This is image 1",
+										"caption": "This is a new caption",
 										"thumb": "media/thumbnail/(30)image-007.jpg"
-								}
-						}
-				},
-				"PROJ_20": {
-						"id": 20,
-						"cleanUrl": "vxdffxd",
-						"published": "1",
-						"added": "21 February 2014 - 09:02 pm",
-						"title": "vxdffxd",
-						"coverImage": "Q01DTSAoMSkucG5n",
-						"year": "2013",
-						"description": "sdfsdf",
-						"media": {
-								"Q01DTSAoMSkucG5n": {
-										"src": "../media/CMCM (1).png",
-										"visible": "1",
-										"type": "image",
-										"caption": "",
-										"thumb": "media/thumbnail/(1)CMCM (1).png"
 								}
 						}
 				},
@@ -496,9 +538,12 @@
 						}
 				},
 				"PROJ_27": {
+						"id": 27,
 						"published": 1,
 						"added": "14 March 2014 - 07:47 pm",
+						"cleanUrl": "how-to-make-w5",
 						"title": "how to make w5",
+						"coverImage": "aHR0cDovL2FwaS5zb3VuZGNsb3VkLmNvbS90cmFja3MvMTM3MDg1NjY3",
 						"year": 2013,
 						"description": "asdasdas",
 						"media": {
@@ -506,28 +551,28 @@
 										"src": "media/mission-complete-e.jpg",
 										"visible": 1,
 										"type": "image",
-										"caption": "",
+										"caption": "Here we have the chip finished.",
 										"thumb": "media/thumbnail/mission-complete-e.jpg"
 								},
 								"OTg4LWNvbXB1dGVyLWUuanBn": {
 										"src": "media/988-computer-e.jpg",
 										"visible": 1,
 										"type": "image",
-										"caption": "",
+										"caption": "Had to make sure color mode was set to rgb.",
 										"thumb": "media/thumbnail/988-computer-e.jpg"
 								},
 								"OTg1LW1pbGwtYmVnaW4tZS5qcGc-": {
 										"src": "media/985-mill-begin-e.jpg",
 										"visible": 1,
 										"type": "image",
-										"caption": "",
+										"caption": "Starting to mill! :0",
 										"thumb": "media/thumbnail/985-mill-begin-e.jpg"
 								},
 								"OTg5LW1pbGwtY2xvc2V1cC1lLmpwZw--": {
 										"src": "media/989-mill-closeup-e.jpg",
 										"visible": 1,
 										"type": "image",
-										"caption": "",
+										"caption": "Mill closeup",
 										"thumb": "media/thumbnail/989-mill-closeup-e.jpg"
 								},
 								"aHR0cDovL3d3dy55b3V0dWJlLmNvbS93YXRjaD92PUxyTlNPblFJVmJJ": {
@@ -572,10 +617,7 @@
 										"caption": "",
 										"thumb": "media/thumbnail/(1)artworks-000072106204-ea8j6x-t500x500.jpg"
 								}
-						},
-						"coverImage": "aHR0cDovL2FwaS5zb3VuZGNsb3VkLmNvbS90cmFja3MvMTM3MDg1NjY3",
-						"id": 27,
-						"cleanUrl": "how-to-make-w5"
+						}
 				},
 				"PROJ_13": {
 						"id": 13,

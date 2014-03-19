@@ -1,0 +1,142 @@
+#body, html{
+	margin: 0px !important;
+	padding: 0;
+	height: 100%;
+	background: #c0c0c0;
+
+}
+#container{
+	overflow: auto;
+	background: #c0c0c0;
+}
+#menu{
+	display: block;
+	position: fixed;
+	z-index: 10;
+	background: #fff;
+	margin: 0;
+	float: left;
+	padding: 0;
+	height: 100%;
+	width: 300px;
+}
+
+#content{
+	position: absolute;
+	display: block;
+	margin: 0;
+	padding: 0;
+	
+	overflow: hidden;
+	margin-left: 300px;
+	overflow-y: hidden;
+	background-color: #c0c0c0;
+	height: 100%;
+}
+#header{
+	padding: 20px 40px;
+}
+#header .site_title{
+	font-size: 24px;
+	margin-bottom: 2px;
+}
+#header .site_title a{
+	color: inherit;
+	text-decoration: inherit;
+	
+}
+#header .site_subtitle{
+	font-size: 14px;
+	margin-bottom: 10px;
+}
+#header .site_description{
+	font-size: 10px;
+	color: #999;
+}
+#menu .verticalMenu{
+	padding: 20px 40px;
+	overflow-y: scroll;
+	height: 100%;
+	margin-right: 20px;
+	font-size: 12px;
+}
+#menu .verticalMenu a{
+	display: block;
+	text-transform: capitalize;
+	color: #000;
+	word-break: break-word;
+	padding: 1px 0px 1px 5px;
+	text-decoration: none;
+}
+#menu .verticalMenu a:hover, #menu .verticalMenu a.active{
+	display: block;
+	color: #fff;
+	background: #000;
+	word-break: break-word;
+	text-decoration: none;
+}
+.project_info{
+	float: left;
+	color: #fff;
+	padding: 30px 40px;
+	background: #000;
+	height: 100%;
+	width: 200px;
+
+	
+}
+.project_info .project_title{
+	text-transform: capitalize;
+	font-weight: bold;
+	vertical-align: bottom;
+	margin-bottom: 20px;
+	word-break: break-word;
+}
+.project_info .project_description{
+	font-size: 10px;
+		word-break: break-word;
+
+}
+.img_slider{
+	overflow-x:hidden;
+	margin: 0;
+	padding: 0;
+	overflow-y: hidden;
+    white-space: nowrap;
+    height: 100%;
+}
+.img_wpr{
+	height: 100%;
+	position: relative;
+	margin: 0;
+	display: inline-block;
+	margin-left: -5px;
+	padding: 0;
+}
+.img_wpr .caption{
+	padding: 10px;
+	 background: #000;
+	 display: inline-block;
+	position: absolute;
+	color: #fff;
+	font-size: 14px;
+	bottom:20px;
+	left: 20px;
+}
+.img_wpr img{
+	height: 100%;
+	width: auto;
+	display: block;
+	margin: 0px;
+	padding: 0px;
+}
+
+.img_wpr img.thumb{
+	display: block;
+	height: auto;
+	width: auto;
+	text-align: center;
+	padding: 0px;
+}
+
+

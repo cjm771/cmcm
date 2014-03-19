@@ -1,8 +1,8 @@
-<?php require_once("chunks/authenticate.php")?>
+<?php require_once("assets/chunks/authenticate.php")?>
 <!DOCTYPE html>
 <html>
 <head>
-	<?php include("chunks/assets.php")?>
+	<?php include("assets/chunks/assets.php")?>
 	<script>
 			
 		//initiate
@@ -19,9 +19,9 @@
 <body>
 	<div id="container">
 	
-		<?php include("chunks/header.html")?>
+		<?php include("assets/chunks/header.html")?>
 	
-		<?php include("chunks/navbar.php")?>
+		<?php include("assets/chunks/navbar.php")?>
 		<h3>Templates</h3><br><br>
 			<h5>Project Template <span id='proj_tmpl_add'><span class='glyphicon glyphicon-plus icon add'></span></span></h5><br>
 			
@@ -37,7 +37,7 @@
 			<div id='discrep_none'></div>
 			<table class='cmcm_table' id='discrep'>
 			</table>
-		<?php include("chunks/footer.html")?>
+		<?php include("assets/chunks/footer.html")?>
 	</div>
 </body>
 </html>

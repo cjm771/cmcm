@@ -1,0 +1,32 @@
+{# <--- WE USE SCAFFOLD BELOW AS TEMPLATE (base for pages) ----> #}
+{% extends "partial/_scaffold.html" %}
+
+{# <------------ BELOW APPENDS TO TITLE TAG -------------------> #}
+{% block title %}
+	{{project.title}}
+{% endblock %}
+
+{# <----- BELOW GOES INTO MAIN CONTENT BLOCK (#content) -------> #}
+{% block content %}
+	<div class='project_info'>
+		<div class='project_title'>{{project.title}}</div>
+		<div class='project_description'>{{project.description}}</div>
+		<div class='project_year'><b>Year:</b> {{project.year}}</div>
+	</div>
+	
+	<div class='img_slider'>
+	{% for media in project.media %}
+	
+		<div class='img_wpr'>
+			{% if media.type == "image" %}
+				<img src='{{cmcm_url}}{{media.src}}'>
+			{% endif %}
+			{% if media.caption %}
+				<div class='caption'>{{media.caption}}</div>
+			{% endif %}
+		</div>
+	{% endfor %}
+	</div>
+{% endblock %}
+
+
