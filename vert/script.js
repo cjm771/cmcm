@@ -2,11 +2,8 @@ vertTemplate = {
 	timer : null,
 	init : function(){
 		var that = this;
+		$(".img_wpr img").each(function(){$(this).css("opacity", 0)});
 		$(".img_wpr img").imagesLoaded(function(elems){			
-			$(elems).each(function(){
-				that.resizeImg(elems);
-	
-			});
 			$(window).trigger("resize");
 		});
 		//set up event
@@ -15,8 +12,9 @@ vertTemplate = {
 			that.timer = setTimeout(function(){
 				$(".img_wpr img").each(function(){
 				that.resizeImg(this);
+				$(".img_wpr img").each(function(){$(this).css("opacity", 1)});
 				});	
-			}, 50);
+			}, 10);
 		};
 	},
 	resizeImg : function(img){

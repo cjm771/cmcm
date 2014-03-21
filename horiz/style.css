@@ -9,17 +9,6 @@
 	overflow: auto;
 	background: #c0c0c0;
 }
-#menu{
-	display: block;
-	position: fixed;
-	z-index: 10;
-	background: #fff;
-	margin: 0;
-	float: left;
-	padding: 0;
-	height: 100%;
-	width: 300px;
-}
 
 #content{
 	position: absolute;
@@ -53,28 +42,20 @@
 	font-size: 10px;
 	color: #999;
 }
-#menu .verticalMenu{
-	padding: 20px 40px;
-	overflow-y: scroll;
+
+#menu{
+	display: block;
+	position: fixed;
+	z-index: 10;
+	background: #fff;
+	margin: 0;
+	float: left;
+	padding: 0;
 	height: 100%;
-	margin-right: 20px;
-	font-size: 12px;
+	width: 300px;
 }
-#menu .verticalMenu a{
-	display: block;
-	text-transform: capitalize;
-	color: #000;
-	word-break: break-word;
-	padding: 1px 0px 1px 5px;
-	text-decoration: none;
-}
-#menu .verticalMenu a:hover, #menu .verticalMenu a.active{
-	display: block;
-	color: #fff;
-	background: #000;
-	word-break: break-word;
-	text-decoration: none;
-}
+
+
 .project_info{
 	float: left;
 	color: #fff;
@@ -104,22 +85,24 @@
 	overflow-y: hidden;
     white-space: nowrap;
     height: 100%;
+    font-size: 0;
 }
 .img_wpr{
 	height: 100%;
 	position: relative;
 	margin: 0;
 	display: inline-block;
-	margin-left: -5px;
+	 font-size: 12px;
+	 overflow: auto;
 	padding: 0;
 }
 .img_wpr .caption{
-	padding: 10px;
+	padding: 5px;
 	 background: #000;
 	 display: inline-block;
 	position: absolute;
 	color: #fff;
-	font-size: 14px;
+	font-size: 12px;
 	bottom:20px;
 	left: 20px;
 }
@@ -137,6 +120,14 @@
 	width: auto;
 	text-align: center;
 	padding: 0px;
+}
+
+#projInfoIcon{
+	padding:10px;
+	color: #fff;
+	background: rgba(0,0,0,.65);
+	white-space: normal;
+	cursor: pointer;
 }
 
 
