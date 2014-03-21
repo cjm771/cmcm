@@ -35,20 +35,15 @@
         'title' => $data->title,
         'subtitle' => $data->subtitle,
         'description' => $data->description,
-        //we use the menu widget
+        //we use the menu widget..cuz its dope
         'menu' => $frunt->widget("menu", $frunt->convert($data->projects, 'array'), array(
-        	 //indicate current page..project or file
-        	"current" => (isset($_GET['id'])) ? $_GET['id'] : basename($_SERVER['PHP_SELF']),
-        	//sort by..creates headers
-        	 "sort_by" => array("year", "type_of_project"),
-        	 "ascOrDesc" => "desc",
-        	//collapse by header
-        	 "collapse" => true,
-        	 //only allow one fan at a time
-        	 "collapse_multiple_fans" => true,
-        	 "collapse_current" => 2018, 
-        	 //add additonal links
-        	"extras" => array(
+        	"current" => (isset($_GET['id'])) ? $_GET['id'] : basename($_SERVER['PHP_SELF']), //indicate current page..project or file
+        	 "sort_by" => array("year"), //sort by..creates headers
+        	 "ascOrDesc" => "desc", //show list descending
+        	 "collapse" => true,//collapse by header
+        	 "collapse_multiple_fans" => false,  //only allow one fan at a time
+        	 "collapse_current" => 2018, //default group to show
+        	"extras" => array(  //add additonal links
         		"Contact" => "contact.php",
         		"About" => "#",
         		

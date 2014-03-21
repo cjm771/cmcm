@@ -18,8 +18,18 @@
 	{% for media in project.media %}
 	
 		<div class='img_wpr'>
+			{# <---------- IMAGE PREVIEW -----------------> #}
 			{% if media.type == "image" %}
 				<img src='{{cmcm_url}}{{media.src}}'>
+			
+			{# <---------- SOUND PREVIEW -----------------> #}
+			{% elseif media.type == "sound" %}
+				<div class='frunt-preview-wpr'>
+					<a href='{{media.src}}' class='frunt-widget frunt-widget-preview'  data-type='sound' data-responsive="true" data-proportion-bias='height' data-thumb='{{cmcm_url}}{{media.thumb}}' data-visual='true'>{{media.src}}</a>
+				</div>
+			{# <---------- VIDEO PREVIEW -----------------> #}
+			{% elseif media.type == "video" %}
+					<a href='{{media.src}}' class='frunt-widget frunt-widget-preview'  data-type='video' data-responsive="true" data-proportion-bias='height' data-thumb='{{cmcm_url}}{{media.thumb}}'>{{media.src}}</a>
 			{% endif %}
 			{% if media.caption %}
 				<div class='caption'>{{media.caption}}</div>

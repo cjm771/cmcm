@@ -4,7 +4,22 @@ horizScript = {
 	buttonText : "Text",
 	init : function(){
 		var that=this;
-		//console.log("position:"+$(".project_info").outerWidth());
+		
+		//pretty scrollbar on menu
+		//$("#menu").css("position", "relative");
+		$("#menu").perfectScrollbar({
+		  wheelSpeed: 2,
+		  wheelPropagation: false,
+		  minScrollbarLength: 20,
+		  includePadding: true
+		})
+		
+		window.onresize = function(){
+			$(".img_wpr > img").each(function(){
+				$(this).closest(".img_wpr").width($(this).width());
+			});
+		}
+		//hide text into button on scroll
 		$(document).on("scroll", function(){
 			now = $(this).scrollLeft();
 			endProj_info = $(".project_info").outerWidth();

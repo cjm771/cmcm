@@ -243,6 +243,10 @@
 				$subGroups = array();
 				foreach ($subLists as $key=>$list)
 					$subGroups[$key]  = self::group($sort_arr, $list, $ascOrDesc);
+				if ($ascOrDesc=="asc")
+					ksort($subGroups);
+				else
+					krsort($subGroups);
 				return $subGroups;
 			}
 		}

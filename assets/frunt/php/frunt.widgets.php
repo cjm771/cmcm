@@ -76,7 +76,25 @@
     	));
 	}
 	
-
+	 //soundPreview 
+	 public function soundPreview(){
+	 	$defaults = array(
+	 		"type" => "sound",
+			"subtype" => "soundcloud", //string, type of sound (soundcloud, local*) *not implemented yet 
+			"url" => false, //url for embedding
+			"visual" => false, //visual mode for soundcloud,
+			"embed" => "", //embed code (filled in later) 
+		);
+		//set user opts
+		$this->opts = $this->opts + $defaults;
+		switch ($this->opts['type']){
+			case "soundcloud":
+				$this->opts['embed'] = '<iframe width="100%" height="100%" scrolling="no" frameborder="no" src="https://w.soundcloud.com/player/?url='.$this->opts['url'].'&amp;auto_play=false&amp;hide_related=false&amp;visual='.$this->opts['visual'].'"></iframe>'; 
+				break;
+		}
+		 return $this->twig->render("preview_embed.php", array("opts"=>$this->opts));
+	 }
+	 
 	 //menu widget
 	 public function menu(){
 	 //	print_r(self::group("year", $this->data));

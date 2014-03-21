@@ -16,7 +16,7 @@
 	margin: 0;
 	padding: 0;
 	
-	overflow: hidden;
+	overflow-x: hidden;
 	margin-left: 300px;
 	overflow-y: hidden;
 	background-color: #c0c0c0;
@@ -50,9 +50,12 @@
 	background: #fff;
 	margin: 0;
 	float: left;
-	padding: 0;
 	height: 100%;
 	width: 300px;
+	overflow: hidden;	
+}
+.verticalMenu{
+	
 }
 
 
@@ -79,7 +82,7 @@
 
 }
 .img_slider{
-	overflow-x:hidden;
+	overflow-x:scroll;
 	margin: 0;
 	padding: 0;
 	overflow-y: hidden;
@@ -93,7 +96,6 @@
 	margin: 0;
 	display: inline-block;
 	 font-size: 12px;
-	 overflow: auto;
 	padding: 0;
 }
 .img_wpr .caption{
