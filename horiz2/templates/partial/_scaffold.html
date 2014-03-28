@@ -1,0 +1,26 @@
+{# <--- BELOW IS BASE FOR ALL PAGES (base for pages) ----> #}
+<!DOCTYPE html>
+<html>
+    <head>
+        {% block head %}
+            {% include 'partial/_assets.html' %}
+            <title>
+            	{{title}} - {{subtitle}} - {% block title %}{% endblock %}
+            </title>
+        {% endblock %}
+    </head>
+    <body>
+		<div id='container'>
+				 {% include 'partial/_header.html' %}
+			<div id="menu">
+				 {#% include 'partial/_header.html' %#}
+				
+				 {{menu}}
+				 <div id='info_toggle'>&#43; Show Text</div>
+			</div>
+			<div id="content">
+				 {% block content %}{% endblock %}
+			</div>
+		</div>
+    </body>
+</html>

@@ -2,13 +2,24 @@
 	margin: 0px !important;
 	padding: 0;
 	height: 100%;
-	background: #c0c0c0;
-	
+	background: #fff;
 
 }
 #container{
-
-	background: #c0c0c0;
+	overflow: auto;
+	background: #000;
+}
+#menu{
+	display: block;
+	position: fixed;
+	z-index: 10;
+	background: #fff;
+	margin: 0;
+	float: left;
+	padding: 0;
+	height: 100%;
+	-webkit-mask-image: -webkit-gradient(linear, left 90%, left bottom, from(rgba(0,0,0,1)), to(rgba(0,0,0,0)));
+	width: 300px;
 }
 
 #content{
@@ -16,13 +27,15 @@
 	display: block;
 	margin: 0;
 	padding: 0;
-	
 	overflow-x: hidden;
-	margin-left: 300px;
-	overflow-y: hidden;
-	background-color: #c0c0c0;
 	height: 100%;
+	width: 100%;
 }
+#splash{
+	margin-left: 300px;
+	background: #fff;
+}
+
 #header{
 	padding: 20px 40px;
 }
@@ -43,29 +56,29 @@
 	font-size: 10px;
 	color: #999;
 }
+.frunt-menu {
+	padding-bottom: 200px;
 
-#menu{
+}
+.frunt-menu .extras{
+		color: #666;
+}
+
+.frunt-menu .extras a{
+	color: inherit;
+	padding: 0 10px;
 	display: block;
-	position: fixed;
-	z-index: 10;
-	background: #fff;
-	margin: 0;
-	float: left;
-	height: 100%;
-	width: 300px;
-	overflow: hidden;	
+	text-decoration: inherit;
 }
-.verticalMenu{
-	
-}
-
 
 .project_info{
-	float: left;
+	position: fixed;
+	right:20px;
+	z-index: 10;
+	top:20px;
 	color: #fff;
 	padding: 30px 40px;
 	background: #000;
-	height: 100%;
 	width: 200px;
 
 	
@@ -83,21 +96,23 @@
 
 }
 .img_slider{
-	margin: 0;
-	overflow-x: scroll;
+	overflow-x:hidden;
 	padding: 0;
-	overflow-y: hidden;
-    white-space: nowrap;
-    height: 100%;
-    font-size: 0;
+	overflow-y: scroll;
+	height: auto;
+	min-height: 100%;
+	margin-left: 300px;
+	background-color: #c0c0c0;
 }
 .img_wpr{
-	height: 100%;
+
 	position: relative;
-	margin: 0;
-	display: inline-block;
-	 font-size: 12px;
+	margin: 0px auto;
+	display: block;
 	padding: 0;
+	height: 100%;
+	overflow: hidden;
+	width: 100%;
 }
 .img_wpr .caption{
 	padding: 5px;
@@ -106,31 +121,7 @@
 	position: absolute;
 	color: #fff;
 	font-size: 12px;
-	bottom:20px;
+	bottom: 20px;
 	left: 20px;
 }
-.img_wpr img{
-	height: 100%;
-	width: auto;
-	display: block;
-	margin: 0px;
-	padding: 0px;
-}
-
-.img_wpr img.thumb{
-	display: block;
-	height: auto;
-	width: auto;
-	text-align: center;
-	padding: 0px;
-}
-
-#projInfoIcon{
-	padding:10px;
-	color: #fff;
-	background: rgba(0,0,0,.65);
-	white-space: normal;
-	cursor: pointer;
-}
-
 

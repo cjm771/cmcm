@@ -2,9 +2,99 @@
   
  $.extend(cmcm, {
 	fruntWidget : {
+		resizeTimer : null,
+		resizeTime : 100,
 		init : function(){
+			var that = this;
+			//setup menuWidget
 			this.menuWidget();
+			//setup previewWidget
 			this.previewWidget();
+			//setup modalWidget
+			this.modalWidget();
+			//init responsive things.
+			this.onResize();
+			//EVENTS
+			window.addEventListener("resize", function(){
+				that.onResize();
+			});
+		},
+		toggler : function(el, opts, sel){
+			$.each(opts, function(k,v){
+				el.removeClass(v);
+			});
+			el.addClass(opts[sel])
+		},
+		onResize : function(){
+			//handle responsive elements
+			clearTimeout(this.resizeTimer);
+			this.resizeTimer = setTimeout(function(){
+				$(".frunt-responsive, .frunt_responsive").each(function(){
+					ratio = $.parseJSON($(this).attr("data-ratio"));
+					//how to fit the object...is it filled (fill) or contained (within)..
+					fit = $(this).attr("data-fit");
+					if (fit==undefined || fit==false)
+						fit=="fill";
+					propBias = $(this).attr("data-bias");
+					syncParent =  $(this).attr("data-sync-parent");
+					parent = $(this).parent();
+	
+					//prop bias lets us determine where to grab dimensions from..
+					//otherwise..we will just make it match its parent
+					if (!propBias){
+						$(this).attr("data-width", parent.width())
+						$(this).attr("data-height", parent.height());
+					}else if(propBias=="width"){
+						$(this).attr("data-width", $(this).width());
+						$(this).attr("data-height", "0");
+					}else if(propBias=="height"){
+						$(this).attr("data-height", $(this).height());
+						$(this).attr("data-width", "0");
+					}else if (propBias=="parent-width"){
+						$(this).attr("data-width", parent.width());
+						$(this).attr("data-height", "0");
+					//bias the parent height
+					}else if (propBias=="parent-height"){
+						$(this).attr("data-height", parent.height());
+						$(this).attr("data-width", "0");
+					}
+					newSize  = cmcm.fruntWidget.getResizeImageDimensions($(this).attr("data-width"), $(this).attr("data-height"), ratio[0], ratio[1], fit);
+					if (propBias!="width"){
+						$(this).css("width", newSize.width+"px");
+						$(this).attr("width", newSize.width);
+					}
+					if (propBias!="height"){
+						$(this).css("height", newSize.height+"px");
+						$(this).attr("height", newSize.height);
+					}
+					if (syncParent){
+						if (propBias!='parent-height'){
+							parent.css("height", newSize.height+"px");
+							parent.attr("height", newSize.height);
+						}
+						if (propBias!='parent-width'){
+							parent.css("width", newSize.width+"px");
+							parent.attr("width", newSize.width);
+						}
+					}
+					
+				});
+			}, this.resizeTime);
+		
+			//handle modal if exists
+			if ($('.frunt-modal-content').length){
+				//calculate top
+				buffer = -20;
+				minimum = 30;
+				topCalc = ($(window).height()-$(".frunt-modal-content").height()+buffer)/2;
+				topCalc = (topCalc < minimum ) ? minimum : topCalc;		
+				$(".frunt-modal-content").stop();
+				$(".frunt-modal-content").clearQueue();		
+				$(".frunt-modal-content").animate({
+					"margin-top" :  topCalc+"px"
+				},200);
+			}
+
 		},
 		//embeds stuff
 		previewWidget : function(){
@@ -13,7 +103,8 @@
 				mediaUrl = $(this).attr("href");
 				mediaThumb = $(this).attr("data-thumb");
 				mediaType = $(this).attr("data-type");
-				propBias = $(this).attr("data-proportion-bias");
+				propBias = $(this).attr("data-bias");
+				propBias = (propBias==undefined) ? $(this).attr("data-proportion-bias") : propBias;
 				parent = $(this).parent();
 				//assume both dimensions provided
 				if (!propBias){
@@ -26,44 +117,170 @@
 				}else if (propBias=="height"){
 					$(this).attr("data-height", parent.height());
 				}
-				$(this).replaceWith(that.mediaTypes[mediaType].preview({
+				$(this).replaceWith(that.preview({
 					src : mediaUrl,
 					thumb : mediaThumb,
 					type : mediaType,
 					opts : $(this).data() //extra options
 				}))		
 			});
-			
-			window.addEventListener("resize", function(){
-					//sound growth
-					console.log("resize!");
-					$(".frunt-preview-sound.responsive, .frunt-preview-video.responsive").each(function(){
-						ratio = $.parseJSON($(this).attr("data-ratio"));
-						propBias = $(this).attr("data-bias");
-					
-					//assume both dimensions provided
-					if (!propBias){
-						$(this).attr("data-width", parent.width())
-						$(this).attr("data-height", parent.height());
-					//bias the width
-					}else if (propBias=="width"){
-						$(this).attr("data-width", parent.width());
-						$(this).attr("data-height", 0);
-					//bias the height
-					}else if (propBias=="height"){
-						$(this).attr("data-height", parent.height());
-						$(this).attr("data-width", 0);
-					}
-					newSize  = cmcm.fruntWidget.getResizeImageDimensions($(this).attr("data-width"), $(this).attr("data-height"), ratio[0], ratio[1], "fill");
-					$(this).prop("width", newSize.width);
-					$(this).prop("height", newSize.height);
+		},
+		modalWidget : function(){
+			var that = this;
+			if ($("a.frunt-modal").length){
+				$("a.frunt-modal").each(function(){
+					$(this).on("click", function(e){
+						
+						e.preventDefault();
+						src = $(this).attr("href");
+						caption = $(this).attr("title");
+						type = $(this).attr("data-type");
+						console.log(src);
+						description = "";
+						switch (type){
+							case "video":
+							case "sound":
+								description = that.mediaTypes[type].preview({
+									type : type,
+									src : src
+								});
+								break;
+							default:
+							case "image":
+								description = "<img src='"+src+"'>";
+								break;
+						}
+						that.modal({
+							subject : caption,
+							description : description
+						});
 					});
-				})
-			
+				});
+			}
 		},
 		menuWidget : function(){
-			//vertical menu collapsed setup
+			var that = this;
+			if ($(".frunt-menu.frunt-menu-grid").length){
+				$(".frunt-menu.frunt-menu-grid").each(function(){
+					menu = $(this);
+					
+					forceCols = menu.attr("data-force-cols");
+					if (forceCols){
+						menu.css("width", "100%");
+						menu.find(".thumb_group").css("width", "100%");
+						samp = menu.find(".thumb_wpr").first();
+						ratio = samp.height()/samp.width();
+						container = samp.parent();
+						//parentExtraPadding = (samp.parent().outerWidth(true)-samp.parent().width());
+						extraPadding = (samp.outerWidth(true)-samp.width())*forceCols;
+						width = (samp.parent().width()-extraPadding)/forceCols;
+						//convert to percent
+						width = (width/samp.parent().width())*100;
+						height = (width*ratio);
+						menu.find(".thumb_wpr").addClass("frunt-responsive");
+						menu.find(".thumb_wpr").each(function(){
+							//$(this).width(width);
+							$(this).css({
+								width : width+"%"
+							});
+							
+							$(this).attr("data-bias", "width");
+							$(this).attr("data-ratio", JSON.stringify([width,height]));	
+						})
+						
+					}
+				});
+			}
+			
+			
+			//horiz widget
+			if ($(".frunt-menu.frunt-menu-horiz").length){
+				$(".frunt-menu.frunt-menu-horiz").each(function(){
+					menu = $(this);
+					$(this).find(".link").each(function(){
+						$(this).on("click", function(){
+							if (!$(this).hasClass("disabled")){
+								$(this).closest(".col_content").scrollTop($(this).position().top);						
+								//define els						
+								column = $(this).closest(".column");
+								
+								//set link as highlighted
+								opts = ['', 'selected'];
+								that.toggler(column.find(".link"), opts, 0);
+								that.toggler($(this), opts, 1);
+								//set current for column
+								column.attr("data-current", $(this).attr("data-val"));
+								//hide all but this column and its previous
+								menu.find(".column").not(column).not(column.prevAll('.column')).each(function(){
+									opts = ['disabled', ''];
+									//disable all links
+									that.toggler($(this), opts, 0);
+									opts = ['', 'selected'];
+									that.toggler($(this).find(".link"), opts, 0);
+									$(this).hide();
+								
+								});
+								//show next column
+								column.next('.column').each(function(){
+									opts = ['disabled', ''];
+									//disable all links
+									that.toggler($(this).find(".link"), opts, 0);
+									that.toggler($(this), opts, 1);
+									//undisable ones
+									//assemble reqs obj
+									reqs = {};
+									menu.find('.column:not(.disabled)').not(this).each(function(){
+										reqs[$(this).attr("data-att")]=$(this).attr("data-current");
+									});
+									//for each link
+										//if data-year has 2003, and data-type has architecture
+										$(this).find(".link").each(function(){
+											//check 
+											valid = 1;
+											link = this;
+											$.each(reqs, function(att, val){
+												
+												arr = $(link).attr("data-"+att).split(",");
+												if ($.inArray(val, arr)==-1)
+													valid = 0;
+											});
+											if (valid){
+													that.toggler($(link), opts, 1);
+											}
+										});
+									//fade in
+									$(this).css({'display' : 'inline-block'}).hide().fadeIn();
+								});
+																
+							} //<--end if not disabled
+						});
+					});
+					
+					//pick default open fans..
+					if ($(menu).find(".active").length){
+						active = $(menu).find(".active");
+						column = active.closest(".column");
+						//
+						$(".column").not(column).each(function(){
+							key = $(this).attr("data-att");
+							activeField = active.attr("data-"+key);
+							$(this).find(".link").each(function(){
+								//link = this;
+								if (activeField==$(this).attr("data-val")){
+									$(this).trigger("click");
+								
+								}
+							});
+						});
+					}
+
+					
+				}); //<--end  each horiz menu
+				
+			}
 		
+		
+			//vertical menu collapsed setup
 			if ($(".verticalMenu.collapsed").length){
 				//set group header click events
 				$(".verticalMenu.collapsed").find(".group_header").each(function(){
@@ -94,7 +311,7 @@
 						if (group.hasClass("closed")){
 							//SHOW FAN
 							group.find("> .group_list > .group_header").show("slow"); 
-							console.log
+							
 							group.find((menu.hasClass("noMulti")) ? "> a" : "> a").fadeIn().css("display", "block");
 							group.removeClass("closed");
 							group.addClass("open");
@@ -120,7 +337,6 @@
 						$(this).removeClass("closed");
 						$(this).addClass("open");
 						$(this).find("> a").css("display", "block");
-					//	console.log($(this).attr("class")+"\n");
 				});
 				
 				//pick default open fan..
@@ -140,7 +356,6 @@
 		}, //<--end menu widget
 		 //<--------- UTILS -------------->//
 		getResizeImageDimensions : function(pw,ph, w, h, fillOrWithin){
-			console.log(pw+" "+ph);
 			//determine size..
 	    	wprWidth = (pw!=undefined) ? pw : 0;
 	    	wprHeight = (ph!=undefined) ? ph : 0;
@@ -159,7 +374,7 @@
 	    	}
 		   ratioX = wprWidth / w;
 		   ratioY = wprHeight / h;
-		   //fill box = max, within box = min
+		   //fill box = max, within box = m
 		   if (fillOrWithin=="fill")
 		   	ratio = Math.max(ratioX, ratioY);
 		   else{
@@ -178,12 +393,173 @@
 			str = (typeof str == "string") ? str.trim() : str;
 			return str;
 		},
-	 
-		 //<--------- CMCM IMPORT -------------->//
-		 
-		  mediaTypes : {
+		preview : function(mediaObj){
+			var that = this;
+								
+			mediaObj.opts.mode = (mediaObj.opts.mode!=undefined) ? 	mediaObj.opts.mode : "direct_embed";
+			mediaType = this.mediaTypes[mediaObj.type];
+			
+			iconTypes = {
+				sound : "glyphicon glyphicon-volume-up",
+				video : "glyphicon glyphicon-facetime-video"	
+			};
+			
+			wpr = $("<div class='frunt-preview-wpr'></div");
+			switch (mediaObj.opts.mode){
+				//THUMB
+				case "thumb":
+					icon = $("<span class='"+iconTypes[mediaObj.type]+" "+mediaObj.type+"_icon frunt-absCenter frunt-32 frunt-iconBox frunt-clickable' title='"+mediaObj.type+"'></span>");
+					
+					if (mediaObj.thumb){
+						thumb = $("<img class='frunt-preview-thumb' src='"+mediaObj.thumb+"'>");
+						thumb.attr("data-bias", mediaObj.opts.bias);
+						//responsive?
+						if (mediaObj.opts.responsive){
+							thumb.imagesLoaded(function(img){
+								//console.log("loaded");
+								 ratio = [img.width, img.height];
+								 $(img).attr("data-ratio", JSON.stringify(ratio));
+								 $(img).addClass("frunt-responsive");
+								 //$(img).attr("data-sync-parent", true);
+							});
+						}
+					}else{
+						thumb = $("<div class='frunt-preview-thumb noImage'></div>");
+						if (mediaObj.opts.responsive){
+							thumb.attr("data-ratio", "[1,1]");
+							thumb.attr("data-bias", mediaObj.opts.bias);
+							thumb.addClass("frunt-responsive");
+						}
+					}
+					icon.on("click", function(){
+						thumb = $(this).closest(".frunt-preview-wpr").find('.frunt-preview-thumb');
+
+						ret =  mediaType.preview(mediaObj);
+						ret.hide();
+						//responsive?
+						if (mediaObj.opts.responsive){
+				     		ret.attr("data-bias", mediaObj.opts.bias);
+				     		ret.addClass("frunt-responsive");
+				     		ret.attr("data-sync-parent", true);
+				     	}
+				     	//ret.on("load", function(){
+				     		ret.show();
+				     		thumb.replaceWith(ret);
+				     		$(this).hide();
+				     	//});
+				     	that.onResize();
+				     
+					});
+					if (mediaObj.opts.responsive){
+						thumb.attr("data-sync-parent", true);
+					}
+					wpr.append(icon);
+					wpr.append(thumb);
+					break;
+				//DIRECT EMBED
+				case "direct_embed":
+				default:
+					ret =  mediaType.preview(mediaObj);
+					ret.hide();
+					//responsive?
+					if (mediaObj.opts.responsive){
+			     		ret.attr("data-bias", mediaObj.opts.bias);
+			     		ret.addClass("frunt-responsive");
+			     		
+			     	}
+			     	ret.show();
+			     	
+			     	wpr.append(ret);
+					break;
+			}
+		
+			if (wpr.is(':empty'))
+				wpr.append("<div class='noImage'>"+mediaObj.type+"</div>");
+				
+			
+			
+			return wpr;
+
+		},
+		 //<--------- CMCM ADAPTATIONS -------------->//
+	 		modal : function(opts){
+		 	var that = this;
+			var modal_bg = $("<div class='frunt-modal-bg'></div>");
+			var modal_content = $("<div class='frunt-modal-content'></div>");
+			var close = function(){
+				modal_bg.remove();
+			}
+			
+			modal_content.on("click", function(e){
+				e.stopPropagation();
+				//e.preventDefault();
+			});
+			var subject = (opts.subject) ? opts.subject : "";
+			var description = (opts.description) ? opts.description : "";
+			
+			description = (typeof opts.description=="string") ? $(description) : description;
+			closeButton = $("<span class='glyphicon glyphicon-remove icon frunt-modal-close' title='info'>");
+			closeButton.on("click", close);
+			modal_content.append(closeButton);
+			modal_content.append($("<span class='frunt-modal-subject'>"+subject+"</span>"));
+			
+			
+			//top_orig = 20;
+			modal_content.css({
+				"margin-top" : "0%",
+				"opacity" :0
+			});
+			
+			modal_content.append(description);
+			modal_bg.append(modal_content);
+			
+			
+			modal_bg.on("click", close);
+			
+			
+			//img = modal_content.find("img").first();
+			//ifr = modal_content.find("iframe").first();
+			//IMG MODAL			
+			HEIGHTBUFFER = 100;
+			if (description.is("img")){
+				description.imagesLoaded(function(img){
+				dims = that.getResizeImageDimensions(modal_content.width(),$(window).height()-HEIGHTBUFFER, img.width, img.height, "within");
+			
+				//if (opts.boxDimensions){
+					modal_content.css({
+						width : dims.width+"px",
+						height : dims.height+"px",
+					});
+				
+				});
+			//IFRAME MODAL
+			}else if (description.is("iframe")){
+				dims = that.getResizeImageDimensions(modal_content.width(),$(window).height()-HEIGHTBUFFER, 9,6, "within");
+				modal_content.css({
+						width : dims.width+"px",
+						height : dims.height+"px",
+					});
+			}
+		
+			$("body").append(modal_bg);
+			
+			
+			//calculate top
+			buffer = -20;
+			minimum = 30;
+			topCalc = ($(window).height()-modal_content.height()+buffer)/2;
+			topCalc = (topCalc < minimum ) ? minimum : topCalc;
+			
+			$(".frunt-modal-content").animate({
+				"opacity" : 1,
+				"margin-top" :  topCalc+"px"
+			},200);
+			
+		},
+		 mediaTypes : {
 				image : {
 					preview : function(mediaObj){
+						mediaObj.opts = (mediaObj.opts==undefined) ? {} : mediaObj.opts;
 						contents = $("<div class='media_crop' style='cursor:pointer'></div>");
 				     	if (mediaObj.thumb && mediaObj.thumb!="false"){
 					     contents.append("<img>").find('img').attr("src", mediaObj.thumb);  	
@@ -197,15 +573,15 @@
 						  
 					    }
 					    return contents;
-					},
-					remove : function(){}
+					}
 				},
 				video : {
 					preview : function(mediaObj){
+						mediaObj.opts = (mediaObj.opts==undefined) ? {} : mediaObj.opts;
 						//check url
 						ret = "";
-						$.each(cmcm.fruntWidget.externalMediaTypes, function(type, mediaType){
-							if (mediaObj.src.match(mediaType.regex)){	
+						$.each(cmcm.fruntWidget.externalMediaTypes, function(type, mediaType){			
+							if (mediaObj.src.match(mediaType.regex)){
 								ret =  mediaType.preview(mediaObj);
 							}
 						});
@@ -213,13 +589,12 @@
 						if (!ret) 
 							return $("<div class='noImage'>"+mediaObj.type+"</div>");
 						else
-							return ret;
-					}
-			
+							return ret;	
+					}		
 				},
 				sound : {
 					preview : function(mediaObj){
-						
+						mediaObj.opts = (mediaObj.opts==undefined) ? {} : mediaObj.opts;
 						//check url
 						ret = "";
 						$.each(cmcm.fruntWidget.externalMediaTypes, function(type, mediaType){			
@@ -242,16 +617,17 @@
 			     	regex :  /\/\/(?:www\.)?youtu(?:\.be|be\.com)\/(?:watch\?v=|embed\/)?([a-z0-9_\-]+)/i, //matches[1] will be id,
 			     	embed : function(mediaObj){
 			     		v = cmcm.fruntWidget.trim(mediaObj.src.match(this.regex)[1]);
-			     		newSize  = cmcm.fruntWidget.getResizeImageDimensions(mediaObj.opts.width, mediaObj.opts.height, this.ratio[0], this.ratio[1], "fill");
-				     	console.log(newSize);	
-				     	console.log(mediaObj.opts);
-				     	emb = $('<iframe class="frunt-preview-video responsive" width="'+newSize.width+'" height="'+newSize.height+'" style="display: block" src="http://www.youtube.com/embed/'+v+'?showinfo=0"  data-ratio="'+JSON.stringify(this.ratio)+'" data-bias="'+mediaObj.opts.proportionBias+'" frameborder="0" allowfullscreen></iframe>');
+			     		//options defaults
+			     		console.log(mediaObj.opts.autoplay);
+			     		mediaObj.opts.autoplay = (mediaObj.opts.autoplay!=undefined && mediaObj.opts.autoplay==true) ?  1 : 0 ;
+			     		console.log(mediaObj.opts.autoplay);
+				     	emb = $('<iframe class="frunt-preview-video" width="100%" height="100%" style="display: block" src="http://www.youtube.com/embed/'+v+'?showinfo=0&autoplay='+mediaObj.opts.autoplay+'" frameborder="0" allowfullscreen></iframe>');
 				     	return emb;
 			     	},
 			     	preview : function(mediaObj){
 			     		var that = this;
 				       	iframe = this.embed(mediaObj);
-				     	//contents.append(iframe);
+				       	iframe.attr("data-ratio", JSON.stringify(this.ratio));
 				     	return iframe;
 			     	}
 		     	},
@@ -261,17 +637,17 @@
 			     	regex : /\/\/(?:www\.)?vimeo.com\/([0-9a-z\-_]+)/i, //matches[1] will be id
 			     	embed : function(mediaObj){
 			     		v = cmcm.fruntWidget.trim(mediaObj.src.match(this.regex)[1]);
-			     		newSize  = cmcm.fruntWidget.getResizeImageDimensions(mediaObj.opts.width, mediaObj.opts.height, this.ratio[0], this.ratio[1], "fill");
-				     	console.log(newSize);	
-				     	console.log(mediaObj.opts);
-				     	emb = $('<iframe  class="frunt-preview-video responsive" src="//player.vimeo.com/video/'+v+'?portrait=0" width="'+newSize.width+'" height="'+newSize.height+'"  data-ratio="'+JSON.stringify(this.ratio)+'" data-bias="'+mediaObj.opts.proportionBias+'" frameborder="0" style="display: block" webkitallowfullscreen mozallowfullscreen allowfullscreen></iframe>');
+			     		//options defaults
+			     		mediaObj.opts.autoplay = (mediaObj.opts.autoplay!=undefined  && mediaObj.opts.autoplay==true) ?  1 : 0 ;
+			     		console.log(mediaObj.opts.autoplay);
+				     	emb = $('<iframe  class="frunt-preview-video" src="//player.vimeo.com/video/'+v+'?portrait=0&autoplay='+mediaObj.opts.autoplay+'" width="100%" height="100%" frameborder="0" style="display: block" webkitallowfullscreen mozallowfullscreen allowfullscreen></iframe>');
 				     	return emb;
 				     	
 			     	},
 			     	preview : function(mediaObj){
 			     		var that = this;
 				       	iframe = this.embed(mediaObj);
-				     	//contents.append(iframe);
+				       	iframe.attr("data-ratio", JSON.stringify(this.ratio));
 				     	return iframe;
 			     	}
 		     	},
@@ -283,21 +659,13 @@
 			     			var that = this;
 			     		//options defaults
 			     		mediaObj.opts.visual = (mediaObj.opts.visual!=undefined) ? mediaObj.opts.visual : "true";
-			     		
-			     		newSize  = cmcm.fruntWidget.getResizeImageDimensions(mediaObj.opts.width, mediaObj.opts.height, this.ratio[0], this.ratio[1], "fill");
-				     	console.log(newSize);	
-				     	console.log(mediaObj.opts);
-				     	emb = $('<iframe class="frunt-preview-sound responsive" width="'+newSize.width+'" height="'+newSize.height+'" data-ratio="'+JSON.stringify(this.ratio)+'" data-bias="'+mediaObj.opts.proportionBias+'" style="display: block" scrolling="no" frameborder="no" src="https://w.soundcloud.com/player/?url='+encodeURI(mediaObj.src)+'&amp;auto_play=false&amp;hide_related=true&amp;visual='+mediaObj.opts.visual+'"></iframe>');
-				     	
-				     
-				     	
-				     	
+			     		mediaObj.opts.autoplay = (mediaObj.opts.autoplay!=undefined  && mediaObj.opts.autoplay==true) ? mediaObj.opts.autoplay : "false";
+				     	emb = $('<iframe class="frunt-preview-sound" width="100%" height="100%" style="display: block" scrolling="no" frameborder="no" src="https://w.soundcloud.com/player/?url='+encodeURI(mediaObj.src)+'&amp;auto_play='+mediaObj.opts.autoplay+'&amp;hide_related=true&amp;visual='+mediaObj.opts.visual+'"></iframe>');	
 				     	return emb;
 			     	},
 			     	preview : function(mediaObj){
-			     		 //contents = $("");
 				     	iframe = this.embed(mediaObj);
-				     	//contents.append(iframe);
+				     	iframe.attr("data-ratio", JSON.stringify(this.ratio));
 				     	return iframe;
 			     	}
 		     	}
@@ -310,3 +678,28 @@
 $(document).ready(function(){
 	cmcm.fruntWidget.init();
 });$
+
+
+$.fn.imagesLoaded = function(callback){
+  var elems = this.filter('img'),
+      len   = elems.length,
+      blank = "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///ywAAAAAAQABAAACAUwAOw==";
+      
+  elems.bind('load.imgloaded',function(){
+      if (--len <= 0 && this.src !== blank){ 
+        elems.unbind('load.imgloaded');
+        callback.call(elems,this); 
+      }
+  }).each(function(){
+     // cached images don't fire load sometimes, so we reset src.
+     if (this.complete || this.complete === undefined){
+        var src = this.src;
+        // webkit hack from http://groups.google.com/group/jquery-dev/browse_thread/thread/eee6ab7b2da50e1f
+        // data uri bypasses webkit log warning (thx doug jones)
+        this.src = blank;
+        this.src = src;
+     }  
+  }); 
+ 
+  return this;
+};

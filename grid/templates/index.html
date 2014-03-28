@@ -1,0 +1,25 @@
+{% block css %}
+<style>
+	#menu{
+		width: 150px;
+	}
+	#header{
+		padding: 30px;
+		text-align: right;
+		padding-right: 0px;
+	}
+	#splash{
+		margin-left: 150px;
+	}
+</style>
+{% endblock %}
+
+{% extends "partial/_scaffold.html" %}
+{% block content %}
+	<div id='splash'>
+	{{content}}
+	</div>
+{% endblock %}
+
+{% block menu %}
+{% endblock %}

@@ -95,6 +95,86 @@
 		 return $this->twig->render("preview_embed.php", array("opts"=>$this->opts));
 	 }
 	 
+	 //simple list widget
+	 public function simpleList(){
+		//default opts
+		$defaults = array(
+ 			"template" => "<span class='key'>{{key}}</span>: <span class='val'>{{val}}</span>", //template for each list item
+ 			//default for everything
+ 			"default_format" => array(
+ 				"key" => function($k){return str_replace("_", " ", $k);},
+ 				"value" => function($v){return $v;}
+ 			),
+ 			//custom formats for types (prefixed with *) and individual attributes
+ 			"custom_format" => array(
+ 				"*bool" => array(
+ 					"value"=> function($v){ return ($v) ? "yes" : "no";}
+ 				)
+ 			),
+ 			//listype
+ 			"type" => "project",
+ 			//elements to ignore..defaults, and additionals
+ 			"showDefaultIgnores" => false,
+ 			"ignore_default" => array(
+ 				"project" => array("id","published","added","cleanUrl","coverImage","media"),
+ 				"media" => array("visible","src","type","thumb")
+ 			),
+ 			"ignore" => false, 
+ 			//restrict elements to the following
+ 			"only" => false
+		);
+		//set user opts
+		$this->opts = $this->opts + $defaults;
+		
+		//filter
+		$rules = array();
+		//filter out default ignores
+		if (!$this->opts['showDefaultIgnores'])
+			$rules[] = array($this->opts['ignore_default'][$this->opts['type']], "IGNORE");
+		//filter out ignore list 
+		$rules[] = array($this->opts['ignore'], "IGNORE");
+		//pick out only..;
+		$rules[] = array($this->opts['only'], "ONLY");
+		$this->data = Frunt::filter($this->data, $rules);
+		
+		$FINAL = array();
+		//go through each thing to get formatting
+		foreach ($this->data as $key=>$value){
+			//for types
+			if (substr($key, 0, 1)=="*"){
+				
+			}else if (isset($this->opts["custom_format"][$key])){
+				if	(isset($this->opts["custom_format"][$key]['key']))
+					$newKey = $this->opts["custom_format"][$key]['key']($key);
+				else
+					$newKey = $this->opts["default_format"]['key']($key);
+				if	(isset($this->opts["custom_format"][$key]['value']))
+					$newVal = $this->opts["custom_format"][$key]['value']($value);
+				else
+					$newVal = $this->opts["default_format"]['value']($value);
+			}else{
+					$newKey = $this->opts["default_format"]['key']($key);
+					$newVal = $this->opts["default_format"]['value']($value);
+			}
+			
+			$FINAL[$newKey] = $newVal;
+		
+		}
+		//display
+		$items = array();
+		foreach ($FINAL as $key=>$value){
+			if (is_array($value))
+				$value = "(".count($value).")";
+			$tmp = str_replace("{{key}}" ,   $key,   $this->opts['template']);
+			$tmp = str_replace("{{val}}" , $value, $tmp);
+			$items[$key] = $tmp;
+		}
+		 return $this->twig->render("simple_list.php", array_merge($this->opts, array(
+			"items" => $items,
+			"site_url" => $this->SITE_URL,
+		)));
+	 }
+	 
 	 //menu widget
 	 public function menu(){
 	 //	print_r(self::group("year", $this->data));
@@ -106,29 +186,89 @@
 			"url_rewrite" => "projects/", //if set, url will be written as specifed followed by indentifier
 			"type" => "basic", //basic: vertical, horiz, submenu: shows next to menu, thumb
 			"ascOrDesc" => "desc", //asc or desc, direction of list
+			"extras" => false,
 			//MENU TYPE-SPECIFIC OPTIONS
 			//basic, submenu
 			"collapse" => false, //true or false, to collapse if sort by
 			"collapse_multiple_fans" => true, //true or false, multiple submenus can be revealed or only allow one at a time
 			"collapse_current" => false, //string or false, which one to reveal on init
 			//basic, submenu, horiz
-			"sort_by" => "year", //array,string,false of attribute to sort by,
-			//horiz
-			"horiz_cols" => 1, //array,int for each section, how many cols
+			"sort_by" => false, //array,string,false of attribute to sort by,
 			//thumb
-			"thumb_cols" => false, //false or int force break after x 
-			"force_cols" => false, //if cols are specified..make images fit within it (hardcode dimensions)
-			"padding_x" => false, //int right padding between squares
-			"padding_y" => false, //int bottom padding between squares
-			"extras" => false
+			"no_title" => false, //dont show title 
+			"force_cols" => false, //false or int force break after x, change media_wpr dimension to percentages 
+			
 		);
 		//set user opts
 		$this->opts = $this->opts + $defaults;
 		
 		//setup
 		switch ($this->opts['type']){
-		
+			case "grid":
+				//if sortby..we wanna only grab the 1st if array...it will be a string..
+				if ($this->opts['sort_by']){
+					if(is_array($this->opts['sort_by'])){
+						$this->opts['sort_by'] = array_shift($this->opts['sort_by']);
+					}
+					//regroup stuff
+					$this->data = Frunt::group($this->opts['sort_by'], $this->data, $this->opts['ascOrDesc']);
+				}else{
+					$this->data = array($this->data);
+				}
+				//print_r($this->data);
+				return $this->twig->render("menu_grid.php", array_merge($this->opts, array(
+					"projects" => $this->data,
+					"site_url" => $this->SITE_URL,
+					"cmcm_url" => $this->CMCM_URL
+				)));
+				
+				break;
+			case "horizontal":
+				//if sortby
+				if ($this->opts['sort_by']){
+					if (is_string($this->opts['sort_by'])){
+						$this->opts['sort_by'] = array($this->opts['sort_by']);
+						
+					}
+					
+					$cols = array();
+					foreach ($this->opts['sort_by'] as $index=>$sortKey){
+						if ($index!=0){
+							$tmp =  Frunt::getExistingValues($sortKey, $this->data);
+							$res = array();
+							foreach ($tmp as $possibleValue){
+								$res[$possibleValue] = array();
+								for($i=0; $i<$index; $i++){
+									$tmpKey = $this->opts['sort_by'][$i];
+									$res[$possibleValue][$tmpKey] = Frunt::getExistingValuesByCond($tmpKey, array(
+										array($sortKey, "EQUALS", $possibleValue)
+									), $this->data, $this->opts['ascOrDesc']);
+						 		}
+							}
+							 $cols[$sortKey] = $res;
+						 }else{
+							 $cols[$sortKey] = Frunt::getExistingValues($sortKey, $this->data, $this->opts['ascOrDesc']);
+						 }
+					}
+					$res = array();
+					Frunt::sort($this->data,  $this->opts['ascOrDesc'], 2, 'title');
+					
+					foreach ($this->data as $projId=>$proj){
+						//echo $proj['title']."\n";
+						 $res[$projId] = Frunt::getAttributes($this->opts['sort_by'], $proj, $this->opts['ascOrDesc']);
+					}
+					
+					$cols["projects"] = $res;
+				}
+				
+				 return $this->twig->render("menu_horiz.php", array_merge($this->opts, array(
+					"projects" => $this->data,
+					"site_url" => $this->SITE_URL,
+					"col_data" => isset($cols) ? $cols : false
+				)));
+				break;
 			case "basic":
+			case "vertical":
 			default:
 				//if sortby
 				if ($this->opts['sort_by']){

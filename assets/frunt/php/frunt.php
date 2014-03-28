@@ -29,6 +29,7 @@
  	 private $SITE_URL = "";
 	 private $config = "";
 	 private $data = "";
+	 private $templates = "";
 	 private $opts = "";
 	 
 	function __construct($CMCM_DIR="", $CMCM_URL="", $SITE_URL="", $opts=false) {
@@ -62,25 +63,40 @@
 	
 		//grab data
 		$this->data = $this->get($this->CMCM_DIR.self::DATA_DIR.$this->opts['file']);
+		$this->templates = $this->data->template;
+		
+		//grab template keys
+		$keys = array(
+			'project' => array_keys($this->convert($this->templates->project, 'array')),
+			'media' =>  array_keys($this->convert($this->templates->media, 'array'))
+		);
+		
+		//PROJECTS
+		//convert
+		$this->data->projects  = $this->convert($this->data->projects, 'array');
 		//remove unpublished projects
 		if (!$this->opts['show_unpublished']){
-			foreach ($this->data->projects as $projId=>$proj){
-				if (!$proj->published)
-					unset($this->data->projects->$projId);
+			foreach ($this->data->projects as $projId=>&$proj){
+				if (!$proj['published']){
+					unset($this->data->projects[$projId]);
+				}
 			}
-		}
+		}	
+		//organize project att by templates
+		self::multisort($this->data->projects, "asc", 3, $keys['project']);
+		//MEDIA
+		//remove unpublished media and reorder by 
 		
-		/*
-		//remove unpublished media
-		if (!$this->opts['show_unpublished)media']){
-			foreach ($this->data->projects as $projId=>$proj){
-			
-				if (!$proj->published)
-					unset($this->data->projects->$projId);
+		foreach ($this->data->projects as $projId => &$proj){
+			foreach ($proj['media'] as $mediaId => &$media){
+				if (!$this->opts['show_unpublished_media']){
+					if (!$media['visible']){
+						unset($this->data->projects[$projId]["media"][$mediaId]);
+					}
+				}
 			}
+			self::multisort($this->data->projects[$projId]["media"], "asc", 3, $keys['media']);		
 		}
-		*/
-		
 	}
 	
 	//initiate Twig for templating
@@ -103,6 +119,7 @@
 	
 	//get and decode files
 	private function get($f){
+		
 		return json_decode(file_get_contents($f));
 	}
 	
@@ -110,6 +127,8 @@
 	public function getProject($val, $att='id'){
 		foreach ($this->data->projects as $projId => $proj)
 			if (isset($proj->$att) && $proj->$att==$val){
+				return $proj;
+			}else if(isset($proj[$att]) && $proj[$att]==$val){
 				return $proj;
 			}
 		return false;
@@ -125,19 +144,54 @@
 	}
 	
 	//grab data file
-	public function getData($incTemplate=false){
+	public function getData(){
+		
 		$data = $this->data;
-		if (!$incTemplate)
-	 		unset($data->template);
 	 	return $data;
 	}
 	//grab data file
 	public function getProjects(){
 	 	return $this->data->projects; 
 	}
+	//get template by name or if no option, get all of em
+	public function getTemplates($type=false){
+		
+		if ($type){
+			return $this->data->template->$type;
+		}
+		else
+			return $this->data->template;
+	}
+	//get template attribute
+	public function getTemplateAttribute($att, $type){
+		if (isset($this->data->template->$att)){
+			return $this->data->template->$att;
+		}else{
+			return false;
+		}
+	}
+	
+	//get attributes from specific project/media
+	public static function getAttributes($arr,$dataObj, $ascOrDesc="desc"){
+		$ret = array();
+		if (is_string($arr))
+			$arr = array($arr);
+		foreach ($arr as $key){
+			$ret[$key] = (isset($dataObj[$key])) ? $dataObj[$key] : "undefined"; 
+		}
+		self::sort($ret, $ascOrDesc, 1);
+		return $ret;
+	}
+	
+	//grab possible values from filtered data
+	public static function getExistingValuesByCond($searchKey, $condArray, $dataObj,  $ascOrDesc="desc"){
+		$data = self::filter($dataObj, $condArray);
+		$values = self::getExistingValues($searchKey, $data, $ascOrDesc);
+		return $values;
+	}
 	
 	//grab possible values from data
-	public static function getExistingValues($searchKey, $dataObj){
+	public static function getExistingValues($searchKey, $dataObj, $ascOrDesc="desc"){
 		$arr = array();
 		foreach ($dataObj as $projId=>$projObj){
 			//if its got that attr and value is not in arr already
@@ -148,13 +202,75 @@
 			}
 			
 		}
+		self::sort($arr, $ascOrDesc);
 		return $arr;
 					
+	}
+	
+	//same as sort, except same routine done to all child arrays
+	public static function multisort(&$dataObj, $ascOrDesc="asc", $key=false, $att=false){
+		foreach ($dataObj as $id=>&$obj){
+			self::sort($dataObj[$id], $ascOrDesc, $key, $att);
+		}
+	}
+	
+	/********************************
+	 *   sort with several options 
+	 *	(0: sort by values, 
+	 *	 1 : sort by keys, 
+	 *	 2: sort by given attribute, 
+	 *	 3: sort by ordered keys)
+	 ********************************/
+	public static function sort(&$dataObj, $ascOrDesc="asc", $key=false, $att=false){
+		
+		if ($key<=1){
+			if ($ascOrDesc=="asc"){
+				(!$key) ? sort($dataObj) :  ksort($dataObj);
+			}else{
+				(!$key) ? rsort($dataObj) : krsort($dataObj);
+			}
+		//by attribute
+		}else if ($key==2){
+			$sortByAtt = function($a, $b) use ($att) {
+				 return strcmp(strtolower($a[$att]), strtolower($b[$att]));
+			};
+			usort($dataObj, $sortByAtt);
+			if ($ascOrDesc=="desc"){
+				$dataObj = array_reverse($dataObj);
+			}
+		//by array of new order keys
+		}else if ($key==3){
+			
+			$newArr = array();
+			$oldArr = $dataObj;
+			foreach ($att as $key){
+				if (isset($oldArr[$key])){
+					$newArr[$key] = $oldArr[$key]; 
+					unset($oldArr[$key]);
+				}
+			}
+			
+			//sort remaining
+			if ($ascOrDesc=="asc")
+				ksort($oldArr);
+			else
+				krsort($oldArr);
+			
+			//merge ordered and extras
+			$dataObj = array_merge($newArr, $oldArr);
+			//$dataObj = $newArr;
+		}
 	}
 	
 	//filter out by rules..DATA MUST BE ARRAY
 	public static function filter($data, $rules, $satisfy="all"){
 		//$data = (object) $data;
+		//check for individual
+		$MULTI = true;
+		if (isset($data["id"])){
+			$data = array($data);
+			$MULTI = false;
+		}
 		$res = ($satisfy=="all") ? $data : array();
 		
 		if (!is_array($rules[0])){
@@ -162,56 +278,74 @@
 		}
 		//print_r($rules);
 		foreach ($rules as $index=>$rule){
-			$attr = $rule[0];
-			$cond = $rule[1];
-			$val =  $rule[2];
-			foreach ((($satisfy=="all") ? $res : $data) as $projId=>$proj){
-				//print_r($proj);
-				//if (isset($proj[$attr])){
-					if (!isset($proj[$attr]))
-						$proj[$attr] = "undefined";
-					switch($cond){
-						default:
-						case "EQUALS":
-							//condition to meet
-							$eval = ($proj[$attr] == $val);
-							//check for condition
-							if ($satisfy=="all"){
-								if (!$eval)
-									unset($res[$projId]);
-							}else{
-								if ($eval)
-									$res[$projId] = $data[$projId];
+			$attr = (isset($rule[0])) ? $rule[0] : false;
+			$cond = (isset($rule[1])) ? $rule[1] : false;
+			$val =  (isset($rule[2])) ? $rule[2] : false;
+			$D = ($satisfy=="all") ? $res : $data;
+			switch($cond){
+				default:
+					foreach ((($satisfy=="all") ? $res : $data) as $projId=>$proj){
+							if (!is_array($attr)){
+								if (!isset($proj[$attr]))
+									$proj[$attr] = "undefined";
 							}
-							break;
-						case "NOT EQUALS":
-							//condition to meet
-							$eval = ($proj[$attr] != $val);
-							//check for condition
-							if ($satisfy=="all"){
-								if (!$eval)
-									unset($res[$projId]);
-							}else{
-								if ($eval)
-									$res[$projId] = $data[$projId];
-							}
-							break;
-					}	
-				/*
-				}else{
-					//condition to meet...wanting undefined
-					$eval = ($val == "undefined");
-					//check for condition
-					if ($satisfy=="all"){
-						if (!$eval)
-							unset($res[$projId]);
-					}else{
-						if ($eval)
-							$res[$projId] = $data[$projId];
+							switch($cond){
+								case 'IGNORE':
+									if ($attr!=false){
+										if (is_string($attr))
+											$attr = array($attr);
+										foreach($attr as $index=>$att){
+											if (isset($res[$projId][$att]))
+												unset($res[$projId][$att]);
+										}
+									}
+									break;
+								case 'ONLY':
+									if ($attr!=false){
+										$tmpArr = array();
+										if (is_string($attr))
+											$attr = array($attr);
+										foreach($attr as $index=>$att){
+											if (isset($res[$projId][$att]))
+												$tmpArr[$att] = $res[$projId][$att];
+										}
+										$res[$projId] = $tmpArr;
+									}
+									break;
+								default:	
+								case "EQUALS":
+									//condition to meet
+									$eval = ($proj[$attr] == $val);
+									//check for condition
+									if ($satisfy=="all"){
+										if (!$eval)
+											unset($res[$projId]);
+									}else{
+										if ($eval)
+											$res[$projId] = $data[$projId];
+									}
+									break;
+								case "NOT EQUALS":
+									//condition to meet
+									$eval = ($proj[$attr] != $val);
+									//check for condition
+									if ($satisfy=="all"){
+										if (!$eval)
+											unset($res[$projId]);
+									}else{
+										if ($eval)
+											$res[$projId] = $data[$projId];
+									}
+									break;
+								
+							}	
+
 					}
-				}
-				*/
+					break;
 			}
+		}
+		if ($MULTI==false){
+			$res = $res[0];
 		}
 		return $res;
 	}

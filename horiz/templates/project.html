@@ -24,12 +24,24 @@
 			
 			{# <---------- SOUND PREVIEW -----------------> #}
 			{% elseif media.type == "sound" %}
-				<div class='frunt-preview-wpr'>
-					<a href='{{media.src}}' class='frunt-widget frunt-widget-preview'  data-type='sound' data-responsive="true" data-proportion-bias='height' data-thumb='{{cmcm_url}}{{media.thumb}}' data-visual='true'>{{media.src}}</a>
+				<div class='frunt-preview-wpr frunt-thumb frunt-responsive' data-ratio='[1,1]' data-bias='parent-height'>
+					{% if media.thumb %}
+					<img src='{{cmcm_url}}{{media.thumb}}'>
+					{% else %}
+						<div class='noImage' data-ratio='[1,1]' data-bias='height'>SOUND</div>
+					{% endif %}
+					<a href='{{media.src}}' class='frunt-widget frunt-widget-preview'  data-type='sound' data-thumb='{{cmcm_url}}{{media.thumb}}' data-visual='true'>{{media.src}}</a>
 				</div>
 			{# <---------- VIDEO PREVIEW -----------------> #}
 			{% elseif media.type == "video" %}
-					<a href='{{media.src}}' class='frunt-widget frunt-widget-preview'  data-type='video' data-responsive="true" data-proportion-bias='height' data-thumb='{{cmcm_url}}{{media.thumb}}'>{{media.src}}</a>
+			<div class='frunt-preview-wpr frunt-thumb frunt-responsive' data-ratio='[1,1]' data-bias='parent-height'>
+					{% if media.thumb %}
+					<img src='{{cmcm_url}}{{media.thumb}}' >
+					{% else %}
+					<div class='noImage' data-ratio='[1,1]' data-proportion-bias='height'>VIDEO</div>
+					{% endif %}
+					<a href='{{media.src}}' class='frunt-widget frunt-widget-preview'  data-type='video' data-thumb='{{cmcm_url}}{{media.thumb}}'>{{media.src}}</a>
+			</div>
 			{% endif %}
 			{% if media.caption %}
 				<div class='caption'>{{media.caption}}</div>

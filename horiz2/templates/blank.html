@@ -1,0 +1,12 @@
+{# <--- WE USE SCAFFOLD BELOW AS TEMPLATE (base for pages) ----> #}
+{% extends "partial/_scaffold.html" %}
+
+{# <------------ BELOW APPENDS TO TITLE TAG -------------------> #}
+{% block title %}
+	Home
+{% endblock %}
+
+{# <----- BELOW GOES INTO MAIN CONTENT BLOCK (#content) -------> #}
+{% block content %}
+	{{content}}
+{% endblock %}

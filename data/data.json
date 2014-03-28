@@ -56,14 +56,14 @@
 								"type": "int",
 								"required": 1
 						},
-						"description": {
-								"type": "text",
-								"required": 1
-						},
 						"type_of_project": {
 								"type": "choice",
 								"choices": "architecture,installation,product design,software",
 								"required": 0
+						},
+						"description": {
+								"type": "text",
+								"required": 1
 						}
 				},
 				"media": {
@@ -85,12 +85,12 @@
 								"hidden": 1,
 								"choices": "image,video,sound"
 						},
-						"caption": {
-								"type": "text",
-								"required": 0
-						},
 						"thumb": {
 								"type": "string",
+								"required": 0
+						},
+						"caption": {
+								"type": "text",
 								"required": 0
 						}
 				}
@@ -177,27 +177,28 @@
 				},
 				"PROJ-2": {
 						"id": -2,
-						"cleanUrl": "xcfgdfgfdg-fdg-dfgdg-df-dfsdf",
 						"published": "1",
 						"added": "January 7, 1988 - 9:00am",
+						"cleanUrl": "xcfgdfgfdg-fdg-dfgdg-df-dfsdf",
 						"title": "Test Project 2 ",
 						"coverImage": "aHR0cDovL2FwaS5zb3VuZGNsb3VkLmNvbS90cmFja3MvOTYxODkyNzc-",
 						"year": "-2014",
+						"type_of_project": "architecture",
 						"description": "This is a Description",
 						"media": {
 								"xx": {
 										"src": "media/image-002.jpg",
-										"visible": "0",
+										"visible": 1,
 										"type": "image",
-										"caption": "This is image 1",
-										"thumb": "media/thumbnail/(4)image-002.jpg"
+										"thumb": "media/thumbnail/(4)image-002.jpg",
+										"caption": "This is image 1"
 								},
 								"aHR0cDovL2FwaS5zb3VuZGNsb3VkLmNvbS90cmFja3MvOTYxODkyNzc-": {
 										"src": "http://api.soundcloud.com/tracks/96189277",
 										"visible": "1",
 										"type": "sound",
-										"caption": "",
-										"thumb": "media/thumbnail/artworks-000050195071-zvcd77-t500x500.jpg"
+										"thumb": "media/thumbnail/artworks-000050195071-zvcd77-t500x500.jpg",
+										"caption": ""
 								}
 						}
 				},
