@@ -19,20 +19,21 @@
 		<div class='img_wpr'>
 			{# <---------- IMAGE PREVIEW -----------------> #}
 			{% if media.type == "image" %}
-				<img src='{{cmcm_url}}{{media.src}}'>
+				{# <img src='{{cmcm_url}}{{media.src}}'> #}
+				<a href='{{cmcm_url}}{{media.src}}'  data-src='{{cmcm_url}}{{media.src}}' title='{{media.caption}}' class='frunt-widget frunt-widget-preview'  data-autoplay='true' data-type='image' data-use-thumb='false' data-mode='modal' {% if media.thumb %}data-thumb='{{cmcm_url}}{{media.thumb}}'{% endif %} data-bias='parent-height' data-responsive='true' data-visual='true'>{{media.src}}</a>
 			
 			{# <---------- SOUND PREVIEW -----------------> #}
 			{% elseif media.type == "sound" %}
-					<a href='{{media.src}}' class='frunt-widget frunt-widget-preview'  data-autoplay='true' data-type='sound' data-mode='thumb' {% if media.thumb %}data-thumb='{{cmcm_url}}{{media.thumb}}'{% endif %} data-bias='parent-height' data-responsive='true' data-visual='true'>{{media.src}}</a>
+					<a href='{{media.src}}' class='frunt-widget frunt-widget-preview'  data-autoplay='true' data-type='sound' data-mode='modal' {% if media.thumb %}data-thumb='{{cmcm_url}}{{media.thumb}}'{% endif %} data-bias='parent-height' data-responsive='true' data-visual='true'>{{media.src}}</a>
 					
 			{# <---------- VIDEO PREVIEW -----------------> #}
 			{% elseif media.type == "video" %}
 			
-					<a href='{{media.src}}' class='frunt-widget frunt-widget-preview'  data-type='video' data-autoplay='true' data-mode='thumb' {% if media.thumb %}data-thumb='{{cmcm_url}}{{media.thumb}}'{% endif %} data-bias='parent-height' data-responsive='true'>{{media.src}}</a>
+					<a href='{{media.src}}' class='frunt-widget frunt-widget-preview'  data-type='video' data-autoplay='true' data-mode='modal' {% if media.thumb %}data-thumb='{{cmcm_url}}{{media.thumb}}'{% endif %} data-bias='parent-height' data-responsive='true'>{{media.src}}</a>
 
 			{% endif %}
 				{% if media.type == "image" %}
-				<div class='caption'>{% if media.caption %} {{media.caption}} {% endif %} <a href='{% if media.type == "image" %}{{cmcm_url}}{% endif %}{{media.src}}' data-type='{{media.type}}' title='{{media.caption}}' class='frunt-modal'><span class='glyphicon glyphicon-search enlarge_icon' ></span></a></div>
+				<div class='caption'>{% if media.caption %} {{media.caption}} {% endif %} {#<a href='{% if media.type == "image" %}{{cmcm_url}}{% endif %}{{media.src}}' data-type='{{media.type}}' title='{{media.caption}}' class='frunt-modal'><span class='glyphicon glyphicon-search enlarge_icon' ></span></a>#}</div>
 				{% endif %}
 			
 		</div>

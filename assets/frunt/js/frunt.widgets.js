@@ -103,6 +103,7 @@
 				mediaUrl = $(this).attr("href");
 				mediaThumb = $(this).attr("data-thumb");
 				mediaType = $(this).attr("data-type");
+				title =  $(this).attr("title");
 				propBias = $(this).attr("data-bias");
 				propBias = (propBias==undefined) ? $(this).attr("data-proportion-bias") : propBias;
 				parent = $(this).parent();
@@ -120,6 +121,7 @@
 				$(this).replaceWith(that.preview({
 					src : mediaUrl,
 					thumb : mediaThumb,
+					caption : title,
 					type : mediaType,
 					opts : $(this).data() //extra options
 				}))		
@@ -400,18 +402,22 @@
 			mediaType = this.mediaTypes[mediaObj.type];
 			
 			iconTypes = {
+				image : "glyphicon glyphicon-search",
 				sound : "glyphicon glyphicon-volume-up",
 				video : "glyphicon glyphicon-facetime-video"	
 			};
 			
 			wpr = $("<div class='frunt-preview-wpr'></div");
 			switch (mediaObj.opts.mode){
+				//MODAL
+				case "modal":
 				//THUMB
 				case "thumb":
 					icon = $("<span class='"+iconTypes[mediaObj.type]+" "+mediaObj.type+"_icon frunt-absCenter frunt-32 frunt-iconBox frunt-clickable' title='"+mediaObj.type+"'></span>");
-					
 					if (mediaObj.thumb){
-						thumb = $("<img class='frunt-preview-thumb' src='"+mediaObj.thumb+"'>");
+						src = (mediaObj.type=='image' && mediaObj.opts.useThumb!=undefined && mediaObj.opts.useThumb==false) ?  mediaObj.src : mediaObj.thumb;
+						thumb = $("<img class='frunt-preview-thumb' src='"+src+"'>");
+						thumb.attr("title", mediaObj.caption);
 						thumb.attr("data-bias", mediaObj.opts.bias);
 						//responsive?
 						if (mediaObj.opts.responsive){
@@ -431,25 +437,38 @@
 							thumb.addClass("frunt-responsive");
 						}
 					}
-					icon.on("click", function(){
-						thumb = $(this).closest(".frunt-preview-wpr").find('.frunt-preview-thumb');
-
-						ret =  mediaType.preview(mediaObj);
-						ret.hide();
-						//responsive?
-						if (mediaObj.opts.responsive){
-				     		ret.attr("data-bias", mediaObj.opts.bias);
-				     		ret.addClass("frunt-responsive");
-				     		ret.attr("data-sync-parent", true);
-				     	}
-				     	//ret.on("load", function(){
-				     		ret.show();
-				     		thumb.replaceWith(ret);
-				     		$(this).hide();
-				     	//});
-				     	that.onResize();
-				     
-					});
+					if (mediaObj.opts.mode=="thumb"){
+						icon.on("click", function(){
+							thumb = $(this).closest(".frunt-preview-wpr").find('.frunt-preview-thumb');
+	
+							ret =  that.mediaTypes[mediaObj.type].preview(mediaObj);
+							ret.hide();
+							//responsive?
+							if (mediaObj.opts.responsive){
+					     		ret.attr("data-bias", mediaObj.opts.bias);
+					     		ret.addClass("frunt-responsive");
+					     		ret.attr("data-sync-parent", true);
+					     	}
+					     	//ret.on("load", function(){
+					     		ret.show();
+					     		thumb.replaceWith(ret);
+					     		$(this).hide();
+					     	//});
+					     	that.onResize();
+					     
+						});
+					}else if(mediaObj.opts.mode=="modal"){
+						icon.on("click", function(){
+							thumb = $(this).closest(".frunt-preview-wpr").find('.frunt-preview-thumb');
+							modalContent = that.mediaTypes[mediaObj.type].preview(mediaObj);
+							console.log("opening modal.."+mediaObj.type);
+							console.log(mediaObj);
+							that.modal({
+								subject : thumb.attr("title"),
+								description : modalContent
+							});
+						});
+					}
 					if (mediaObj.opts.responsive){
 						thumb.attr("data-sync-parent", true);
 					}
@@ -459,7 +478,7 @@
 				//DIRECT EMBED
 				case "direct_embed":
 				default:
-					ret =  mediaType.preview(mediaObj);
+					ret =  that.mediaTypes[mediaObj.type].preview(mediaObj);
 					ret.hide();
 					//responsive?
 					if (mediaObj.opts.responsive){
@@ -512,10 +531,8 @@
 			
 			modal_content.append(description);
 			modal_bg.append(modal_content);
-			
-			
 			modal_bg.on("click", close);
-			
+			$("body").append(modal_bg);
 			
 			//img = modal_content.find("img").first();
 			//ifr = modal_content.find("iframe").first();
@@ -526,14 +543,21 @@
 				dims = that.getResizeImageDimensions(modal_content.width(),$(window).height()-HEIGHTBUFFER, img.width, img.height, "within");
 			
 				//if (opts.boxDimensions){
+				
+					description.css({
+						border: modal_content.css("border"),
+						padding: modal_content.css("padding")
+					});
 					modal_content.css({
 						width : dims.width+"px",
 						height : dims.height+"px",
+						border : "none"
 					});
 				
 				});
 			//IFRAME MODAL
 			}else if (description.is("iframe")){
+				console.log(modal_content.width());
 				dims = that.getResizeImageDimensions(modal_content.width(),$(window).height()-HEIGHTBUFFER, 9,6, "within");
 				modal_content.css({
 						width : dims.width+"px",
@@ -541,7 +565,7 @@
 					});
 			}
 		
-			$("body").append(modal_bg);
+			
 			
 			
 			//calculate top
@@ -560,18 +584,12 @@
 				image : {
 					preview : function(mediaObj){
 						mediaObj.opts = (mediaObj.opts==undefined) ? {} : mediaObj.opts;
-						contents = $("<div class='media_crop' style='cursor:pointer'></div>");
-				     	if (mediaObj.thumb && mediaObj.thumb!="false"){
-					     contents.append("<img>").find('img').attr("src", mediaObj.thumb);  	
-					    }else if (mediaObj.src){
-						   contents.append("<img>").find('img').attr("src", mediaObj.src);  	 
+				     	contents =  $("<img>");
+				     	if (mediaObj)
+				     	if (mediaObj.src){    
+						   contents.attr("src", mediaObj.src);  	 
 					    }else
 					    	contents.addClass('noImage').html("No Image");
-					    
-					    
-					    if (mediaObj.thumb || mediaObj.src){  
-						  
-					    }
 					    return contents;
 					}
 				},
@@ -594,6 +612,7 @@
 				},
 				sound : {
 					preview : function(mediaObj){
+						//console.log('weeeeeeeeeeee');
 						mediaObj.opts = (mediaObj.opts==undefined) ? {} : mediaObj.opts;
 						//check url
 						ret = "";

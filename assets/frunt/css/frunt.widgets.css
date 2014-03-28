@@ -324,6 +324,7 @@ a.frunt-modal{
 	
 	position: absolute;
 	right: 0px;
+	cursor: pointer;
 	top: -25px;
 }
 
@@ -341,12 +342,34 @@ a.frunt-modal{
   top: 0; left: 0; bottom: 0; right: 0;
   z-index: 5;
 }
-
 .frunt-fadeout { -webkit-mask-image: -webkit-gradient(linear, left 90%, left bottom, from(rgba(0,0,0,1)), to(rgba(0,0,0,0))); } 
 .frunt-clickable{ cursor: pointer; }
-.frunt-clickable:hover,a.frunt-modal:hover{ color: #3496ff;}
+.frunt-clickable:hover,
+a.frunt-modal:hover,
+.frunt-modal-close:hover{ 
+	color: #3496ff;
+}
 .frunt-white{ color: #fff }
 .frunt-32{ font-size: 32px; width: 32px; height: 32px; }
 .frunt-16{ font-size: 16px; width: 16px; height: 16px; }
 .frunt-32.frunt-iconBox{ width: 52px; height: 52px; }
 .frunt-16.frunt-iconBox{ width: 36px; height: 36px; }
+
+
+.glyphicon.image_icon{
+	margin : 0px;
+	top: 5px;
+	left: auto;
+	bottom: auto;
+	opacity: 0;
+	right: 5px;
+	font-size: 12px; 
+	width: 32px;
+	height: 32px;
+	 transition: opacity .25s ease-in-out;
+   -moz-transition: opacity .25s ease-in-out;
+   -webkit-transition: opacity .25s ease-in-out;
+}
+.frunt-preview-wpr:hover .glyphicon.image_icon{
+	opacity: 1;
+}
