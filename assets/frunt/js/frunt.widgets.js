@@ -196,6 +196,7 @@
 						
 					}
 				});
+				that.onResize();
 			}
 			
 			
