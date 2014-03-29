@@ -15,6 +15,9 @@
 			//setup layoutWidget
 			this.layoutWidget();
 			//init responsive things.
+			$(document).imagesLoaded(function(){
+				this.onResize();
+			});
 			this.onResize();
 			//EVENTS
 			window.addEventListener("resize", function(){
