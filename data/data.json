@@ -823,113 +823,113 @@
 						"title": "Soundcloud test",
 						"coverImage": "aHR0cDovL2FwaS5zb3VuZGNsb3VkLmNvbS90cmFja3MvMTM3MDg1NjY3",
 						"year": "2014",
-						"description": "THis is a test for uploading multiple types of files.",
 						"type_of_project": "product design",
+						"description": "Contrary to popular belief,&lt;b&gt; Lorem Ipsum &lt;/b&gt; is not simply random text. It has roots in a piece of classical Latin literature from 45 BC, making it over 2000 years old. Richard McClintock, a Latin professor at Hampden-Sydney College in Virginia, looked up one of the more obscure Latin words, consectetur, from a Lorem Ipsum passage, and going through the cites of the word in classical literature, discovered the undoubtable source. Lorem Ipsum comes from sections 1.10.32 and 1.10.33 of &quot;de Finibus Bonorum et Malorum&quot; (The Extremes of Good and Evil) by Cicero, written in 45 BC. This book is a treatise on the theory of ethics, very popular during the Renaissance. The first line of Lorem Ipsum, &quot;Lorem ipsum dolor sit amet..&quot;, comes from a line in section 1.10.32.\n\nThe standard chunk of Lorem Ipsum used since the 1500s is reproduced below for those interested. Sections 1.10.32 and 1.10.33 from &quot;de Finibus Bonorum et Malorum&quot; by Cicero are also reproduced in their exact original form, accompanied by English versions from the 1914 translation by H. Rackham.",
 						"media": {
 								"aHR0cDovL2FwaS5zb3VuZGNsb3VkLmNvbS90cmFja3MvMTA4NTE2ODQ2": {
 										"src": "http://api.soundcloud.com/tracks/108516846",
 										"visible": "1",
 										"type": "sound",
-										"caption": "",
-										"thumb": "media/thumbnail/(1)artworks-000056829441-we8g5u-t500x500.jpg"
+										"thumb": "media/thumbnail/(1)artworks-000056829441-we8g5u-t500x500.jpg",
+										"caption": ""
 								},
 								"aHR0cDovL2FwaS5zb3VuZGNsb3VkLmNvbS90cmFja3MvMTM1NjkzOTcy": {
 										"src": "http://api.soundcloud.com/tracks/135693972",
 										"visible": "1",
 										"type": "sound",
-										"caption": "",
-										"thumb": "media/thumbnail/(14)artworks-000071335516-7t6nsq-t500x500.jpg"
+										"thumb": "media/thumbnail/(14)artworks-000071335516-7t6nsq-t500x500.jpg",
+										"caption": ""
 								},
 								"aW1hZ2UtMDExLmpwZw--": {
 										"src": "media/image-011.jpg",
 										"visible": "1",
 										"type": "image",
-										"caption": "Exterior view 1",
-										"thumb": "media/thumbnail/(6)image-011.jpg"
+										"thumb": "media/thumbnail/(6)image-011.jpg",
+										"caption": "Exterior view 1"
 								},
 								"aHR0cDovL3lvdXR1LmJlL0xyTlNPblFJVmJJ": {
 										"src": "http://youtu.be/LrNSOnQIVbI",
 										"visible": "1",
 										"type": "video",
-										"caption": "",
-										"thumb": "media/thumbnail/(32)sddefault.jpg"
+										"thumb": "media/thumbnail/(32)sddefault.jpg",
+										"caption": ""
 								},
 								"aHR0cDovL3ZpbWVvLmNvbS84NTAwNDkwNg--": {
 										"src": "http://vimeo.com/85004906",
 										"visible": "1",
 										"type": "video",
-										"caption": "",
-										"thumb": "media/thumbnail/(13)462402180_640.jpg"
+										"thumb": "media/thumbnail/(13)462402180_640.jpg",
+										"caption": ""
 								},
 								"aHR0cDovL3ZpbWVvLmNvbS84NzAyNDYyMQ--_1": {
 										"src": "http://vimeo.com/87024621",
 										"visible": "1",
 										"type": "video",
-										"caption": "",
-										"thumb": "media/thumbnail/(17)464920662_640.jpg"
+										"thumb": "media/thumbnail/(17)464920662_640.jpg",
+										"caption": ""
 								},
 								"aW1hZ2UtMDA3ICgxKS5qcGc-": {
 										"src": "media/image-007 (1).jpg",
 										"visible": "1",
 										"type": "image",
-										"caption": "Firestation Exterior view",
-										"thumb": "media/thumbnail/(6)image-007 (1).jpg"
+										"thumb": "media/thumbnail/(6)image-007 (1).jpg",
+										"caption": "Firestation Exterior view"
 								},
 								"aW1hZ2UtMDA4ICgxKS5qcGc-": {
 										"src": "media/image-008 (1).jpg",
 										"visible": "1",
 										"type": "image",
-										"caption": "Marketplace underneath",
-										"thumb": "media/thumbnail/(6)image-008 (1).jpg"
+										"thumb": "media/thumbnail/(6)image-008 (1).jpg",
+										"caption": "Marketplace underneath"
 								},
 								"aHR0cDovL2FwaS5zb3VuZGNsb3VkLmNvbS90cmFja3MvMTM1NjkzOTcy_3": {
 										"src": "http://api.soundcloud.com/tracks/135693972",
 										"visible": "1",
 										"type": "sound",
-										"caption": "some text",
-										"thumb": "media/thumbnail/(12)artworks-000071335516-7t6nsq-t500x500.jpg"
+										"thumb": "media/thumbnail/(12)artworks-000071335516-7t6nsq-t500x500.jpg",
+										"caption": "some text"
 								},
 								"aW1hZ2UtMDA5LmpwZw--": {
 										"src": "media/image-009.jpg",
 										"visible": "1",
 										"type": "image",
-										"caption": "Interior view near the mountians",
-										"thumb": "media/thumbnail/(6)image-009.jpg"
+										"thumb": "media/thumbnail/(6)image-009.jpg",
+										"caption": "Interior view near the mountians"
 								},
 								"aW1hZ2UtMDEwLmpwZw--": {
 										"src": "media/image-010.jpg",
 										"visible": "1",
 										"type": "image",
-										"caption": "Exterior view from bay",
-										"thumb": "media/thumbnail/(6)image-010.jpg"
+										"thumb": "media/thumbnail/(6)image-010.jpg",
+										"caption": "Exterior view from bay"
 								},
 								"aHR0cDovL2FwaS5zb3VuZGNsb3VkLmNvbS90cmFja3MvMTMxNTg2NjU-": {
 										"src": "http://api.soundcloud.com/tracks/13158665",
 										"visible": "1",
 										"type": "sound",
-										"caption": "",
-										"thumb": ""
+										"thumb": "",
+										"caption": ""
 								},
 								"aHR0cDovL2FwaS5zb3VuZGNsb3VkLmNvbS90cmFja3MvMTM1NjkzOTcy_1": {
 										"src": "http://api.soundcloud.com/tracks/135693972",
 										"visible": "1",
 										"type": "sound",
-										"caption": "",
-										"thumb": "media/thumbnail/(1)artworks-000071335516-7t6nsq-t500x500.jpg"
+										"thumb": "media/thumbnail/(1)artworks-000071335516-7t6nsq-t500x500.jpg",
+										"caption": ""
 								},
 								"aHR0cDovL2FwaS5zb3VuZGNsb3VkLmNvbS90cmFja3MvMTM1NjkzOTcy_2": {
 										"src": "http://api.soundcloud.com/tracks/135693972",
 										"visible": "1",
 										"type": "sound",
-										"caption": "",
-										"thumb": "media/thumbnail/(5)artworks-000071335516-7t6nsq-t500x500.jpg"
+										"thumb": "media/thumbnail/(5)artworks-000071335516-7t6nsq-t500x500.jpg",
+										"caption": ""
 								},
 								"aHR0cDovL2FwaS5zb3VuZGNsb3VkLmNvbS90cmFja3MvMTM3MDg1NjY3": {
 										"src": "http://api.soundcloud.com/tracks/137085667",
 										"visible": "1",
 										"type": "sound",
-										"caption": "sadsadsad",
-										"thumb": "media/thumbnail/artworks-000072106204-ea8j6x-t500x500.jpg"
+										"thumb": "media/thumbnail/artworks-000072106204-ea8j6x-t500x500.jpg",
+										"caption": "sadsadsad"
 								}
 						}
 				},

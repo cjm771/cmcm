@@ -12,6 +12,8 @@
 			this.previewWidget();
 			//setup modalWidget
 			this.modalWidget();
+			//setup layoutWidget
+			this.layoutWidget();
 			//init responsive things.
 			this.onResize();
 			//EVENTS
@@ -33,8 +35,10 @@
 					ratio = $.parseJSON($(this).attr("data-ratio"));
 					//how to fit the object...is it filled (fill) or contained (within)..
 					fit = $(this).attr("data-fit");
-					if (fit==undefined || fit==false)
-						fit=="fill";
+					if (fit==undefined || fit==false || fit==""){
+						fit="fill";
+						console.log($(this).attr('src')+" = "+fit);
+					}
 					propBias = $(this).attr("data-bias");
 					syncParent =  $(this).attr("data-sync-parent");
 					parent = $(this).parent();
@@ -160,6 +164,42 @@
 				});
 			}
 		},
+		layoutWidget : function(){
+			var that = this;
+			if ($(".frunt-layout.frunt-layout-grid").length){
+				$(".frunt-layout.frunt-layout-grid").each(function(){
+					menu = $(this);
+					
+					forceCols = menu.attr("data-force-cols");
+					if (forceCols){
+						menu.css("width", "100%");
+						menu.find(".thumb_group").css("width", "100%");
+						samp = menu.find(".thumb_wpr").first();
+						ratio = samp.height()/samp.width();
+						container = samp.parent();
+						//parentExtraPadding = (samp.parent().outerWidth(true)-samp.parent().width());
+						extraPadding = (samp.outerWidth(true)-samp.width())*forceCols;
+						width = (container.width()-extraPadding)/forceCols;
+						//convert to percent
+						width = (width/container.width())*100;
+						height = (width*ratio);
+						menu.find(".thumb_wpr").addClass("frunt-responsive");
+						menu.find(".thumb_wpr").each(function(){
+							//$(this).width(width);
+							$(this).css({
+								width : width+"%"
+							});
+							
+							$(this).attr("data-bias", "width");
+							$(this).attr("data-ratio", JSON.stringify([width,height]));	
+						})
+						
+					}
+				});
+			}
+			
+			
+		},
 		menuWidget : function(){
 			var that = this;
 			if ($(".frunt-menu.frunt-menu-grid").length){
@@ -202,7 +242,7 @@
 					$(this).find(".link").each(function(){
 						$(this).on("click", function(){
 							if (!$(this).hasClass("disabled")){
-								$(this).closest(".col_content").scrollTop($(this).position().top);						
+								//$(this).closest(".col_content").scrollTop($(this).position().top);						
 								//define els						
 								column = $(this).closest(".column");
 								
@@ -262,6 +302,7 @@
 					if ($(menu).find(".active").length){
 						active = $(menu).find(".active");
 						column = active.closest(".column");
+						active.closest(".column").find(".col_content").scrollTop(active.position().top);
 						//
 						$(".column").not(column).each(function(){
 							key = $(this).attr("data-att");
@@ -270,8 +311,14 @@
 								//link = this;
 								if (activeField==$(this).attr("data-val")){
 									$(this).trigger("click");
-								
+									    
+									if ($(this).closest(".column").find(".col_content").length){
+										el = $(this).closest(".column").find(".col_content");
+										console.log(el[0].scrollHeight+" "+$(this).position().top);
+										$(this).closest(".column").find(".col_content").scrollTop($(this).position().top);
+									}
 								}
+								
 							});
 						});
 					}
@@ -410,6 +457,10 @@
 			wpr = $("<div class='frunt-preview-wpr'></div");
 			switch (mediaObj.opts.mode){
 				//MODAL
+				case "none":
+					mediaObj.opts.noIcons = true;
+				case "modal-noIcon":
+					mediaObj.opts.noIcons = true;
 				case "modal":
 				//THUMB
 				case "thumb":
@@ -417,8 +468,21 @@
 					if (mediaObj.thumb){
 						src = (mediaObj.type=='image' && mediaObj.opts.useThumb!=undefined && mediaObj.opts.useThumb==false) ?  mediaObj.src : mediaObj.thumb;
 						thumb = $("<img class='frunt-preview-thumb' src='"+src+"'>");
-						thumb.attr("title", mediaObj.caption);
+						
+						if (mediaObj.opts.thumb)
+							thumb.attr("data-thumb", mediaObj.opts.thumb);
+						if (mediaObj.opts.src)
+							thumb.attr("data-src", mediaObj.opts.src);
+						if (mediaObj.opts.mediaKey)
+							thumb.attr("data-media-key", mediaObj.opts.mediaKey);
+						if (mediaObj.caption)
+							thumb.attr("title", mediaObj.caption);
+						if (mediaObj.opts.fit)
+							thumb.attr("data-fit", mediaObj.opts.fit);
+						if (mediaObj.opts.bias)
 						thumb.attr("data-bias", mediaObj.opts.bias);
+						
+						
 						//responsive?
 						if (mediaObj.opts.responsive){
 							thumb.imagesLoaded(function(img){
@@ -426,7 +490,7 @@
 								 ratio = [img.width, img.height];
 								 $(img).attr("data-ratio", JSON.stringify(ratio));
 								 $(img).addClass("frunt-responsive");
-								 //$(img).attr("data-sync-parent", true);
+								 //$(img).attr("data-=", true);
 							});
 						}
 					}else{
@@ -445,9 +509,16 @@
 							ret.hide();
 							//responsive?
 							if (mediaObj.opts.responsive){
+								if (mediaObj.opts.realFit){
+									ret.attr("data-fit", mediaObj.opts.realFit);
+								}else if (mediaObj.opts.fit){
+									ret.attr("data-fit", mediaObj.opts.fit);
+								}
 					     		ret.attr("data-bias", mediaObj.opts.bias);
 					     		ret.addClass("frunt-responsive");
-					     		ret.attr("data-sync-parent", true);
+					     		if (mediaObj.opts.syncParent){
+					     			ret.attr("data-sync-parent", true);
+					     		}
 					     	}
 					     	//ret.on("load", function(){
 					     		ret.show();
@@ -461,18 +532,28 @@
 						icon.on("click", function(){
 							thumb = $(this).closest(".frunt-preview-wpr").find('.frunt-preview-thumb');
 							modalContent = that.mediaTypes[mediaObj.type].preview(mediaObj);
-							console.log("opening modal.."+mediaObj.type);
-							console.log(mediaObj);
 							that.modal({
 								subject : thumb.attr("title"),
 								description : modalContent
 							});
 						});
+					}else if (mediaObj.opts.mode=="modal-noIcon"){
+						thumb.on("click", function(){
+							thumb = $(this);
+							modalContent = that.mediaTypes[mediaObj.type].preview(mediaObj);
+							that.modal({
+								subject : thumb.attr("title"),
+								description : modalContent
+							});
+						});	
 					}
 					if (mediaObj.opts.responsive){
-						thumb.attr("data-sync-parent", true);
+						if (mediaObj.opts.syncParent)
+							thumb.attr("data-sync-parent", true);
 					}
-					wpr.append(icon);
+					if (mediaObj.opts.noIcons==undefined || mediaObj.opts.noIcons==false ){
+						wpr.append(icon);
+					}
 					wpr.append(thumb);
 					break;
 				//DIRECT EMBED

@@ -66,6 +66,14 @@
 	padding: 20px;
 }
 
+.frunt-menu, .column{
+	height : 100%;
+}
+#menu .col_content{
+	position : relative;
+	overflow : hidden;
+	height : 100%;
+}
 .frunt-menu-horiz .col_content{
 	padding: 0 20px 30px 0 ;
 	

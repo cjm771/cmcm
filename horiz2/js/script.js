@@ -5,6 +5,8 @@ horizScript = {
 	init : function(){
 		var that=this;
 		
+		
+		/*
 		//pretty scrollbar on menu
 		$(" .frunt-menu, .column").css({
 			"height" : "100%"
@@ -12,10 +14,14 @@ horizScript = {
 		$("#menu .col_content").css({
 			"position" : "relative",
 			"overflow" : "hidden",
+			"overflow-y" : "scroll",
 			"height" : "100%"
 		});
+		*/
+		
 		
 		$("#menu .col_content").each(function(){
+			
 			$(this).perfectScrollbar({
 			  wheelSpeed: 2,
 			  wheelPropagation: 1,
@@ -23,6 +29,7 @@ horizScript = {
 			  includePadding: true,
 			  suppressScrollX : true
 		  })
+		  
 		});
 		$("#menu #info_toggle").click(function(){
 			that.infoVisible=(!that.infoVisible);
