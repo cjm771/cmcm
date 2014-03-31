@@ -1,0 +1,130 @@
+#body, html{
+	margin: 0px !important;
+	padding: 0;
+	height: 100%;
+	background: #fff;
+
+}
+
+#menu{
+	display: block;
+	position: fixed;
+	z-index: 10;
+	background: #fff;
+	margin: 0;
+	float: left;
+	padding: 0;
+	height: 100%;
+	-webkit-mask-image: -webkit-gradient(linear, left 90%, left bottom, from(rgba(0,0,0,1)), to(rgba(0,0,0,0)));
+	width: 300px;
+}
+
+#content{
+	position: relative;
+	display: block;
+	max-width: 800px;
+	margin: 0;
+	padding: 0;
+	height: 100%;
+	margin-left: 300px;
+}
+.frunt-layout{
+	margin-bottom: 40px;
+	margin-right: 40px;
+}
+.frunt-layout .thumb_wpr .caption{
+	background: rgba(255,255,255,.9);
+}
+
+#splash{
+	background: #fff;
+	height: 100%;
+	width: 100%;
+}
+
+#header{
+	padding: 20px 40px;
+}
+#header .site_title{
+	font-size: 24px;
+	margin-bottom: 2px;
+}
+#header .site_title a{
+	color: inherit;
+	text-decoration: inherit;
+	
+}
+#header .site_subtitle{
+	font-size: 14px;
+	margin-bottom: 10px;
+}
+#header .site_description{
+	font-size: 10px;
+	color: #999;
+}
+.frunt-menu {
+	padding-bottom: 200px;
+
+}
+.frunt-menu .extras{
+		color: #666;
+}
+
+.frunt-menu .extras a{
+	color: inherit;
+	padding: 0 10px;
+	display: block;
+	text-decoration: inherit;
+}
+
+.project_info{
+	right:20px;
+	z-index: 10;
+	top:20px;
+	color: #000;
+	padding: 30px 0px;
+}
+.project_info .project_title{
+	text-transform: capitalize;
+	font-weight: bold;
+	vertical-align: bottom;
+	margin-bottom: 20px;
+	word-break: break-word;
+}
+.project_info .frunt-list .val{
+	font-size: 10px;
+	word-break: break-word;
+	padding: 5px 0;
+	padding-right: 50px;
+	display: block;
+
+}
+.img_slider{
+	overflow-x:hidden;
+	padding: 0;
+	overflow-y: scroll;
+	height: auto;
+	min-height: 100%;
+	margin-left: 300px;
+	background-color: #c0c0c0;
+}
+.img_wpr{
+
+	position: relative;
+	margin: 0px auto;
+	display: block;
+	padding: 0;
+	
+	overflow: hidden;
+}
+.img_wpr .caption{
+	padding: 5px;
+	 background: #000;
+	 display: inline-block;
+	position: absolute;
+	color: #fff;
+	font-size: 12px;
+	bottom: 20px;
+	left: 20px;
+}
+

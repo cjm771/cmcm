@@ -2,6 +2,7 @@
   
  $.extend(cmcm, {
 	fruntWidget : {
+		miscTimer : {},
 		resizeTimer : null,
 		resizeTime : 100,
 		init : function(){
@@ -35,16 +36,20 @@
 			clearTimeout(this.resizeTimer);
 			this.resizeTimer = setTimeout(function(){
 				$(".frunt-responsive, .frunt_responsive").each(function(){
-					ratio = $.parseJSON($(this).attr("data-ratio"));
+					parent = $(this).parent();
+					if (!$(this).attr("data-ratio"))
+						ratio = [parent.width(), parent.height()];
+					else
+						ratio = $.parseJSON($(this).attr("data-ratio"));
+						
 					//how to fit the object...is it filled (fill) or contained (within)..
 					fit = $(this).attr("data-fit");
 					if (fit==undefined || fit==false || fit==""){
 						fit="fill";
-						console.log($(this).attr('src')+" = "+fit);
 					}
 					propBias = $(this).attr("data-bias");
 					syncParent =  $(this).attr("data-sync-parent");
-					parent = $(this).parent();
+				
 	
 					//prop bias lets us determine where to grab dimensions from..
 					//otherwise..we will just make it match its parent
@@ -167,8 +172,154 @@
 				});
 			}
 		},
+		slideshow_goto : function(el, id, effect,loop){
+			
+			currentSlide =  slider.find(".slide:eq("+(slider.attr("data-current"))+")");
+			
+			//reset old incase its an iframe playing
+			/*
+			backup = currentSlide.clone(1,1);
+			currentSlide.replaceWith(backup);
+			*/
+			
+			slideID = id;
+			slider = $(el);
+			effect = slider.attr("data-effect");
+			loop = slider.attr("data-loop");
+			length = $(slider).find(".slide").length;
+			loop = (loop==undefined) ? 0 : loop;
+			if (loop){
+				slideID = slideID%(length);
+				if (slideID<0){
+					slideID = (length-1);
+				}
+			}else
+				slideID = (Math.max(0, slideID)==0) ? 0 : Math.min(slideID, length-1);
+			if (effect=='slide'){
+				slider.find(".frunt-slider").animate({
+					scrollLeft : slider.find(".slide:eq("+(slideID)+")")[0].offsetLeft
+				}, duration);
+			}else if(effect='fade'){
+				active = slider.find(".slide:eq("+(slider.attr("data-current"))+")");
+				next = slider.find(".slide:eq("+(slideID)+")");
+
+			  	active.css({
+			  		'opacity': 0,
+			  		'z-index' : 1
+				  	
+			  	});
+			  	next.css({
+			  		'opacity' : 1,
+			  		'z-index' : 5
+				  	
+			  	});
+			}else{
+				slider.scrollLeft(slider.find(".slide:eq("+(slideID)+")")[0].offsetLeft);
+			}
+			//trigger move event
+			slider.trigger({
+				'type' : 'frunt.slideshow.change',
+				'index' : slideID
+			});
+			//update controls
+			if (slider.find(".frunt-layout-controls").length){
+					if (slider.find(".info").length){
+						slider.find(".info .current").html(slideID+1);
+					}
+					if (slider.find(".jump_to").length){
+						slider.find(".jump_to").removeClass("active");
+						slider.find(".jump_to[data-id='"+slideID+"']").addClass("active");
+					}
+			}
+			slider.attr("data-current", slideID);		
+		},
 		layoutWidget : function(){
+			
 			var that = this;
+			//initialize slideshow
+			if ($(".frunt-layout.frunt-layout-slideshow").length){
+				$(".frunt-layout.frunt-layout-slideshow").each(function(){
+					slider = $(this);
+					
+			
+					id = "slider-"+Math.round(Math.random()*10000000000);
+					slider.attr('id',id);
+					effect = slider.attr("data-effect");
+					
+					//fix slider if window is being resized
+					if (effect=="slide"){
+						window.addEventListener("resize", function(){
+							clearTimeout(that.miscTimer.slider);
+							that.miscTimer.slider = null;
+							that.miscTimer.slider = setTimeout(function(){
+								slider = $("#"+id);
+								slider.clearQueue();
+								slider.stop();
+								that.slideshow_goto(slider, slider.attr("data-current"));
+							}, that.resizeTime); 
+						});
+					}
+					
+					duration = slider.attr("data-duration");
+					loop = slider.attr("data-loop");
+					autoplay = parseInt(slider.attr("data-autoplay"));
+					
+	
+					
+					moveOnClick = slider.attr("data-move-on-click");
+					slider.attr("data-current", 0);
+					slider.attr("data-z", 1);
+					if (moveOnClick){
+						$(slider).find(".frunt-slider").on("click", function(e){
+							nextOrPrev = ((e.clientX-$(this).offset().left) < .4 * $(slider).width()) ? -1 : 1;
+							next = parseInt(slider.attr("data-current"))+nextOrPrev;
+							that.slideshow_goto(slider, next)
+						});
+					}
+					
+					if (autoplay){
+						setInterval(function(){
+							slider = $("#"+id);
+							next = parseInt(slider.attr("data-current"))+1;
+							that.slideshow_goto(slider, next)
+						}, autoplay);
+					}
+					
+		
+					/*
+					//event test
+					slider.on("frunt.slideshow.change", function(e){
+						console.log("slideshow moved! "+e.index);
+					});
+					*/
+					//initialize controls
+					if ($(".frunt-layout.frunt-layout-slideshow .frunt-layout-controls").length){
+						$(".frunt-layout.frunt-layout-slideshow .frunt-layout-controls").each(function(){
+							controls = $(this);
+							controls.find(".jump_to").first().addClass("active");
+							controls.find(".jump_to").on("click", function(){
+								controls = $(this).closest(".frunt-layout-controls");
+								slider = $(this).closest(".frunt-layout-slideshow");
+								controls.find(".jump_to").removeClass("active");
+								that.slideshow_goto(slider, $(this).attr("data-id"));
+								$(this).addClass("active");
+							});
+							
+							controls.find(".next").on("click", function(){
+								slider = $(this).closest(".frunt-layout-slideshow");
+								that.slideshow_goto(slider, parseInt(slider.attr("data-current"))+1);
+							});
+							controls.find(".prev").on("click", function(){
+								slider = $(this).closest(".frunt-layout-slideshow");
+								that.slideshow_goto(slider, parseInt(slider.attr("data-current"))-1);
+							});
+						});
+					}
+				
+				});
+			}
+			
+			//initialize grid
 			if ($(".frunt-layout.frunt-layout-grid").length){
 				$(".frunt-layout.frunt-layout-grid").each(function(){
 					menu = $(this);
@@ -472,7 +623,8 @@
 					if (mediaObj.thumb){
 						src = (mediaObj.type=='image' && mediaObj.opts.useThumb!=undefined && mediaObj.opts.useThumb==false) ?  mediaObj.src : mediaObj.thumb;
 						thumb = $("<img class='frunt-preview-thumb' src='"+src+"'>");
-						
+						if (mediaObj.opts.noRatio)
+							thumb.attr("data-no-ratio", mediaObj.opts.noRatio);
 						if (mediaObj.opts.thumb)
 							thumb.attr("data-thumb", mediaObj.opts.thumb);
 						if (mediaObj.opts.src)
@@ -501,12 +653,14 @@
 						thumb = $("<div class='frunt-preview-thumb noImage'></div>");
 						if (mediaObj.opts.responsive){
 							thumb.attr("data-ratio", "[1,1]");
-							thumb.attr("data-bias", mediaObj.opts.bias);
+							if (mediaObj.opts.bias)
+								thumb.attr("data-bias", mediaObj.opts.bias);
 							thumb.addClass("frunt-responsive");
 						}
 					}
 					if (mediaObj.opts.mode=="thumb"){
-						icon.on("click", function(){
+						icon.on("click", function(e){
+							e.stopPropagation();
 							thumb = $(this).closest(".frunt-preview-wpr").find('.frunt-preview-thumb');
 	
 							ret =  that.mediaTypes[mediaObj.type].preview(mediaObj);
@@ -533,7 +687,8 @@
 					     
 						});
 					}else if(mediaObj.opts.mode=="modal"){
-						icon.on("click", function(){
+						icon.on("click", function(e){
+							e.stopPropagation();
 							thumb = $(this).closest(".frunt-preview-wpr").find('.frunt-preview-thumb');
 							modalContent = that.mediaTypes[mediaObj.type].preview(mediaObj);
 							that.modal({
@@ -542,7 +697,8 @@
 							});
 						});
 					}else if (mediaObj.opts.mode=="modal-noIcon"){
-						thumb.on("click", function(){
+						thumb.on("click", function(e){
+							e.stopPropagation();
 							thumb = $(this);
 							modalContent = that.mediaTypes[mediaObj.type].preview(mediaObj);
 							that.modal({
@@ -617,7 +773,21 @@
 			modal_content.append(description);
 			modal_bg.append(modal_content);
 			modal_bg.on("click", close);
-			$("body").append(modal_bg);
+			
+			
+			
+			modalShow = function(){
+				//calculate top
+				buffer = -20;
+				minimum = 30;
+				topCalc = ($(window).height()-modal_content.height()+buffer)/2;
+				topCalc = (topCalc < minimum ) ? minimum : topCalc;
+				
+				$(".frunt-modal-content").animate({
+					"opacity" : 1,
+					"margin-top" :  topCalc+"px"
+				},200);
+			};
 			
 			//img = modal_content.find("img").first();
 			//ifr = modal_content.find("iframe").first();
@@ -639,30 +809,27 @@
 						border : "none"
 					});
 				
+				modalShow();
+				
 				});
+			$("body").append(modal_bg);
 			//IFRAME MODAL
 			}else if (description.is("iframe")){
-				console.log(modal_content.width());
+				$("body").append(modal_bg);
 				dims = that.getResizeImageDimensions(modal_content.width(),$(window).height()-HEIGHTBUFFER, 9,6, "within");
 				modal_content.css({
 						width : dims.width+"px",
 						height : dims.height+"px",
 					});
+			
+				modalShow();		
+			
 			}
 		
 			
 			
 			
-			//calculate top
-			buffer = -20;
-			minimum = 30;
-			topCalc = ($(window).height()-modal_content.height()+buffer)/2;
-			topCalc = (topCalc < minimum ) ? minimum : topCalc;
-			
-			$(".frunt-modal-content").animate({
-				"opacity" : 1,
-				"margin-top" :  topCalc+"px"
-			},200);
+		
 			
 		},
 		 mediaTypes : {
@@ -731,7 +898,8 @@
 			     	preview : function(mediaObj){
 			     		var that = this;
 				       	iframe = this.embed(mediaObj);
-				       	iframe.attr("data-ratio", JSON.stringify(this.ratio));
+				       	if (!mediaObj.opts.noRatio)
+				      	 	iframe.attr("data-ratio", JSON.stringify(this.ratio));
 				     	return iframe;
 			     	}
 		     	},
@@ -751,7 +919,8 @@
 			     	preview : function(mediaObj){
 			     		var that = this;
 				       	iframe = this.embed(mediaObj);
-				       	iframe.attr("data-ratio", JSON.stringify(this.ratio));
+				       	if (!mediaObj.opts.noRatio)
+				       		iframe.attr("data-ratio", JSON.stringify(this.ratio));
 				     	return iframe;
 			     	}
 		     	},
@@ -769,7 +938,8 @@
 			     	},
 			     	preview : function(mediaObj){
 				     	iframe = this.embed(mediaObj);
-				     	iframe.attr("data-ratio", JSON.stringify(this.ratio));
+				     	if (!mediaObj.opts.noRatio)
+				     		iframe.attr("data-ratio", JSON.stringify(this.ratio));
 				     	return iframe;
 			     	}
 		     	}

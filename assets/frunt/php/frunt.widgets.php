@@ -105,7 +105,8 @@
 			//responsive settings
 			"responsive" => true,
 			"real_fit" => "within",
-			"fit" => "fill"
+			"fit" => "fill",
+			"no_ratio" => false
 		);
 		
 		$image_media = array(
@@ -121,10 +122,20 @@
 		
 		//default opts
 		$defaults = array( 
+			"type" => "grid",
+			//GRID SPECIFIC
 			"sort_by" => false, //false,string, or array 
-			"use_thumb" => false, //true or false, for image type media
 			"force_cols" => false, //false or int force break after x, change media_wpr dimension to percentages,
 			"ascOrDesc" => "desc", //asc or desc, direction of list
+			//SLIDESHOW SPECIFIC
+			"autoplay" => false, //false or delay length, 
+			"transition_effect" => "slide", //slide or fade, effect of transition
+			"transition_length" => 400, //int, length of transition
+			"next_on_click" => true, //true or false, if slide click goes to next
+			"loop_slides" => true, //true or false, if next is clicked on last slide, it should return to first
+			"slide_controls" => false, //false, numbers,dots,or thumbs
+			//GENERAL
+			"use_thumb" => false, //true or false, for image type media
 			"media_opts" => array(
 				"image" => $image_media + $defaults_media,
 				"video" => $video_media + $defaults_media,
@@ -143,24 +154,32 @@
 		//set user opts
 		$this->opts = $this->opts + $defaults;
 		
-		
-		
-		//if sortby..we wanna only grab the 1st if array...it will be a string..
-		if ($this->opts['sort_by']){
-			if(is_array($this->opts['sort_by'])){
-				$this->opts['sort_by'] = array_shift($this->opts['sort_by']);
+		switch($this->opts['type']){
+			case "slideshow":
+			return $this->twig->render("layout_slideshow.php", array_merge($this->opts, array(
+				"media" => $this->data,
+				"site_url" => $this->SITE_URL,
+				"cmcm_url" => $this->CMCM_URL
+			)));
+			case "grid":
+			//if sortby..we wanna only grab the 1st if array...it will be a string..
+			if ($this->opts['sort_by']){
+				if(is_array($this->opts['sort_by'])){
+					$this->opts['sort_by'] = array_shift($this->opts['sort_by']);
+				}
+				//regroup stuff
+				$this->data = Frunt::group($this->opts['sort_by'], $this->data, $this->opts['ascOrDesc']);
+			}else{
+				$this->data = array($this->data);
 			}
-			//regroup stuff
-			$this->data = Frunt::group($this->opts['sort_by'], $this->data, $this->opts['ascOrDesc']);
-		}else{
-			$this->data = array($this->data);
+			
+			return $this->twig->render("layout_grid.php", array_merge($this->opts, array(
+				"media" => $this->data,
+				"site_url" => $this->SITE_URL,
+				"cmcm_url" => $this->CMCM_URL
+			)));
+			break;
 		}
-		
-		return $this->twig->render("layout_grid.php", array_merge($this->opts, array(
-			"media" => $this->data,
-			"site_url" => $this->SITE_URL,
-			"cmcm_url" => $this->CMCM_URL
-		)));
 	 }
 	 
 	 

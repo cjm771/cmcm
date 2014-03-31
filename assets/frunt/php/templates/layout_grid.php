@@ -31,12 +31,6 @@
 {% else %}
 	{{ macros.subList(false, media, sort_by,  _context) }}
 {% endif %}
-
-	<div class='extras'>
-	{% for name,link in extras %}
-		<a href='{{site_url}}{{link}}' {% if link == current %}class='active'{% endif %}>{{name}}</a>
-	{% endfor %}
-	</div>
 </div>
 
 {% endspaceless %}

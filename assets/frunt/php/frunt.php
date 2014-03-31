@@ -112,7 +112,11 @@
 	
 	//run widget
 	public function widget($type="", $data, $opts=""){
-		
+		//subtype was specified in the type
+		if (strrpos($type, ".")!==false){
+			$opts['type'] = substr($type, strrpos($type, ".")+1);
+			$type =  substr($type, 0, strrpos($type, "."));
+		}
 		$widget =  new FruntWidget($type, $data, $opts,  $this->CMCM_DIR, $this->CMCM_URL, $this->SITE_URL);
 		return $widget->render();
 	}
@@ -205,6 +209,19 @@
 		self::sort($arr, $ascOrDesc);
 		return $arr;
 					
+	}
+	
+	//get cover images as media objects for stated data object
+	public function getCoverImages($dataObj){
+		$arr = array();
+		foreach ($dataObj as $projId=>$projObj){
+			if ($projObj['coverImage']){
+				if (isset($projObj['media'][$projObj['coverImage']])){
+					$arr[$projObj['coverImage']] = $projObj['media'][$projObj['coverImage']];
+				}
+			}
+		}
+		return $arr;
 	}
 	
 	//same as sort, except same routine done to all child arrays

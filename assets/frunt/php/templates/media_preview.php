@@ -1,20 +1,34 @@
-{# <---------- IMAGE PREVIEW -----------------> #}
-{% if media.type == "image" %}
-	{% set mediaSrc = cmcm_url~media.src %}
-	{% set mediaOpts = media_opts.image %}
-	
-{# <---------- SOUND PREVIEW -----------------> #}
-{% elseif media.type == "sound" %}
-
-	{% set mediaSrc = media.src %}
-	{% set mediaOpts = media_opts.sound %}
+{% if just_thumbs==false %}
+	{# <---------- IMAGE PREVIEW -----------------> #}
+	{% if media.type == "image" %}
+		{% set mediaSrc = cmcm_url~media.src %}
+		{% set mediaOpts = media_opts.image %}
 		
-{# <---------- VIDEO PREVIEW -----------------> #}
-{% elseif media.type == "video" %}
-	{% set mediaSrc = media.src %}
-	{% set mediaOpts = media_opts.video %}
-{% endif %}
+	{# <---------- SOUND PREVIEW -----------------> #}
+	{% elseif media.type == "sound" %}
+	
+		{% set mediaSrc = media.src %}
+		{% set mediaOpts = media_opts.sound %}
+			
+	{# <---------- VIDEO PREVIEW -----------------> #}
+	{% elseif media.type == "video" %}
+		{% set mediaSrc = media.src %}
+		{% set mediaOpts = media_opts.video %}
+	{% endif %}
 
+{% else %}
+	{% set mediaSrc = media.src %}
+	{% if media.type == "image" %}
+		{% set mediaSrc = cmcm_url~media.src %}
+	{% endif %}
+	{% set mediaOpts = {
+		'mode' : 'none',
+		'use_thumb' : 'true',
+		'responsive' : 'false'
+	}
+	%}
+	
+{% endif %}
 
 
 <a href='{{mediaSrc}}' class='frunt-widget frunt-widget-preview' title='{{media.caption}}'
@@ -30,13 +44,16 @@
 	
 	{# <---- preview settings -----/ #}
 	
-	data-use-thumb='{{mediaOpts.autoplay}}'
+	data-use-thumb='{{mediaOpts.use_thumb}}'
 	data-mode='{{mediaOpts.mode}}'
 	data-visual='{{mediaOpts.visual}}'  
 	data-autoplay='{{mediaOpts.autoplay}}' 
 	
 	{# <---- preview responsive settings -----/ #}
 	
+	{% if mediaOpts.no_ratio %}
+		data-no-ratio = 'true'
+	{% endif %}
 	data-responsive='{{mediaOpts.responsive}}' 
 	data-fit='{{mediaOpts.fit}}' 
 	data-real-fit='{{mediaOpts.real_fit}}'
