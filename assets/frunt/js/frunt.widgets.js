@@ -36,9 +36,9 @@
 			clearTimeout(this.resizeTimer);
 			this.resizeTimer = setTimeout(function(){
 				$(".frunt-responsive, .frunt_responsive").each(function(){
-					parent = $(this).parent();
+					_parent = $(this).parent();
 					if (!$(this).attr("data-ratio"))
-						ratio = [parent.width(), parent.height()];
+						ratio = [_parent.width(), _parent.height()];
 					else
 						ratio = $.parseJSON($(this).attr("data-ratio"));
 						
@@ -54,8 +54,8 @@
 					//prop bias lets us determine where to grab dimensions from..
 					//otherwise..we will just make it match its parent
 					if (!propBias){
-						$(this).attr("data-width", parent.width())
-						$(this).attr("data-height", parent.height());
+						$(this).attr("data-width", _parent.width())
+						$(this).attr("data-height", _parent.height());
 					}else if(propBias=="width"){
 						$(this).attr("data-width", $(this).width());
 						$(this).attr("data-height", "0");
@@ -63,11 +63,11 @@
 						$(this).attr("data-height", $(this).height());
 						$(this).attr("data-width", "0");
 					}else if (propBias=="parent-width"){
-						$(this).attr("data-width", parent.width());
+						$(this).attr("data-width", _parent.width());
 						$(this).attr("data-height", "0");
 					//bias the parent height
 					}else if (propBias=="parent-height"){
-						$(this).attr("data-height", parent.height());
+						$(this).attr("data-height", _parent.height());
 						$(this).attr("data-width", "0");
 					}
 					newSize  = cmcm.fruntWidget.getResizeImageDimensions($(this).attr("data-width"), $(this).attr("data-height"), ratio[0], ratio[1], fit);
@@ -80,7 +80,7 @@
 						$(this).attr("height", newSize.height);
 					}
 					if (syncParent){
-						_nextParent = parent;
+						_nextParent = _parent;
 						for (i = 0; i<syncParent; i++){
 							if (propBias!='parent-height'){
 								_nextParent.css("height", newSize.height+"px");
@@ -122,17 +122,17 @@
 				title =  $(this).attr("title");
 				propBias = $(this).attr("data-bias");
 				propBias = (propBias==undefined) ? $(this).attr("data-proportion-bias") : propBias;
-				parent = $(this).parent();
+				_parent = $(this).parent();
 				//assume both dimensions provided
 				if (!propBias){
-					$(this).attr("data-width", parent.width())
-					$(this).attr("data-height", parent.height());
+					$(this).attr("data-width", _parent.width())
+					$(this).attr("data-height", _parent.height());
 				//bias the width
 				}else if (propBias=="width"){
-					$(this).attr("data-width", parent.width());
+					$(this).attr("data-width", _parent.width());
 				//bias the height
 				}else if (propBias=="height"){
-					$(this).attr("data-height", parent.height());
+					$(this).attr("data-height", _parent.height());
 				}
 				$(this).replaceWith(that.preview({
 					src : mediaUrl,
