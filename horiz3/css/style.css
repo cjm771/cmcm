@@ -1,0 +1,180 @@
+#body, html{
+	margin: 0px !important;
+	padding: 0;
+	height: 100%;
+	background: #fff;
+
+}
+
+.frunt-menu{
+	margin-top: 20px;
+	margin-right: 225px;
+	border-right: 1px solid #c0c0c0;
+}
+
+.frunt-menu .column{
+	float: right;
+}
+
+#menu{
+	display: block;
+	position: fixed;
+	z-index: 10;
+	overflow: hidden;
+	text-align: right;
+	margin: 0;
+	padding: 0;
+	height: 150px;
+	-webkit-mask-image: -webkit-gradient(linear, left 90%, left bottom, from(rgba(0,0,0,1)), to(rgba(0,0,0,0)));
+	width: 100%;
+}
+
+#content{
+	position: absolute;
+	display: block;
+	margin: 0;
+	padding: 0;
+	height: 100%;
+}
+.frunt-layout{
+	position: fixed;
+	top: 30%;
+	margin-bottom: 0px !important;
+	width: 100%;
+	bottom : 0;
+}
+body,html,
+#container,
+#content,
+.frunt-slider{
+	height: 100% !important;
+}
+.frunt-layout-controls{
+	margin-top: 0px;
+	right: 20px;
+	position: absolute;
+	background: #fff;
+	top: -30px;
+	vertical-align: middle;
+	margin-bottom: none;
+}
+.frunt-layout .thumb_wpr .caption{
+	background: rgba(255,255,255,.9);
+}
+
+
+#splash{
+	background: #fff;
+	height: 100%;
+
+	width: 100%;
+}
+
+#header{
+	position: absolute;
+	text-align: left;
+	right: 0;
+	padding: 20px 40px;
+}
+#header .site_title{
+	font-size: 24px;
+	margin-bottom: 2px;
+}
+#header .site_title a{
+	color: inherit;
+	text-decoration: inherit;
+	
+}
+#header .site_subtitle{
+	font-size: 14px;
+	margin-bottom: 10px;
+}
+#header .site_description{
+	font-size: 10px;
+	color: #999;
+}
+
+.frunt-menu{
+	margin-left: 250px;
+}
+
+.frunt-menu .extras{
+		color: #666;
+}
+
+.frunt-menu .extras a{
+	color: inherit;
+	padding: 0 10px;
+	display: block;
+	text-decoration: inherit;
+}
+
+.project_info{
+	position: fixed;
+	right:20px;
+	z-index: 0;
+	width: 100%;
+	height: 25%;
+
+	top:0px;
+	overflow: auto;
+	text-overflow: ellipsis;
+	-webkit-mask-image: -webkit-gradient(linear, left 90%, left bottom, from(rgba(0,0,0,1)), to(rgba(0,0,0,0)));
+	color: #000;
+	padding: 30px 20px 60px 45px;
+}
+.project_info .project_title{
+	text-transform: capitalize;
+	font-weight: bold;
+	vertical-align: bottom;
+	margin-bottom: 20px;
+	word-break: break-word;
+}
+.project_info .frunt-list .val{
+	font-size: 10px;
+	word-break: break-word;
+	padding: 5px 0;
+	padding-right: 50px;
+	display: block;
+
+}
+.frunt-list-key-description{
+	position: absolute;
+	padding: 10px;
+	top: 20px;
+	width: 400px;
+	height: 100%;
+	left: 300px;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	
+}
+.img_slider{
+	overflow-x:hidden;
+	padding: 0;
+	overflow-y: scroll;
+	height: auto;
+	min-height: 100%;
+	margin-left: 300px;
+	background-color: #c0c0c0;
+}
+.img_wpr{
+
+	position: relative;
+	margin: 0px auto;
+	display: block;
+	padding: 0;
+	
+	overflow: hidden;
+}
+.img_wpr .caption{
+	padding: 5px;
+	 background: #000;
+	 display: inline-block;
+	position: absolute;
+	color: #fff;
+	font-size: 12px;
+	bottom: 20px;
+	left: 20px;
+}
+

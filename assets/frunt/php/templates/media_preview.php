@@ -30,7 +30,7 @@
 	
 {% endif %}
 
-
+{% spaceless %}
 <a href='{{mediaSrc}}' class='frunt-widget frunt-widget-preview' title='{{media.caption}}'
 	
 	{# <---- preview vars -----/ #}
@@ -51,10 +51,16 @@
 	
 	{# <---- preview responsive settings -----/ #}
 	
+	data-responsive='{{mediaOpts.responsive}}' 
 	{% if mediaOpts.no_ratio %}
 		data-no-ratio = 'true'
 	{% endif %}
-	data-responsive='{{mediaOpts.responsive}}' 
+	{% if mediaOpts.bias %}
+		data-bias='{{mediaOpts.bias}}' 
+	{% endif %}
+	{% if mediaOpts.sync_parent %}
+		data-sync-parent={{mediaOpts.sync_parent}}
+	{% endif %}
 	data-fit='{{mediaOpts.fit}}' 
 	data-real-fit='{{mediaOpts.real_fit}}'
 	
@@ -62,5 +68,5 @@
 	
 >{{media.src}}
 </a>
-
+{% endspaceless %}
 

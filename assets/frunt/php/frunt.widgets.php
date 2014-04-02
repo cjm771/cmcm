@@ -105,6 +105,7 @@
 			//responsive settings
 			"responsive" => true,
 			"real_fit" => "within",
+			'bias' => false,
 			"fit" => "fill",
 			"no_ratio" => false
 		);
@@ -155,12 +156,14 @@
 		$this->opts = $this->opts + $defaults;
 		
 		switch($this->opts['type']){
+			case "horizontal":
 			case "slideshow":
-			return $this->twig->render("layout_slideshow.php", array_merge($this->opts, array(
+			return $this->twig->render("layout_".$this->opts['type'].".php", array_merge($this->opts, array(
 				"media" => $this->data,
 				"site_url" => $this->SITE_URL,
 				"cmcm_url" => $this->CMCM_URL
 			)));
+				break;
 			case "grid":
 			//if sortby..we wanna only grab the 1st if array...it will be a string..
 			if ($this->opts['sort_by']){
