@@ -8,23 +8,37 @@
 
 .frunt-menu{
 	margin-top: 20px;
+	width: 30%;
+	float: right;
 	margin-right: 225px;
 	border-right: 1px solid #c0c0c0;
+	height: 100%;
 }
-
 .frunt-menu .column{
+	height: 100%;
 	float: right;
 }
-
+.frunt-menu .header{
+	padding-right: 30px;
+}
+.frunt-menu .column:first-child .header{
+	padding-right: 0px;
+}
+.frunt-menu .col_content{
+	position: relative;
+	height: 100%;
+	overflow-y: hidden;
+	padding-right: 30px;
+}
 #menu{
 	display: block;
-	position: fixed;
-	z-index: 10;
 	overflow: hidden;
+	position: fixed;
+	z-index: 0;
 	text-align: right;
 	margin: 0;
 	padding: 0;
-	height: 150px;
+	height: 25%;
 	-webkit-mask-image: -webkit-gradient(linear, left 90%, left bottom, from(rgba(0,0,0,1)), to(rgba(0,0,0,0)));
 	width: 100%;
 }
@@ -111,15 +125,14 @@ body,html,
 
 .project_info{
 	position: fixed;
-	right:20px;
+	left:20px;
 	z-index: 0;
 	width: 100%;
 	height: 25%;
-
 	top:0px;
-	overflow: auto;
+	width: 250px;
+	float: left;
 	text-overflow: ellipsis;
-	-webkit-mask-image: -webkit-gradient(linear, left 90%, left bottom, from(rgba(0,0,0,1)), to(rgba(0,0,0,0)));
 	color: #000;
 	padding: 30px 20px 60px 45px;
 }
@@ -138,16 +151,26 @@ body,html,
 	display: block;
 
 }
+.frunt-list{
+	height: 100%;
+}
 .frunt-list-key-description{
 	position: absolute;
 	padding: 10px;
+	z-index: 50px;
 	top: 20px;
 	width: 400px;
 	height: 100%;
+	background: #fff;
+	overflow-y: hidden;
+	-webkit-mask-image: -webkit-gradient(linear, left 90%, left bottom, from(rgba(0,0,0,1)), to(rgba(0,0,0,0)));
 	left: 300px;
-	overflow: hidden;
-	text-overflow: ellipsis;
 	
+}
+
+.frunt-list-key-description .val{
+
+		
 }
 .img_slider{
 	overflow-x:hidden;

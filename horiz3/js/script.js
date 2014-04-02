@@ -1,63 +1,42 @@
 vertTemplate = {
 	timer : null,
 	init : function(){
-		var that = this;
-		$(".img_wpr img").each(function(){$(this).css("opacity", 0)});
-		$(".img_wpr img").imagesLoaded(function(elems){			
-			$(window).trigger("resize");
-		});
+	
+			
 		
+		/*
 		//pretty scrollbar on menu
-		$(".frunt-menu").css({
-			"position" : "relative",
-			"overflow" : "hidden",
+		$(" .frunt-menu, .column").css({
 			"height" : "100%"
 		});
 		
-		$(".frunt-menu").each(function(){
+		$("#menu .col_content").css({
+			"position" : "relative",
+			"overflow" : "hidden",
+			"overflow-y" : "scroll",
+			"height" : "100%"
+		});
+		*/
+		
+		$(".frunt-list-key-description").css({
+			"height" : "100%"
+		})
+		
+		$("#menu .col_content,.frunt-list-key-description").each(function(){
+			
 			$(this).perfectScrollbar({
 			  wheelSpeed: 2,
-			  wheelPropagation: 0,
+			  wheelPropagation: 1,
 			  minScrollbarLength: 20,
-			  includePadding: true,
+			  includePadding: false,
 			  suppressScrollX : true
 		  })
+		  
 		});
-		
-		//set up event
-		window.onresize = function(){
-			clearTimeout(that.timer);
-			that.timer = setTimeout(function(){
-				$(".img_wpr img").each(function(){
-				that.resizeImg(this);
-				$(".img_wpr img").each(function(){$(this).css("opacity", 1)});
-				});	
-			}, 10);
-		};
+
+	
 	},
 	resizeImg : function(img){
-		
-		//100% height, auto width is default
-		wpr = $(img).closest(".img_wpr");
-		wpr.height($(window).height());
-		wpr.width($(window).width()-wpr.position().left);
-
-		 //determine size..
-    	wprWidth = wpr.width();
-    	wprHeight = wpr.height();
-    	console.log("wpr: "+wprWidth+" "+wprHeight);
-	   ratioX = wprWidth / img.width;
-	   ratioY = wprHeight /img.height;
-	   //fill box = max, within box = min
-	   ratio = Math.max(ratioX, ratioY);
-
-	   newWidth = (img.width * ratio);
-	   newHeight = (img.height * ratio);
-	   
-	   $(img).css({
-    	   width : newWidth+"px",
-    	   height : newHeight+"px"
-	   })
 	}
 }
 

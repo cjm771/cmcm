@@ -6,18 +6,19 @@ horizScript = {
 		var that=this;
 		
 		
-		/*
+		
 		//pretty scrollbar on menu
 		$(" .frunt-menu, .column").css({
 			"height" : "100%"
 		});
+		
 		$("#menu .col_content").css({
 			"position" : "relative",
 			"overflow" : "hidden",
 			"overflow-y" : "scroll",
 			"height" : "100%"
 		});
-		*/
+		
 		
 		
 		$("#menu .col_content").each(function(){
