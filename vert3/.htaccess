@@ -1,0 +1,2 @@
+RewriteEngine on
+RewriteRule ^projects/([^/\.]+)/?$ project.php?id=$1 [L]

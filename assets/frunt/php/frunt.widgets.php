@@ -156,9 +156,10 @@
 		$this->opts = $this->opts + $defaults;
 		
 		switch($this->opts['type']){
+			case "vertical":
 			case "horizontal":
 			case "slideshow":
-			return $this->twig->render("layout_".$this->opts['type'].".php", array_merge($this->opts, array(
+			return $this->twig->render("layout_".(($this->opts['type']=="vertical") ? "horizontal" :  $this->opts['type']).".php", array_merge($this->opts, array(
 				"media" => $this->data,
 				"site_url" => $this->SITE_URL,
 				"cmcm_url" => $this->CMCM_URL

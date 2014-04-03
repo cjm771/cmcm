@@ -51,19 +51,20 @@
 	
 	{# <---- preview responsive settings -----/ #}
 	
-	data-responsive='{{mediaOpts.responsive}}' 
-	{% if mediaOpts.no_ratio %}
-		data-no-ratio = 'true'
+	{% if mediaOpts.responsive %}
+		data-responsive='{{mediaOpts.responsive}}' 
+		{% if mediaOpts.no_ratio %}
+			data-no-ratio = 'true'
+		{% endif %}
+		{% if mediaOpts.bias %}
+			data-bias='{{mediaOpts.bias}}' 
+		{% endif %}
+		{% if mediaOpts.sync_parent %}
+			data-sync-parent={{mediaOpts.sync_parent}}
+		{% endif %}
+		data-fit='{{mediaOpts.fit}}' 
+		data-real-fit='{{mediaOpts.real_fit}}'
 	{% endif %}
-	{% if mediaOpts.bias %}
-		data-bias='{{mediaOpts.bias}}' 
-	{% endif %}
-	{% if mediaOpts.sync_parent %}
-		data-sync-parent={{mediaOpts.sync_parent}}
-	{% endif %}
-	data-fit='{{mediaOpts.fit}}' 
-	data-real-fit='{{mediaOpts.real_fit}}'
-	
 	
 	
 >{{media.src}}

@@ -1,0 +1,204 @@
+#body, html{
+	margin: 0px !important;
+	padding: 0;
+	height: 100%;
+	background: #fff;
+
+}
+
+.frunt-menu{
+	margin-top: 20px;
+	width: 30%;
+	float: right;
+	margin-right: 225px;
+	border-right: 1px solid #c0c0c0;
+	height: 100%;
+}
+.frunt-menu .column{
+	height: 100%;
+	float: right;
+}
+.frunt-menu .header{
+	padding-right: 30px;
+}
+.frunt-menu .column:first-child .header{
+	padding-right: 0px;
+}
+.frunt-menu .col_content{
+	position: relative;
+	height: 100%;
+	overflow-y: hidden;
+	padding-right: 30px;
+}
+#menu{
+	display: block;
+	overflow: hidden;
+	position: fixed;
+	z-index: 0;
+	text-align: left;
+	margin: 0;
+	padding: 0;
+	height: 100%;
+	-webkit-mask-image: -webkit-gradient(linear, left 90%, left bottom, from(rgba(0,0,0,1)), to(rgba(0,0,0,0)));
+	width: 300px;
+}
+
+#content{
+	position: absolute;
+	display: block;
+	margin: 0;
+	padding: 0;
+	height: 100%;
+}
+.frunt-layout{
+	position: fixed;
+	top: 0;
+	margin-bottom: 0px !important;
+	right: 250px;
+	left: 300px;
+	bottom : 0;
+}
+body,html,
+#container,
+#content,
+.frunt-slider{
+	height: 100% !important;
+}
+.frunt-layout-controls{
+	margin-top: 0px;
+	right: 20px;
+	position: fixed;
+	z-index: 100;
+	background: none;
+	top: 30%;
+	vertical-align: middle;
+	text-align: right;
+	margin-bottom: none;
+}
+.frunt-layout-controls .prev_next
+{
+	text-align: right;
+	display: block;
+	position: fixed;
+	bottom: 20px;
+	right: 100px;
+}
+.frunt-layout-controls .jump_to.dot{
+	display: block;
+	width: 9px;
+	height: 9px;
+	border-radius: 9px;
+	margin-bottom: 5px;
+}
+.frunt-layout .thumb_wpr .caption{
+	background: rgba(255,255,255,.9);
+}
+
+#header{
+	padding: 30px 40px;
+}
+
+#splash{
+	background: #fff;
+	height: 100%;
+
+	width: 100%;
+}
+
+#header .site_title{
+	font-size: 24px;
+	margin-bottom: 2px;
+}
+#header .site_title a{
+	color: inherit;
+	text-decoration: inherit;
+	
+}
+#header .site_subtitle{
+	font-size: 14px;
+	margin-bottom: 10px;
+}
+#header .site_description{
+	font-size: 10px;
+	color: #999;
+}
+
+.frunt-menu{
+	margin-left: 250px;
+}
+
+.frunt-menu .extras{
+		color: #666;
+}
+
+.frunt-menu .extras a{
+	color: inherit;
+	padding: 0 10px;
+	display: block;
+	text-decoration: inherit;
+}
+
+.project_info{
+	position: fixed;
+	right:0px;
+	background: #fff;
+	width: 100%;
+	bottom: 50px;
+	top:0px;
+	width: 250px;
+	float: left;
+	text-overflow: ellipsis;
+	color: #000;
+	padding: 30px 20px 60px 45px;
+	-webkit-mask-image: -webkit-gradient(linear, left 90%, left bottom, from(rgba(0,0,0,1)), to(rgba(0,0,0,0)));
+}
+.project_info .project_title{
+	text-transform: capitalize;
+	font-weight: bold;
+	vertical-align: bottom;
+	margin-bottom: 20px;
+	word-break: break-word;
+}
+.project_info .frunt-list .val{
+	font-size: 10px;
+	word-break: break-word;
+	padding: 5px 0;
+	padding-right: 50px;
+	display: block;
+
+}
+.frunt-list{
+	height: 100%;
+	overflow-y: hidden;
+	padding-bottom: 20px;
+}
+
+.img_slider{
+	overflow-x:hidden;
+	padding: 0;
+	overflow-y: hidden;
+	height: auto;
+	min-height: 100%;
+	margin-left: 300px;
+	background-color: #c0c0c0;
+}
+.img_wpr{
+
+	position: relative;
+	margin: 0px auto;
+	display: block;
+	padding: 0;
+	
+	overflow: hidden;
+}
+.img_wpr .caption{
+	padding: 5px;
+	 background: #000;
+	 display: inline-block;
+	position: absolute;
+	color: #fff;
+	font-size: 12px;
+	bottom: 20px;
+	left: 20px;
+}
+

@@ -1,6 +1,6 @@
 {% spaceless %}
 
-<div class='frunt-layout frunt-layout-horizontal'>
+<div class='frunt-layout frunt-layout-{{type}}'>
 	{% if media|length > 0 %}
 		<div class='frunt-slider'>
 		{% set count = 0 %}
@@ -21,9 +21,12 @@
 				<div class='frunt-layout-controls {{slide_controls}}'>
 						{#<------------------ numbers ---------------->#}
 						{% if slide_controls=="numbers" %}
-								<span class='prev'>Prev</span> 
-								<span class='next'>Next</span>
+								<span class='prev_next'>
+									<span class='prev'>Prev</span> 
+									<span class='next'>Next</span>
+								
 								<span class='info'>(<span class='current'>1</span>/{{media|length}})</span>
+								</span>
 							{% set count = 0 %}
 							{% for mediaId, _media in media %}
 								<span class='jump_to dot' data-id={{count}}>{{count+1}}</span>
@@ -33,9 +36,11 @@
 						
 						{#<------------------ dots ---------------->#}
 						{% if slide_controls=="dots" %}
-								<span class='prev'>Prev</span> 
-								<span class='next'>Next</span>
-								<span class='info'>(<span class='current'>1</span>/{{media|length}})</span>
+								<span class='prev_next'>
+									<span class='prev'>Prev</span> 
+									<span class='next'>Next</span>
+									<span class='info'>(<span class='current'>1</span>/{{media|length}})</span>
+								</span>
 							{% set count = 0 %}
 							{% for mediaId, _media in media %}
 								<span class='jump_to dot' data-id={{count}}></span>
@@ -45,7 +50,7 @@
 						
 						{#<------------------ thumbnails ---------------->#}
 						{% if slide_controls=="thumbs" %}
-							<div class='next_and_prev'>
+							<div class='prev_next'>
 								<span class='prev'>Prev</span> 
 								<span class='next'>Next</span>
 								<span class='info'>(<span class='current'>1</span>/{{media|length}})</span>

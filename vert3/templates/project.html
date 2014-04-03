@@ -1,0 +1,36 @@
+{% extends "partial/_scaffold.html" %}
+
+{% block title %}
+	{{project.title}}
+{% endblock %}
+
+{% block content %}
+	<div class='project_info'>
+		{#
+		<div class='project_title'>{{project.title}}</div>
+		<div class='project_description'>{{project.description}}</div>
+		<div class='project_year'><b>Year:</b> {{project.year}}</div>
+		#}
+		<div class='project_title'>{{project.title}}</div>
+		{# <------AUTOMATED ATTRIBUTE LIST ---------->#}
+		{{projectInfo}}
+	</div>
+	
+	{{img_gallery}}
+	{#
+	<div class='img_slider'>
+	{% for media in project.media %}
+		{% if media.type == "image" %}
+		<div class='img_wpr'>
+			<img src='{{cmcm_url}}{{media.src}}'>
+			{% if media.caption %}
+				<div class='caption'>{{media.caption}}</div>
+			{% endif %}
+		</div>
+		{% endif %}
+	{% endfor %}
+	</div>
+	#}
+{% endblock %}
+
+
