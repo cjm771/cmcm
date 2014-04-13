@@ -41,8 +41,8 @@
 					
 					//grab template keys
 					keys = {
-						'project' : Object.keys(that.templates.project),
-						'media' :  Object.keys(that.templates.media)
+						'project' : Object.keys(resp.template.project),
+						'media' :  Object.keys(resp.template.media)
 					};
 					
 					//PROJECTS
