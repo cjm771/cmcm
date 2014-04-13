@@ -6,6 +6,7 @@
 		this.DATA_DIR = "data/";
 		
 		this.data = {};
+		this.templates = {};
 		//set cmcm root
 		this.CMCM_DIR = CMCM_DIR;
 		this.CMCM_URL = CMCM_URL;
@@ -36,7 +37,7 @@
 			//grab data
 			 this.get(this.CMCM_DIR+this.DATA_DIR+this.opts['file'],  function(resp){
 					that.data = resp;
-					that.templates = that.data.template;
+					that.templates = resp.template;
 					
 					//grab template keys
 					keys = {
