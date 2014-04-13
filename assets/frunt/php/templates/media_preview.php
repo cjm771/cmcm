@@ -1,3 +1,4 @@
+
 {% if just_thumbs==false %}
 	{# <---------- IMAGE PREVIEW -----------------> #}
 	{% if media.type == "image" %}
@@ -21,12 +22,7 @@
 	{% if media.type == "image" %}
 		{% set mediaSrc = cmcm_url~media.src %}
 	{% endif %}
-	{% set mediaOpts = {
-		'mode' : 'none',
-		'use_thumb' : 'true',
-		'responsive' : 'false'
-	}
-	%}
+	{% set mediaOpts = {'mode' : 'none','use_thumb' : 'true','responsive' : 'false'} %}
 	
 {% endif %}
 
@@ -48,6 +44,10 @@
 	data-mode='{{mediaOpts.mode}}'
 	data-visual='{{mediaOpts.visual}}'  
 	data-autoplay='{{mediaOpts.autoplay}}' 
+	{% if mediaOpts.modal_group %}
+		rel = "{{ mediaOpts.modal_group|escape('html_attr') }}"
+	{% endif %}
+	
 	
 	{# <---- preview responsive settings -----/ #}
 	

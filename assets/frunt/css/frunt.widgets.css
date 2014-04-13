@@ -86,7 +86,6 @@
 	bottom:0;
 	background: rgba(255,255,255,.75);
 	font-size: 10px;
-	height: 20px;
 	width: 100%;
 }
 
@@ -103,10 +102,10 @@
 
 
 .frunt-menu-grid .thumb_wpr{
-	width: 50px;
+	width: 75px;
 	display: inline-block;
 	 vertical-align: top;
-	height: 50px;
+	height: 75px;
 	overflow: hidden;
 	padding: 0px;
 	margin: 2%;
@@ -221,6 +220,7 @@
  
  .frunt-layout-vertical  .frunt-slider{
 	position: relative;
+	 height: 450px;
 	overflow-x: hidden;
 }
 .frunt-layout-vertical .slide{
@@ -577,7 +577,7 @@
 .frunt-layout-grid .thumb_wpr.active, .frunt-layout-grid .thumb_wpr:hover{
 	opacity: .85;
 }
-
+/*
 .frunt-layout-grid .thumb_wpr a{
 	display: block;
 	color: inherit;
@@ -585,7 +585,7 @@
 	padding: 0;
 	margin: 0;
 }
-
+*/
 .frunt-layout-grid .thumb_wpr .noImage, 
 .frunt-layout-grid .thumb_wpr .media_wpr{
 	position: absolute;

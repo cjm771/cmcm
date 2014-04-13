@@ -4,16 +4,16 @@
 				{% if sort %}
 				<div class='group_header'>{{ groupName }}</div>
 				{% endif %}
-			{% for mediaId, media in group  %}
+			{% for mediaId, _media in group  %}
 			<div class='thumb_wpr'>
 					<div class='media_wpr'>
 						{#<------------------ handle all previews ---------------->#}
-						{% include 'media_preview.php' with {'cmcm_url' : context.cmcm_url, 'media_opts' : context.media_opts} %}
+						{% include 'media_preview.php' with {'just_thumbs' :  context.just_thumbs,'media' : _media, 'cmcm_url' : context.cmcm_url, 'media_opts' : context.media_opts} %}
 					</div>
 						{#<------------------ handle all captions ---------------->#}
 					{% if context.no_caption == false %} 
-					{% if media.caption %} 
-						<div class='caption'>{{media.caption}}</div>
+					{% if _media.caption %} 
+						<div class='caption'>{{_media.caption}}</div>
 					 {% endif %}
 					{% endif %}
 			</div>

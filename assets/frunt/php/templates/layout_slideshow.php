@@ -1,3 +1,4 @@
+
 {% spaceless %}
 
 <div class='frunt-layout frunt-layout-slideshow transition-{{transition_effect}}' data-effect='{{transition_effect}}' data-duration={{transition_length}} 
@@ -10,7 +11,7 @@
 		{% set count = 0 %}
 		{% for mediaId, _media in media %}
 			<div class='slide' data-id={{count}}>
-					{% include 'media_preview.php' with {'media' : _media} %}
+					{% include 'media_preview.php'  with {'media' : _media}  %}
 					{% set count = count + 1 %}
 				{#<------------------ handle all captions ---------------->#}
 				{% if no_caption == false %} 

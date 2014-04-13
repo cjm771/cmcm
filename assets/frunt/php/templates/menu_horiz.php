@@ -1,10 +1,14 @@
-{% macro dataParams(data) %}
-	{% set atts = "" %}
-	{% for dataName,arr in data %}
-		{% set atts = atts~" data-"~dataName~"='"~arr|join(",")|replace("'", "\'")~"'" %}
-	{% endfor %}
-		{% set atts = atts~" data-xxMENUxx='projects'" %}
-	{{ atts }}
+{% macro dataParams(data, notArray) %}
+	{% set atts = "" %}	
+		{% for dataName,arr in data %}
+			{% if notArray == false %}
+				{% set atts = arr|join(",") %}	
+			{% else %}
+				{% set atts = arr %}
+			{% endif %}
+			{{ " data-"~dataName~"='"~atts|escape('html_attr')~"'" }}
+		{% endfor %}
+		{{ " data-xxMENUxx='projects'" }}
 {% endmacro %}
 
 {% macro subList(data, cols, context) %}
@@ -49,7 +53,7 @@
 					{% endfor %}
 					
 				{# <----------------- MIDDLE COLUMNS--------------------> #}
-				{% elseif COUNT != col_data|length-1 %}
+				{% elseif COUNT != (col_data|length)-1 %}
 					
 					{% for link,data in col %}
 						<div class='link' {{ macros.dataParams(data) }} data-val="{{ link }}">{{ link }}</div>
@@ -62,7 +66,7 @@
 				{% else %}
 					{% for projId , data in col %}
 						{% set proj = projects[projId] %}
-						<a href='{{site_url}}{{url_rewrite}}{{proj.cleanUrl}}' class='link {% if proj.cleanUrl == current %}active{% endif %}' {{ macros.dataParams(data) }} data-val="{{ projId }}">{{ proj.title }}</a>
+						<a href='{{site_url}}{{url_rewrite}}{{proj.cleanUrl}}' class='link {% if proj.cleanUrl == current %}active{% endif %}' {{ macros.dataParams(data, 1) }} data-val="{{ projId }}">{{ proj.title }}</a>
 					{% endfor %}
 				{% endif %}
 			</div>	

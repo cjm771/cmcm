@@ -137,6 +137,7 @@
 			"slide_controls" => false, //false, numbers,dots,or thumbs
 			//GENERAL
 			"use_thumb" => false, //true or false, for image type media
+			"just_thumbs" => false, //true or false, for just thumb
 			"media_opts" => array(
 				"image" => $image_media + $defaults_media,
 				"video" => $video_media + $defaults_media,
@@ -147,13 +148,17 @@
 		
 		//media opts defaults
 		if (isset($this->opts['media_opts'])){
-			foreach ($this->opts['media_opts'] as $type=>$o){
-				$this->opts['media_opts'][$type] = $o + $defaults['media_opts'][$type] ;
+			foreach ($defaults['media_opts'] as $type=>$o){
+				if (isset($this->opts['media_opts'][$type]))
+					$this->opts['media_opts'][$type] =  $this->opts['media_opts'][$type] + $o;
+				else
+					$this->opts['media_opts'][$type] = $defaults['media_opts'][$type];
 			}
 			
 		}
 		//set user opts
 		$this->opts = $this->opts + $defaults;
+		
 		
 		switch($this->opts['type']){
 			case "vertical":
@@ -204,7 +209,7 @@
  				)
  			),
  			//listype
- 			"type" => "project",
+ 			"list_type" => "project",
  			//elements to ignore..defaults, and additionals
  			"showDefaultIgnores" => false,
  			"ignore_default" => array(
@@ -222,7 +227,7 @@
 		$rules = array();
 		//filter out default ignores
 		if (!$this->opts['showDefaultIgnores'])
-			$rules[] = array($this->opts['ignore_default'][$this->opts['type']], "IGNORE");
+			$rules[] = array($this->opts['ignore_default'][$this->opts['list_type']], "IGNORE");
 		//filter out ignore list 
 		$rules[] = array($this->opts['ignore'], "IGNORE");
 		//pick out only..;
@@ -281,8 +286,8 @@
 			"extras" => false,
 			//MENU TYPE-SPECIFIC OPTIONS
 			//basic, submenu
-			"collapse" => false, //true or false, to collapse if sort by
-			"collapse_multiple_fans" => true, //true or false, multiple submenus can be revealed or only allow one at a time
+			"collapse" =>  (isset($this->opts['type']) && $this->opts['type']=="horizontal") ? false : true,  //true or false, to collapse if sort by
+			"collapse_multiple_fans" => false, //true or false, multiple submenus can be revealed or only allow one at a time
 			"collapse_current" => false, //string or false, which one to reveal on init
 			//basic, submenu, horiz
 			"sort_by" => false, //array,string,false of attribute to sort by,

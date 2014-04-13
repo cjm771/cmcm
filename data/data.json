@@ -64,6 +64,10 @@
 						"description": {
 								"type": "text",
 								"required": 1
+						},
+						"featured": {
+								"type": "bool",
+								"required": 1
 						}
 				},
 				"media": {
@@ -1004,36 +1008,36 @@
 						"title": "Super Awesome project",
 						"coverImage": "T01BIC4gVmlsbGEgUiAoMykuanBn",
 						"year": "2001",
-						"description": "w'&quot;&quot;''''eeeee&quot; &quot;''weffdvgfd",
 						"type_of_project": "installation",
+						"description": "w'&quot;&quot;''''eeeee&quot; &quot;''weffdvgfd&lt;b&gt;Bold&lt;/b&gt; Text...\ndsfddsf\nf\nsdfdfsdfdsfsd &lt;u&gt;Underline&lt;/u&gt;",
 						"media": {
 								"T01BIC4gVmlsbGEgUiAoMykuanBn": {
 										"src": "media/OMA . Villa R (3).jpg",
 										"visible": "1",
 										"type": "image",
-										"caption": "dasdasd",
-										"thumb": "media/thumbnail/(9)OMA . Villa R (3).jpg"
+										"thumb": "media/thumbnail/(9)OMA . Villa R (3).jpg",
+										"caption": "dasdasd"
 								},
 								"T01BIC4gVmlsbGEgUiAoNSkuanBn": {
 										"src": "media/OMA . Villa R (5).jpg",
 										"visible": "1",
 										"type": "image",
-										"caption": "sadsada",
-										"thumb": "media/thumbnail/(10)OMA . Villa R (5).jpg"
+										"thumb": "media/thumbnail/(10)OMA . Villa R (5).jpg",
+										"caption": "sadsada"
 								},
 								"T01BIC4gVmlsbGEgUiAoMikuanBn": {
 										"src": "media/OMA . Villa R (2).jpg",
 										"visible": "1",
 										"type": "image",
-										"caption": "sadas",
-										"thumb": "media/thumbnail/(9)OMA . Villa R (2).jpg"
+										"thumb": "media/thumbnail/(9)OMA . Villa R (2).jpg",
+										"caption": "sadas"
 								},
 								"T01BIC4gVmlsbGEgUiAoMSkuanBn": {
 										"src": "media/OMA . Villa R (1).jpg",
 										"visible": "1",
 										"type": "image",
-										"caption": "dasdsa",
-										"thumb": "media/thumbnail/(9)OMA . Villa R (1).jpg"
+										"thumb": "media/thumbnail/(9)OMA . Villa R (1).jpg",
+										"caption": "dasdsa"
 								}
 						}
 				},

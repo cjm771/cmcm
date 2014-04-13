@@ -2,7 +2,7 @@
 		var cmcm = {
 			editMode : 0,
 			unsavedChanges : 0,
-			debug : 1,
+			debug : 0,
 			src : '',
 			endpoint : 'assets/php/ajax.php',
 			filesAllowed : ["image/jpeg", "image/jpg", "image/gif", "image/png"],

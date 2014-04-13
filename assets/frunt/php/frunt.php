@@ -141,7 +141,7 @@
 	
 	//grab settings
 	 public function getSettings($incUsers=false){
-	 	$config = $this->config; 
+	 	$config = clone $this->config; 
 	 	if (!$incUsers)
 	 		unset($config->users);
 		return $config;
@@ -153,9 +153,20 @@
 		$data = $this->data;
 	 	return $data;
 	}
+	
+	public function getInfo(){
+		$data = clone $this->data;
+		unset($data->projects);
+		unset($data->template);
+		return $data;	
+	}
+	
 	//grab data file
 	public function getProjects(){
-	 	return $this->data->projects; 
+		if (isset($this->data->projects))
+	 		return $this->data->projects; 
+	 	else
+	 		return false;
 	}
 	//get template by name or if no option, get all of em
 	public function getTemplates($type=false){
@@ -166,6 +177,7 @@
 		else
 			return $this->data->template;
 	}
+	/*
 	//get template attribute
 	public function getTemplateAttribute($att, $type){
 		if (isset($this->data->template->$att)){
@@ -174,7 +186,7 @@
 			return false;
 		}
 	}
-	
+	*/
 	//get attributes from specific project/media
 	public static function getAttributes($arr,$dataObj, $ascOrDesc="desc"){
 		$ret = array();
@@ -199,9 +211,9 @@
 		$arr = array();
 		foreach ($dataObj as $projId=>$projObj){
 			//if its got that attr and value is not in arr already
-			if (isset($projObj[$searchKey]) && !in_array($projObj[$searchKey], $arr)){
+			if ((isset($projObj[$searchKey])  && $projObj[$searchKey]!="") && !in_array($projObj[$searchKey], $arr)){
 				$arr[] = $projObj[$searchKey];
-			}else if (!isset($projObj[$searchKey]) &&  !in_array("undefined", $arr)){
+			}else if ((!isset($projObj[$searchKey]) || $projObj[$searchKey]=="") && !in_array("undefined", $arr)){
 				$arr[] = "undefined";
 			}
 			
@@ -299,68 +311,110 @@
 			$cond = (isset($rule[1])) ? $rule[1] : false;
 			$val =  (isset($rule[2])) ? $rule[2] : false;
 			$D = ($satisfy=="all") ? $res : $data;
-			switch($cond){
-				default:
-					foreach ((($satisfy=="all") ? $res : $data) as $projId=>$proj){
-							if (!is_array($attr)){
-								if (!isset($proj[$attr]))
-									$proj[$attr] = "undefined";
-							}
-							switch($cond){
-								case 'IGNORE':
-									if ($attr!=false){
-										if (is_string($attr))
-											$attr = array($attr);
-										foreach($attr as $index=>$att){
-											if (isset($res[$projId][$att]))
-												unset($res[$projId][$att]);
-										}
-									}
-									break;
-								case 'ONLY':
-									if ($attr!=false){
-										$tmpArr = array();
-										if (is_string($attr))
-											$attr = array($attr);
-										foreach($attr as $index=>$att){
-											if (isset($res[$projId][$att]))
-												$tmpArr[$att] = $res[$projId][$att];
-										}
-										$res[$projId] = $tmpArr;
-									}
-									break;
-								default:	
-								case "EQUALS":
-									//condition to meet
-									$eval = ($proj[$attr] == $val);
-									//check for condition
-									if ($satisfy=="all"){
-										if (!$eval)
-											unset($res[$projId]);
-									}else{
-										if ($eval)
-											$res[$projId] = $data[$projId];
-									}
-									break;
-								case "NOT EQUALS":
-									//condition to meet
-									$eval = ($proj[$attr] != $val);
-									//check for condition
-									if ($satisfy=="all"){
-										if (!$eval)
-											unset($res[$projId]);
-									}else{
-										if ($eval)
-											$res[$projId] = $data[$projId];
-									}
-									break;
-								
-							}	
-
+			foreach ((($satisfy=="all") ? $res : $data) as $projId=>$proj){
+					if (!is_array($attr)){
+						if (!isset($proj[$attr]))
+							$proj[$attr] = "undefined";
 					}
-					break;
-			}
-		}
+					switch($cond){
+						case 'IGNORE':
+							if ($attr!=false){
+								if (is_string($attr))
+									$attr = array($attr);
+								foreach($attr as $index=>$att){
+									if (isset($res[$projId][$att]))
+										unset($res[$projId][$att]);
+								}
+							}
+							break;
+						case 'ONLY':
+							if ($attr!=false){
+								$tmpArr = array();
+								if (is_string($attr))
+									$attr = array($attr);
+								foreach($attr as $index=>$att){
+									if (isset($res[$projId][$att]))
+										$tmpArr[$att] = $res[$projId][$att];
+								}
+								$res[$projId] = $tmpArr;
+							}
+							break;
+						case 'WITH ANY TAGS':
+							//get tags
+							$vals = explode(",", $val);
+							$atts = explode(",", $proj[$attr]);
+							$eval = false;
+							foreach ($vals as $v){
+								if (in_array($v, $atts))
+									$eval = true;
+							}
+							break;
+						case 'WITH TAGS':
+							//get tags
+							$vals = explode(",", $val);
+							$atts = explode(",", $proj[$attr]);
+							$eval = true;
+							foreach ($vals as $v){
+								if (!in_array($v, $atts))
+									$eval = false;
+							}
+							break;
+						case 'NOT WITH TAGS':
+							//get tags
+							$val = explode(",", $val);
+							$proj[$attr] = explode(",", $proj[$attr]);
+							$eval = true;
+							foreach ($val as $v){
+								if (in_array($v, $proj[$attr]))
+									$eval = false;
+							}
+						case 'CUSTOM':
+							//condition to meet
+							$eval = $val($proj[$attr]);
+							break;
+						case 'MORE THAN':
+							//condition to meet
+							$eval = ($proj[$attr]>$val);
+							break;
+						case 'LESS THAN':
+							//condition to meet
+							$eval = ($proj[$attr]<$val);
+							break;
+						case 'NOT CONTAINS':
+							//condition to meet
+							$eval = (stripos($proj[$attr], $val)===false);
+							break;
+						case 'CONTAINS':
+							//condition to meet
+							$eval = (stripos($proj[$attr], $val)!==false);
+							break;
+						default:	
+						case "EQUALS":
+							//condition to meet
+							$eval = ($proj[$attr] == $val);
+							break;
+						case "NOT EQUALS":
+							//condition to meet
+							$eval = ($proj[$attr] != $val);
+							break;
+						
+					}
+					//for basic evals
+					if (isset($eval)){
+					//check for condition
+						if ($satisfy=="all"){
+							if (!$eval)
+								unset($res[$projId]);
+						}else{
+							if ($eval)
+								$res[$projId] = $data[$projId];
+						}
+						unset($eval);
+					}
+
+				}//<--end loop	
+			}//<--end loop
+		
 		if ($MULTI==false){
 			$res = $res[0];
 		}
@@ -407,23 +461,44 @@
 	
 	
 	//convert data to all arrays or all objects
-	public function convert($d, $type='array') {
-		switch ($type){
-			case 'array':
-		        $ret = array();
-		        foreach ( (array)$d as $prop => $value ) {
-		            if ( is_object( $value ) ) {
-		            
-		                $ret[ $prop ] = $this->convert($value, 'array');
-		                continue;
-		            }
-		            $ret[ $prop ] = $value;
-		        }
-	        	return $ret;
-		        break;
-		    case 'object':
-		    	return is_array($d) ? (object) array_map(__METHOD__, $d) : $d;
+	public function convert($d, $type='array', $extras=false) {
+		$type = explode(",", $type);
+		foreach ($type as $t){
+			switch (trim($t)){
+				case 'date':
+					$d = str_replace("-", ",", $d);
+					$d = date($extras, strtotime($d));
+					break;
+				case 'timestamp':
+					$d = str_replace("-", ",", $d);
+					$d = strtotime($d);
+					break;
+				case 'breaks':
+					$d = nl2br($d);
+				case 'html':
+					$d = html_entity_decode($d);
+					break;
+				case 'plain':
+					$d =  strip_tags(html_entity_decode($d));
+					break;
+				case 'array':
+			        $ret = array();
+			        foreach ( (array)$d as $prop => $value ) {
+			            if ( is_object( $value ) ) {
+			            
+			                $ret[ $prop ] = $this->convert($value, 'array');
+			                continue;
+			            }
+			            $ret[ $prop ] = $value;
+			        }
+		        	$d =  $ret;
+			        break;
+			    case 'object':
+			    	$d = is_array($d) ? (object) array_map(__METHOD__, $d) : $d;
+			    	break;
+		    }
 	    }
+	    return $d;
 	 }	 
  }
  

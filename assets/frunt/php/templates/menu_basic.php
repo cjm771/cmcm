@@ -1,5 +1,8 @@
 
 {% macro subList(name, projects, more, index, context) %}
+	{% if index is not defined %}
+		{% set index = 0  %}
+	{% endif %}
 	<div class='group_list group_index_{{index}}'>
 	{% if name %}
 		{# <----- group header ----> #}
@@ -26,7 +29,7 @@
 {% spaceless %}
 <div class='verticalMenu {% if collapse and sort_by %}collapsed{% endif %} {% if collapse_multiple_fans==false and sort_by %}noMulti{% endif %}'  {% if collapse_current %}data-current='{{ collapse_current }}'{% endif %}>
 {% if sort_by==false %}
-	{{ macros.subList(false, projects, false, 0, _context) }}
+	{{ macros.subList(false, projects, 0, 0, _context) }}
 {% else %}
 	{{ macros.subList(false, projects, sort_by|length, 0, _context) }}
 {% endif %}

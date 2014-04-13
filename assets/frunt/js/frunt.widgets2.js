@@ -7,7 +7,10 @@
 		resizeTime : 100,
 		init : function(){
 			var that = this;
-			
+			//turn off all frunt namespace events
+			$(window).off('.frunt');
+			$("*").off('.frunt');
+			$("*").off('frunt.slider.change');
 			//setup menuWidget
 			this.menuWidget();
 			//setup previewWidget
@@ -22,10 +25,7 @@
 				that.onResize();
 			});
 			this.onResize();
-			//EVENTS
-			window.addEventListener("resize", function(){
-				that.onResize();
-			});
+		
 		},
 		toggler : function(el, opts, sel){
 			$.each(opts, function(k,v){
@@ -60,17 +60,18 @@
 						$(this).attr("data-height", _parent.height());
 					}else if(propBias=="width"){
 						$(this).attr("data-width", $(this).width());
-						$(this).attr("data-height", "0");
+						$(this).attr("data-height", 0);
 					}else if(propBias=="height"){
 						$(this).attr("data-height", $(this).height());
-						$(this).attr("data-width", "0");
+						$(this).attr("data-width", 0);
 					}else if (propBias=="parent-width"){
 						$(this).attr("data-width", _parent.width());
-						$(this).attr("data-height", "0");
+						$(this).attr("data-height", 0);
+						
 					//bias the parent height
 					}else if (propBias=="parent-height"){
 						$(this).attr("data-height", _parent.height());
-						$(this).attr("data-width", "0");
+						$(this).attr("data-width", 0);
 					}
 					newSize  = cmcm.fruntWidget.getResizeImageDimensions($(this).attr("data-width"), $(this).attr("data-height"), ratio[0], ratio[1], fit);
 					if (propBias!="width"){
@@ -122,6 +123,7 @@
 				mediaThumb = $(this).attr("data-thumb");
 				mediaType = $(this).attr("data-type");
 				title =  $(this).attr("title");
+				rel =  $(this).attr("rel");
 				propBias = $(this).attr("data-bias");
 				propBias = (propBias==undefined) ? $(this).attr("data-proportion-bias") : propBias;
 				_parent = $(this).parent();
@@ -139,6 +141,7 @@
 				$(this).replaceWith(that.preview({
 					src : mediaUrl,
 					thumb : mediaThumb,
+					rel : rel,
 					caption : title,
 					type : mediaType,
 					opts : $(this).data() //extra options
@@ -167,7 +170,6 @@
 			}
 			description = $(description);
 			description.attr("title", $(el).attr("title"));
-			console.log(description.html());
 			return description;
 		},
 		modalWidget : function(){
@@ -181,7 +183,7 @@
 			if ($("a.frunt-modal").length){
 				$("a.frunt-modal").each(function(){
 					
-					$(this).on("click", function(e){
+					$(this).on("click.frunt", function(e){
 						
 						e.preventDefault();
 						caption = $(this).attr("title");
@@ -218,7 +220,6 @@
 			}
 		},
 		slideshow_goto : function(el, id, direction){
-			
 			currentSlide =  slider.find(".slide:eq("+(slider.attr("data-current"))+")");
 			
 			//reset old incase its an iframe playing
@@ -248,10 +249,14 @@
 			switch (effect){
 			case "slide":
 			default:
-				if (direction=="left")
-					change = { scrollLeft : slider.find(".slide:eq("+(slideID)+")")[0].offsetLeft };
-				else
-					change = { scrollTop : slider.find(".slide:eq("+(slideID)+")")[0].offsetTop };
+				if (slider.find(".slide:eq("+(slideID)+")")[0]!=undefined){
+					if (direction=="left")
+							change = { scrollLeft : slider.find(".slide:eq("+(slideID)+")")[0].offsetLeft };
+					else
+						change = { scrollTop : slider.find(".slide:eq("+(slideID)+")")[0].offsetTop };
+				}else{
+					change = false;
+				}
 				slider.find(".frunt-slider").animate(change, duration);
 				break;
 			case "fade":
@@ -299,8 +304,7 @@
 			var that = this;
 			slider = layout;
 			controls.find(".jump_to").first().addClass("active");
-				controls.find(".jump_to").on("click", function(){
-					//console.log('weee');
+				controls.find(".jump_to").on("click.frunt", function(){
 					controls = $(this).closest(".frunt-layout-controls");
 					slider = $(this).closest(".frunt-layout");
 					controls.find(".jump_to").removeClass("active");
@@ -308,11 +312,11 @@
 					$(this).addClass("active");
 				});
 				
-				controls.find(".next").on("click", function(){
+				controls.find(".next").on("click.frunt", function(){
 					slider = $(this).closest(".frunt-layout");
 					that.slideshow_goto(slider, parseInt(slider.attr("data-current"))+1,  direction);
 				});
-				controls.find(".prev").on("click", function(){
+				controls.find(".prev").on("click.frunt", function(){
 					slider = $(this).closest(".frunt-layout");
 					that.slideshow_goto(slider, parseInt(slider.attr("data-current"))-1,  direction);
 				});
@@ -320,9 +324,12 @@
 		scrollSpy  : function(slider, direction){
 			direction = (direction == undefined) ? "left" : direction;
 			var that = this;
-			$(slider).find(".frunt-slider").on("scroll", function(){
+			$(slider).find(".frunt-slider").on("scroll.frunt", function(){
+			 	
+			 	slider = $(this).closest(".frunt-layout");
 				clearTimeout(that.miscTimer.horizSlider);
 				that.miscTimer.horizSlider = null;
+			
 				that.miscTimer.horizSlider = setTimeout(function(){
 					if (direction=="left")
 						scrollPosition = slider.find(".frunt-slider").scrollLeft();
@@ -344,7 +351,7 @@
 					BUFFER=0;
 					while (found==0){
 						_current = slideLefts[slide];
-						//console.log("slide "+slide+":"+last+" "+scrollPosition+" "+_current);
+
 						//last slide
 						if (scrollPosition >= slideLefts[slideLefts.length-1]-5){
 							trueSlide = slideLefts.length-1;
@@ -359,14 +366,7 @@
 						}else if (last-BUFFER<=scrollPosition && scrollPosition<_current+BUFFER){
 							trueSlide  = Math.max(0, slide-1);
 							if (trueSlide!=currentSlide){
-								
-								/*
-								console.log('current scroll position: '+scrollPosition);
-								console.log('current slide left: '+_current);
-								console.log('past slide left: '+last);
-								*/
-								//console.log("slide "+slide+":"+(last-BUFFER)+" "+scrollPosition+" "+(_current+BUFFER));
-								//console.log('true slide: '+trueSlide);
+					
 								
 								slider.attr("data-current", trueSlide);
 								//trigger move event
@@ -375,6 +375,7 @@
 									'index' : trueSlide
 									});
 								found = 1;
+								
 							}
 						}
 						last = _current;
@@ -383,15 +384,30 @@
 							found=1;
 					};
 						
-						
 				}, 10);
 			
 			});
 			
 		},
 		layoutWidget : function(){
-			console.log("#");
 			var that = this;
+			
+						
+			//fix slideshow slider if window is being resized
+			$(window).on("resize.frunt", function(){
+				clearTimeout(that.miscTimer.slider);
+				that.miscTimer.slider = setTimeout(function(){
+				$(".frunt-layout").each(function(){
+							slider = $(this);
+							slider.clearQueue();
+							slider.stop();
+							that.slideshow_goto(slider, slider.attr("data-current"));
+						});
+					}, that.resizeTime); 
+				
+			});
+				
+			
 			//initalize horizontal scroller
 			if ($(".frunt-layout.frunt-layout-horizontal, .frunt-layout.frunt-layout-vertical").length){
 				$(".frunt-layout.frunt-layout-horizontal, .frunt-layout.frunt-layout-vertical").each(function(){
@@ -400,14 +416,14 @@
 					slider.attr('id',id);
 					slider.attr("data-current", 0);
 					direction = (slider.hasClass("frunt-layout-vertical")) ? "top" : "left";
-					that.scrollSpy($("#"+id), direction);
+					that.scrollSpy("#"+id, direction);
 					
 					
 					//if they have controls	
 					if (slider.find(".frunt-layout-controls").length){
 						//if controls..do a detect on change
 						slider.on("frunt.slider.change", function(e){
-							
+							slider = $(this);
 							if (slider.find(".info").length){
 								slider.find(".info .current").html(e.index+1);
 							}
@@ -428,7 +444,7 @@
 							
 				});
 			}
-				
+
 			//initialize slideshow
 			if ($(".frunt-layout.frunt-layout-slideshow").length){
 				$(".frunt-layout.frunt-layout-slideshow").each(function(){
@@ -438,19 +454,8 @@
 					slider.attr('id',id);
 					effect = slider.attr("data-effect");
 					
-					//fix slider if window is being resized
-					if (effect=="slide"){
-						window.addEventListener("resize", function(){
-							clearTimeout(that.miscTimer.slider);
-							that.miscTimer.slider = null;
-							that.miscTimer.slider = setTimeout(function(){
-								slider = $("#"+id);
-								slider.clearQueue();
-								slider.stop();
-								that.slideshow_goto(slider, slider.attr("data-current"));
-							}, that.resizeTime); 
-						});
-					}
+					
+						
 					
 					duration = slider.attr("data-duration");
 					loop = slider.attr("data-loop");
@@ -462,7 +467,8 @@
 					slider.attr("data-current", 0);
 					slider.attr("data-z", 1);
 					if (moveOnClick){
-						$(slider).find(".frunt-slider").on("click", function(e){
+						$(slider).find(".frunt-slider").on("click.frunt", function(e){
+							slider = $(this).closest(".frunt-layout");
 							nextOrPrev = ((e.clientX-$(this).offset().left) < .4 * $(slider).width()) ? -1 : 1;
 							next = parseInt(slider.attr("data-current"))+nextOrPrev;
 							that.slideshow_goto(slider, next)
@@ -470,10 +476,13 @@
 					}
 					
 					if (autoplay){
-						setInterval(function(){
-							slider = $("#"+id);
+						clearInterval(that.miscTimer.autoplay);
+						that.miscTimer.autoplay = setInterval(function(){
+							$(".frunt-layout.frunt-layout-slideshow[data-autoplay]").each(function(){
+							slider = $(this);
 							next = parseInt(slider.attr("data-current"))+1;
 							that.slideshow_goto(slider, next)
+							});
 						}, autoplay);
 					}
 					
@@ -486,6 +495,20 @@
 							slider = $(this).closest(".frunt-layout-slideshow");
 							controls = $(this);
 							that.initializeControls(slider, controls);
+							
+							//if controls..do a detect on change
+							slider.on("frunt.slider.change", function(e){
+								slider = $(this);
+								if (slider.find(".info").length){
+									slider.find(".info .current").html(e.index+1);
+								}
+								if (slider.find(".jump_to").length){
+									slider.find(".jump_to").removeClass("active");
+									slider.find(".jump_to[data-id='"+e.index+"']").addClass("active");
+								}
+							
+							
+							});
 							/*
 							controls.find(".jump_to").first().addClass("active");
 							controls.find(".jump_to").on("click", function(){
@@ -589,8 +612,10 @@
 				$(".frunt-menu.frunt-menu-horiz").each(function(){
 					menu = $(this);
 					$(this).find(".link").each(function(){
-						$(this).on("click", function(){
+						$(this).on("click.frunt", function(){
+
 							if (!$(this).hasClass("disabled")){
+								menu= $(this).closest(".frunt-menu.frunt-menu-horiz");
 								//$(this).closest(".col_content").scrollTop($(this).position().top);						
 								//define els						
 								column = $(this).closest(".column");
@@ -659,7 +684,7 @@
 							$(this).find(".link").each(function(){
 								//link = this;
 								if (activeField==$(this).attr("data-val")){
-									$(this).trigger("click");
+									$(this).trigger("click.frunt");
 									    
 									if ($(this).closest(".column").find(".col_content").length){
 										el = $(this).closest(".column").find(".col_content");
@@ -680,75 +705,78 @@
 			//vertical menu collapsed setup
 			if ($(".verticalMenu.collapsed").length){
 				//set group header click events
-				$(".verticalMenu.collapsed").find(".group_header").each(function(){
-					
-					group = $(this).closest(".group_list");
-					group.find(".group_list .group_header").hide();
-					group.addClass("closed");
-					$(this).on("click", function(){
+				$(".verticalMenu.collapsed").each(function(){
+					menu = $(this);
+					menu.find(".group_header").each(function(){
 						
-						header = $(this);
 						group = $(this).closest(".group_list");
-						menu  = $(this).closest(".verticalMenu");
-						menu.find(".group_header").removeClass("selected");
-						
-						//no multiple
-						if (menu.hasClass("noMulti")){
-								//turn off all things..
-								group.parent().find(".group_list").not(group).each(function(){
-									
-									//groups not 
-									$(this).removeClass("open");
-									$(this).addClass("closed");
-									$(this).find(".group_list > .group_header").hide("slow");
-									$(this).find("a").hide("slow");
-							});
-						}
-						
-						if (group.hasClass("closed")){
-							//SHOW FAN
-							group.find("> .group_list > .group_header").show("slow"); 
+						group.find(".group_list .group_header").hide();
+						group.addClass("closed");
+						$(this).on("click.frunt", function(){
 							
-							group.find((menu.hasClass("noMulti")) ? "> a" : "> a").fadeIn().css("display", "block");
-							group.removeClass("closed");
-							group.addClass("open");
-							header.addClass("selected");
-							//group.show();
-						}else{
-							//HIDE FAN
-							group.find("> .group_list > .group_header").hide("slow");
-							group.find((menu.hasClass("noMulti")) ? "> a" : "> a").hide("slow");
-							group.attr("data-toggle", 0);
-							group.removeClass("open");
-							header.removeClass("selected");
-							group.addClass("closed");
-						}
+							header = $(this);
+							group = $(this).closest(".group_list");
+							menu  = $(this).closest(".verticalMenu");
+							menu.find(".group_header").removeClass("selected");
+							
+							//no multiple
+							if (menu.hasClass("noMulti")){
+									//turn off all things..
+									group.parent().find(".group_list").not(group).each(function(){
+										
+										//groups not 
+										$(this).removeClass("open");
+										$(this).addClass("closed");
+										$(this).find(".group_list > .group_header").hide("slow");
+										$(this).find("a").hide("slow");
+								});
+							}
+							
+							if (group.hasClass("closed")){
+								//SHOW FAN
+								group.find("> .group_list > .group_header").show("slow"); 
+								
+								group.find((menu.hasClass("noMulti")) ? "> a" : "> a").fadeIn().css("display", "block");
+								group.removeClass("closed");
+								group.addClass("open");
+								header.addClass("selected");
+								//group.show();
+							}else{
+								//HIDE FAN
+								group.find("> .group_list > .group_header").hide("slow");
+								group.find((menu.hasClass("noMulti")) ? "> a" : "> a").hide("slow");
+								group.attr("data-toggle", 0);
+								group.removeClass("open");
+								header.removeClass("selected");
+								group.addClass("closed");
+							}
+						});
+						
+					});
+					//set current page
+					menu.find(".active").closest(".group_list").find(".group_header").addClass("selected");
+					menu.find(".active").parentsUntil(".group_index_0", ".group_list").each(function(){
+							
+							$(this).find("> .group_list >.group_header").show();
+							$(this).removeClass("closed");
+							$(this).addClass("open");
+							$(this).find("> a").css("display", "block");
 					});
 					
-				});
-				//set current page
-				$(".verticalMenu.collapsed").find(".active").closest(".group_list").find(".group_header").addClass("selected");
-				$(".verticalMenu.collapsed").find(".active").parentsUntil(".group_index_0", ".group_list").each(function(){
-						
-						$(this).find("> .group_list >.group_header").show();
-						$(this).removeClass("closed");
-						$(this).addClass("open");
-						$(this).find("> a").css("display", "block");
-				});
-				
-				//pick default open fan..
-				if (!$(".verticalMenu.collapsed").find(".active").length){
-					currentFan = $(".verticalMenu.collapsed").attr("data-current");
-					if (currentFan){
-						//if the current fan is a string then attempt to find it
-						if ($(".verticalMenu.collapsed").find(".group_header[data-name='"+currentFan+"']").length){
-							$(".verticalMenu.collapsed").find(".group_header[data-name='"+currentFan+"']").first().trigger("click");
-						}else{
-							//else just show first
-							$(".verticalMenu.collapsed").find(".group_header").first().trigger("click");
+					//pick default open fan..
+					if (!menu.find(".active").length){
+						currentFan = menu.attr("data-current");
+						if (currentFan){
+							//if the current fan is a string then attempt to find it
+							if (menu.find(".group_header[data-name='"+currentFan+"']").length){
+								menu.find(".group_header[data-name='"+currentFan+"']").first().trigger("click.frunt");
+							}else{
+								//else just show first
+								menu.find(".group_header").first().trigger("click.frunt");
+							}
 						}
 					}
-				}
+				});
 			}
 		}, //<--end menu widget
 		 //<--------- UTILS -------------->//
@@ -757,15 +785,18 @@
 	    	wprWidth = (pw!=undefined) ? pw : 0;
 	    	wprHeight = (ph!=undefined) ? ph : 0;
 	    	if (wprWidth == 0 || wprHeight==0){
+		    	
 		    	if (wprWidth==0){
+			    //height bias
 			    	return {
 			    		height: wprHeight,
 			    		width : wprHeight*(w/h)
 			    	};
+		    	//width bias
 		    	}else{
 			    		return {
-			    		height: wprWidth,
-			    		width : wprWidth*(h/w)
+			    		width: wprWidth,
+			    		height : wprWidth*(h/w)
 			    	};
 		    	}
 	    	}
@@ -793,7 +824,7 @@
 		preview : function(mediaObj){
 			var that = this;
 								
-			mediaObj.opts.mode = (mediaObj.opts.mode!=undefined) ? 	mediaObj.opts.mode : "direct_embed";
+			mediaObj.opts.mode = (mediaObj.opts.mode!=undefined) ? 	mediaObj.opts.mode : "none";
 			mediaType = this.mediaTypes[mediaObj.type];
 			
 			iconTypes = {
@@ -802,7 +833,7 @@
 				video : "glyphicon glyphicon-facetime-video"	
 			};
 			
-			wpr = $("<div class='frunt-preview-wpr'></div");
+			wpr = $("<div class='frunt-preview-wpr'></div>");
 			switch (mediaObj.opts.mode){
 				//MODAL
 				case "none":
@@ -818,18 +849,20 @@
 						thumb = $("<img class='frunt-preview-thumb' src='"+src+"'>");
 						if (mediaObj.opts.thumb)
 							thumb.attr("data-thumb", mediaObj.opts.thumb);
-
-											
-						//responsive?
-						if (mediaObj.opts.responsive){
+				
+					
+					//responsive?
+					if (mediaObj.opts.responsive){
+							thumb.attr("data-awesome", 1);
 							thumb.imagesLoaded(function(img){
-								//console.log("loaded");
-								 ratio = [img.width, img.height];
-								 $(img).attr("data-ratio", JSON.stringify(ratio));
-								 $(img).addClass("frunt-responsive");
-								 //$(img).attr("data-=", true);
-							});
-						}
+;
+							 ratio = [img.width, img.height];
+							 $(img).attr("data-ratio", JSON.stringify(ratio));
+							 $(img).addClass("frunt-responsive");
+							 //$(img).attr("data-=", true);
+						});
+					}
+					
 					}else{
 						thumb = $("<div class='frunt-preview-thumb noImage'></div>");
 						if (mediaObj.opts.responsive){
@@ -854,6 +887,7 @@
 						thumb.attr("data-fit", mediaObj.opts.fit);
 					if (mediaObj.opts.bias)
 					thumb.attr("data-bias", mediaObj.opts.bias);
+		
 					
 					
 					if (mediaObj.opts.mode=="thumb"){
@@ -937,11 +971,12 @@
 				//DIRECT EMBED
 				case "direct_embed":
 				default:
-
+					mediaObj.opts.visual = 1;
 					ret =  that.mediaTypes[mediaObj.type].preview(mediaObj);
 					ret.addClass("frunt-modal");
 					ret.attr("data-src", mediaObj.src);
-					ret.attr("title",  thumb.attr("title"));
+					if (mediaObj.caption != undefined)
+						ret.attr("title",  mediaObj.caption);
 					ret.attr("data-type", mediaObj.type);
 					ret.hide();
 					//responsive?
@@ -958,8 +993,9 @@
 		
 			if (wpr.is(':empty'))
 				wpr.append("<div class='noImage'>"+mediaObj.type+"</div>");
-				
 			
+			if (mediaObj.rel)
+				wpr.find('.frunt-modal').first().attr("rel", mediaObj.rel);
 			
 			return wpr;
 
@@ -983,9 +1019,8 @@
 					 //preload
 					 img = document.createElement("img");
 					 img.src = $(new_content).attr("src");
-					 //$(img).appendTo("body").css("opacity", 0);
+
 					 $(img).imagesLoaded(function(img){
-					 	console.log('loaded');
 						 modal_content = $('.frunt-modal-content');
 						 dims = that.getResizeImageDimensions($(window).width()-WIDTHBUFFER,$(window).height()-HEIGHTBUFFER, img.width, img.height, "within");
 						 modal_content.find(".description_wpr").addClass("old");
@@ -1005,14 +1040,13 @@
 						},200, function(){
 							$(this).css("overflow", "visible");
 							setTimeout(function(){
-								modal_content.find(".description_wpr.old").remove();
+								$(".frunt-modal-content .description_wpr.old").remove();
 							}, 500);
 							 
 							//$(this).append(descriptionWrapper.fadeIn());
 							//modalShow(0);
 						});
 						
-						 console.log((modal_content.offset().top+modal_content.height())+" "+$(window).height());
 						 
 					 });
 				}else if ($(new_content).is("iframe")){
@@ -1027,9 +1061,16 @@
 					dims = that.getResizeImageDimensions($(window).width()-WIDTHBUFFER,$(window).height()-HEIGHTBUFFER, 9,6, "within");
 					modalShow(200, dims.height);
 					
-					modal_content.css({
+					modal_content.animate({
 							width : dims.width+"px",
 							height : dims.height+"px",
+						},200, function(){
+							$(this).css("overflow", "visible");
+							setTimeout(function(){
+								$(".frunt-modal-content .description_wpr.old").remove();
+							}, 500);
+							
+							
 						});
 				
 				
@@ -1049,7 +1090,7 @@
 			WIDTHBUFFER = 300;
 			amount  = $(".frunt-modal[rel='"+opts.group+"']").length;
 			modal_content.attr("data-id", opts.index);
-			modal_content.on("click", function(e){
+			modal_content.on("click.frunt", function(e){
 				e.stopPropagation();
 				//e.preventDefault();
 			});
@@ -1058,41 +1099,40 @@
 			
 			description = (typeof opts.description=="string") ? $(description) : description;
 			closeButton = $("<span class='glyphicon glyphicon-remove icon frunt-modal-close' title='info'>");
-			closeButton.on("click", close);
+			closeButton.on("click.frunt", close);
 			nextButton = $("<span class='glyphicon glyphicon-chevron-right icon frunt-modal-next frunt-clickable' title='info'>");
 			prevButton = $("<span class='glyphicon glyphicon-chevron-left icon frunt-modal-prev frunt-clickable' title='info'>");
-			prevButton.on("click", function(e){
+			prevButton.on("click.frunt", function(e){
 				e.stopPropagation();
 				
 				_index = parseInt(modal_content.attr("data-id"))-1;
 				if (_index<0)
 					_index = amount+_index;
-				console.log(_index);
 				 that.modal_move(_index, opts.group);	
 			});
-			modal_content.on("mousemove", function(e){
+			modal_content.on("mousemove.frunt", function(e){
 				
 				nextOrPrev = ((e.clientX-$(this).offset().left) < .4 * $(slider).width()) ? -1 : 1;
-				//console.log(nextOrPrev);
+
 				$(".frunt-modal-next, .frunt-modal-prev").removeClass("frunt-clickable-hover");
 				if (nextOrPrev==1)
 					$(".frunt-modal-next").addClass('frunt-clickable-hover');
 				else
 					$(".frunt-modal-prev").addClass('frunt-clickable-hover');
 			});
-			modal_content.on("mouseout", function(e){
+			modal_content.on("mouseout.frunt", function(e){
 				$(".frunt-modal-next, .frunt-modal-prev").removeClass("frunt-clickable-hover");
 			});
 
 			
-			modal_content.on("click", function(e){
+			modal_content.on("click.frunt", function(e){
 				nextOrPrev = ((e.clientX-$(this).offset().left) < .4 * $(slider).width()) ? -1 : 1;
 				 _index = (parseInt(modal_content.attr("data-id"))+nextOrPrev)%amount;
 				 if (_index<0)
 					_index = amount+_index;
 				 that.modal_move(_index, opts.group);
 			});
-			nextButton.on("click", function(e){
+			nextButton.on("click.frunt", function(e){
 				e.stopPropagation();
 				
 				 _index = (parseInt(modal_content.attr("data-id"))+1)%amount;
@@ -1119,7 +1159,7 @@
 			descriptionWrapper.append(description);
 			modal_content.append(descriptionWrapper);
 			modal_bg.append(modal_content);
-			modal_bg.on("click", close);
+			modal_bg.on("click.frunt", close);
 			
 			
 			
@@ -1214,7 +1254,7 @@
 				},
 				sound : {
 					preview : function(mediaObj){
-						//console.log('weeeeeeeeeeee');
+
 						mediaObj.opts = (mediaObj.opts==undefined) ? {} : mediaObj.opts;
 						//check url
 						ret = "";
@@ -1259,7 +1299,6 @@
 			     		v = cmcm.fruntWidget.trim(mediaObj.src.match(this.regex)[1]);
 			     		//options defaults
 			     		mediaObj.opts.autoplay = (mediaObj.opts.autoplay!=undefined  && mediaObj.opts.autoplay==true) ?  1 : 0 ;
-			     		console.log(mediaObj.opts.autoplay);
 				     	emb = $('<iframe  class="frunt-preview-video" src="//player.vimeo.com/video/'+v+'?portrait=0&autoplay='+mediaObj.opts.autoplay+'" width="100%" height="100%" frameborder="0" style="display: block" webkitallowfullscreen mozallowfullscreen allowfullscreen></iframe>');
 				     	return emb;
 				     	
@@ -1299,7 +1338,15 @@
 
 $(document).ready(function(){
 	cmcm.fruntWidget.init();
-});$
+	
+//EVENTS
+	
+	window.addEventListener("resize", function(){
+		cmcm.fruntWidget.onResize();
+	});
+	
+	
+});
 
 
 $.fn.imagesLoaded = function(callback){
