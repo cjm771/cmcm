@@ -150,6 +150,9 @@ TXT
 ,
 "js" => <<<'TXT'
 
+<!-- (any) jquery --> 
+<script src="cmcm/assets/js/jquery-2.1.0.min.js"></script>
+
 <!-- frunt js -->
 <script src="cmcm/assets/frunt/js/frunt.js"></script>
 <!-- twig js (opts, if using widgets) -->
@@ -531,7 +534,170 @@ TXT
 )
 // END CODE SNIPPET
 ,
+//CODE SNIPPET
+"frunt_widgets" => <<<'TXT'
 
+<!--ADDITIONAL RESOURCES TO INCLUDE FOR WIDGETS -->
+
+<!-- (any) jquery..if you didn't include it before --> 
+<script src="cmcm/assets/js/jquery-2.1.0.min.js"></script>
+<!-- twig js (JS SDK ONlY..if you didn't include it before) -->
+<script src="cmcm/assets/frunt/js/lib/twig.js"></script>
+
+<!--- WIDGET SPECIFIC BELOW -->
+
+<!-- frunt.widgets js -->
+<script src="cmcm/assets/frunt/js/frunt.widgets.js"></script>
+<!-- frunt.widgets css -->
+<link rel='stylesheet' href='cmcm/assets/frunt/css/frunt.widgets.css' />
+
+TXT
+// END CODE SNIPPET
+,
+//CODE SNIPPET
+"frunt_widgetsBasic" => array(
+"php" => <<<'TXT'
+
+//grab projects
+$projs = $frunt->getProjects();
+//display a vertical menu, with various options..
+echo $frunt->widget('menu.vertical', $projs, array(
+	"collapse" => false,
+	"current" => "soundcloud-test",
+	"sort_by" => "year"
+));
+
+TXT
+,
+"js" => <<<'TXT'
+
+//grab projects
+projs = frunt.getProjects();
+//display a vertical menu, with various options..
+html = frunt.widget('menu.vertical', projs, {
+	async : false,
+	collapse : false,
+	current : "soundcloud-test",
+	sort_by : "year"
+});
+//put it in the dom
+$("#container").html(html);
+
+//if this is after page load, make sure to reinit frunt.widgets.js
+cmcm.fruntWidget.init();
+
+
+TXT
+)
+// END CODE SNIPPET
+,
+//CODE SNIPPET
+"frunt_menuVert" => array(
+"php" => <<<'TXT'
+	
+echo $frunt->widget("menu.vertical", $frunt->getProjects(), array(
+		"sort_by" => "year",
+		"current" => "soundcloud-test",
+		"extras" => array(
+			"about" => "about.php",
+			"contact" => "contact.php"
+		)
+));
+						
+TXT
+,
+"js" => <<<'TXT'
+
+//display a vertical menu, with various options..
+html = frunt.widget('menu.vertical', frunt.getProjects(), {
+	async : false,
+	sort_by : "year",
+	current : "soundcloud-test",
+	extras : {
+		about : 'about.php',
+		contact : 'contact.php'
+	}
+});
+//put it in the dom
+$("#container").html(html);
+
+//if this is after page load, make sure to reinit frunt.widgets.js
+cmcm.fruntWidget.init();
+
+
+TXT
+)
+// END CODE SNIPPET
+,
+//CODE SNIPPET
+"frunt_menuHoriz" => array(
+"php" => <<<'TXT'
+	
+//display a horizontal menu, with various options..
+echo $frunt->widget("menu.horizontal", $frunt->getProjects(), array(
+		"sort_by" => "year",
+		"collapse" => true,
+		"current" => "soundcloud-test",
+		"extras" => array(
+			"about" => "about.php",
+			"contact" => "contact.php"
+		)
+));
+
+						
+TXT
+,
+"js" => <<<'TXT'
+
+//display a horizontal menu, with various options..
+html = frunt.widget('menu.horizontal', frunt.getProjects(), {
+	async : false,
+	sort_by : "year",
+	collapse : true,
+	current : "soundcloud-test",
+	extras : {
+		about : 'about.php',
+		contact : 'contact.php'
+	}
+});
+//put it in the dom
+$("#container").html(html);
+
+//if this is after page load, make sure to reinit frunt.widgets.js
+cmcm.fruntWidget.init();
+
+
+TXT
+)
+// END CODE SNIPPET
+,
+//CODE SNIPPET
+"frunt_menuGrid" => array(
+"php" => <<<'TXT'
+	
+//display a grid menu, with various options..
+echo $frunt->widget("menu.grid", $frunt->getProjects(), array(
+	"current" => "soundcloud-test"
+));
+						
+TXT
+,
+"js" => <<<'TXT'
+
+//display a grid menu, with various options..
+html = frunt.widget('menu.grid', frunt.getProjects(), {
+	current : "soundcloud-test"
+});
+//put it in the dom
+$("#container").html(html);
+
+//if this is after page load, make sure to reinit frunt.widgets.js
+cmcm.fruntWidget.init();
+
+
+TXT
+)
+// END CODE SNIPPET
 );
 
 function render($var){

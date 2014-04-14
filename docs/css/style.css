@@ -83,6 +83,15 @@ body,html{
 	font-weight: bold;
 }
 
+.widgetName{
+	background: #000;
+	padding: 5px;
+	border-radius: 5px;
+	font-weight: normal;
+	color: #fff;
+	margin-top: 50px;
+	padding-left: 10px;
+}
 .submenu{
 	width: 100px;
 	font-size: 12px;
@@ -147,6 +156,10 @@ body,html{
 .submenu a > .subItem:last-child{
 	padding-bottom: 10px;
 }
+.submenu a > .subItem:first-child{
+	padding-top: 2px;
+}
+
 .submenu a.active > .subItem:hover,
 .submenu a:hover{
 	color: #5383f2;
@@ -216,7 +229,8 @@ pre.prettyprint{
 	padding: 2px;
 }
 
-.section img{
+.section > img,
+.section > p > img{
 	width: 100%;
 	height: auto;
 	margin: 10px 0;

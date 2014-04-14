@@ -1,6 +1,25 @@
 <?
 	//code samples
 	include('chunks/codesamples.php');
+	
+
+    // frunt php
+    require_once('../assets/frunt/php/frunt.php');
+    
+    /*******************
+     * 
+     * new frunt instance!
+     * args are as follows:
+     * 
+     * CMCM_ROOT: cmcm directory, relative or abs
+     * CMCM_URL: cmcm url, relative or abs
+     * SITE_URL: site url, relative or abs
+     * OPTS: object of additional options 
+     *
+     *******************/
+
+     $frunt = new Frunt("../", "../", "./", array());
+
 ?>
 
 <!DOCTYPE HTML>
@@ -382,6 +401,185 @@
 								<?=render($var['frunt_twig']['js'])?>
 							</pre>
 						</p>
+					</div> <!--end section-->
+					<div class='section' data-section="frunt_widgets">
+						<a name='frunt-widgets'></a>
+						<h2>Frunt / Widgets</h2>
+						<p>
+							<b>Frunt's widgets are a set of reusable components to help you build out a basic website quickly!</b> These are basically an extension of the core set of functions, where we now implement those functions to create self-contained ready-to-use html blocks.
+						</p>
+						<p>
+							 <b>A widget takes care of the markup (html), the interactive (js) and initial stylings (css) of elements</b>...examples would include menus, slideshows, previewers, scrollers, modals (enlargement windows), and more. After including a widget, you can  of course add additional css to customize the look and feel of the widgets.
+						</p>
+							<h4>Requirements:</h4>
+						<p>
+							For frunt widget's you need to include the <b>frunt.widgets.js</b> and <b>frunt.widgets.css</b> files, regardless of the sdk. For js sdk only, you need to make sure your including the <b>twig.js</b> file.
+						</p>
+						<p>So all dependencies would be the following..
+							<ul>
+								<li><a href='#frunt-setup'>[Frunt SDK, JS or PHP]</a></li>
+								<li><b>jquery</b></li>
+								<li><b>twig.js*</b></li>
+								<li><b>frunt.widgets.js</b></li>
+								<li><b>frunt.widgets.css</b></li>
+							</ul>
+							<div class='light'><i>*Only required for Frunt JS SDK.</i></div>
+						</p>
+						<p>
+							<pre class='prettyprint'>
+								<?=render($var['frunt_widgets'])?>
+							</pre>
+						</p>
+					</div> <!--end section-->
+					<div class='section' data-section="frunt_widgets_basic">
+						<a name='frunt-widgets-basic'></a>
+						<h2>Frunt / Widgets / Basic</h2>
+						<p>
+							All widgets are used by calling the same  <i>widget</i> method, just with different params. THis section will go over the widget method, and then the following specific widget sections will simply display the widget name, data type, and available options.
+						</p>
+						<p id='fruntWidgetsBasic'>
+							
+						</p>
+						<p>
+							<h4>Usage Example | 
+								<span class='code code_php'>PHP</span>
+								<span class='code code_js'>JS</span>
+							</h4>
+							<pre class='prettyprint code code_php'>
+								<?=render($var['frunt_widgetsBasic']['php'])?>
+							</pre>
+							<pre class='prettyprint code code_js'>
+								<?=render($var['frunt_widgetsBasic']['js'])?>
+							</pre>
+						</p>
+					</div> <!--end section-->
+					<div class='section' data-section="frunt_widgets_menu">
+					<a name='frunt-widgets-menu'></a>
+						<h2>Frunt / Widgets / Menus</h2>
+						<p>
+							The Menu Widget allows you to display your project lists in a variety of ways. For data input, it takes all or a subset of projects.  Actual <i>widget</i> method structure covered <a href='#frunt-widgets-basic'>here</a>
+						</p>
+						<a name='frunt-menuVertical'></a>
+						<h3 class='widgetName'>menu.vertical</h3>
+						<p>Vertical Menu (menu.vertical) accepts a <b>set of project objects</b>, below are the available options..</p>
+						<ul>
+							<li><b>identifier : </b>  <span class='light'>String, Identifier type for url..cleanUrl or id </span> / <i>Default : 'cleanUrl'</i></li>
+							<li><b>current : </b> <span class='light'>False or Int/String, Current project identifier to highlight on menu</span> / <i>Default : false</i></li>
+							<li><b>url_rewrite : </b> <span class='light'>String, desired link url to project followed by identifier</span> / <i>Default : 'projects/'</i></li>
+							<li><b>ascOrDesc : </b> <span class='light'>String, Sort direction</span> / <i>Default : 'desc'</i></li>
+							<li><b>extras : </b> <span class='light'>false or Object, Additional links to append to bottom of menu ex. {about : "about.html", contact : "contact.html"} </span> / <i>Default : false</i></li>
+							<li><b>sort_by : </b> <span class='light'>False, String or Array, Create nested subgroups in menu </span> / <i>Default : false</i></li>
+							<li><b>collapse : </b> <span class='light'>True or False, if sort_by, collapse groups or not</span> / <i>Default : true</i></li>
+							<li><b>collapse_multiple_fans : </b> <span class='light'>True or False,if sort_by, Allow multiple groups to be open at same time or not</span> / <i>Default : false</i></li>
+							<li><b>collapse_current : </b> <span class='light'>False or String/int, subgroup  to open on load..so if sorted by year, one could specify '2014' to show</span> / <i>Default : false</i></li>
+						</ul>
+						</p>
+						<p>
+							<h4>Usage Example | 
+								<span class='code code_php'>PHP</span>
+								<span class='code code_js'>JS</span>
+							</h4>
+							<pre class='prettyprint code code_php'>
+								<?=render($var['frunt_menuVert']['php'])?>
+							</pre>
+							<pre class='prettyprint code code_js'>
+								<?=render($var['frunt_menuVert']['js'])?>
+							</pre>
+						</p>
+						<h4>Output </h4>
+						<div class='box'>
+						<?php
+						
+						echo $frunt->widget("menu.vertical", $frunt->getProjects(), array(
+								"sort_by" => "year",
+								"current" => "soundcloud-test",
+								"extras" => array(
+									"about" => "about.php",
+									"contact" => "contact.php"
+								)
+						));
+						
+						?>
+						</div>
+						<a name='frunt-menuHorizontal'></a>
+						<h3 class='widgetName'>menu.horizontal</h3>
+						<p>Horizontal Menu (menu.horizontal) accepts a <b>set of project objects</b>, below are the available options..</p>
+						<ul>
+							<li><b>identifier : </b>  <span class='light'>String, Identifier type for url..cleanUrl or id </span> / <i>Default : 'cleanUrl'</i></li>
+							<li><b>current : </b> <span class='light'>False or Int/String, Current project identifier to highlight on menu</span> / <i>Default : false</i></li>
+							<li><b>url_rewrite : </b> <span class='light'>String, desired link url to project followed by identifier</span> / <i>Default : 'projects/'</i></li>
+							<li><b>ascOrDesc : </b> <span class='light'>String, Sort direction</span> / <i>Default : 'desc'</i></li>
+							<li><b>extras : </b> <span class='light'>false or Object, Additional links to append to bottom of menu ex. {about : "about.html", contact : "contact.html"} </span> / <i>Default : false</i></li>
+							<li><b>sort_by : </b> <span class='light'>False, String or Array, Create nested subgroups in menu </span> / <i>Default : false</i></li>
+							<li><b>collapse : </b> <span class='light'>True or False, if true, will collapse first column into 'projects'</span> / <i>Default : false</i></li>
+						</ul>
+						</p>
+						<p>
+							<h4>Usage Example | 
+								<span class='code code_php'>PHP</span>
+								<span class='code code_js'>JS</span>
+							</h4>
+							<pre class='prettyprint code code_php'>
+								<?=render($var['frunt_menuHoriz']['php'])?>
+							</pre>
+							<pre class='prettyprint code code_js'>
+								<?=render($var['frunt_menuHoriz']['js'])?>
+							</pre>
+						</p>
+						<h4>Output </h4>
+						<div class='box'>
+						<?php
+						
+						echo $frunt->widget("menu.horizontal", $frunt->getProjects(), array(
+								"sort_by" => "year",
+								"collapse" => true,
+								"current" => "soundcloud-test",
+								"extras" => array(
+									"about" => "about.php",
+									"contact" => "contact.php"
+								)
+						));
+						
+						?>
+						</div>
+						<a name='frunt-menuGrid'></a>
+						<h3 class='widgetName'>menu.grid</h3>
+						<p>Grid Menu (menu.grid) accepts a <b>set of project objects</b>, below are the available options..</p>
+						<ul>
+							<li><b>identifier : </b>  <span class='light'>String, Identifier type for url..cleanUrl or id </span> / <i>Default : 'cleanUrl'</i></li>
+							<li><b>current : </b> <span class='light'>False or Int/String, Current project identifier to highlight on menu</span> / <i>Default : false</i></li>
+							<li><b>url_rewrite : </b> <span class='light'>String, desired link url to project followed by identifier</span> / <i>Default : 'projects/'</i></li>
+							<li><b>ascOrDesc : </b> <span class='light'>String, Sort direction</span> / <i>Default : 'desc'</i></li>
+							<li><b>extras : </b> <span class='light'>false or Object, Additional links to append to bottom of menu ex. {about : "about.html", contact : "contact.html"} </span> / <i>Default : false</i></li>
+							<li><b>sort_by : </b> <span class='light'>False or String, Create subgroups in menu </span> / <i>Default : false</i></li>
+							<li><b>no_title : </b> <span class='light'>True or False, No title on thumb </span> / <i>Default : false</i></li>
+							<li><b>force_cols : </b> <span class='light'>False or Int, Force a certian amount of thumbs in each column..makes this element responsive, and converts thumbs dimensions to percentages..make sure you use relative padding and margin if you use this feature</span> / <i>Default : false</i></li>
+							<!-- "no_title" => false, //dont show title 
+			"force_cols" => false, //false or int force break after x, change media_wpr dimension to percentages -->
+						</ul>
+						</p>
+						<p>
+							<h4>Usage Example | 
+								<span class='code code_php'>PHP</span>
+								<span class='code code_js'>JS</span>
+							</h4>
+							<pre class='prettyprint code code_php'>
+								<?=render($var['frunt_menuGrid']['php'])?>
+							</pre>
+							<pre class='prettyprint code code_js'>
+								<?=render($var['frunt_menuGrid']['js'])?>
+							</pre>
+						</p>
+						<h4>Output </h4>
+						<div class='box'>
+						<?php
+						
+						echo $frunt->widget("menu.grid", $frunt->getProjects(), array(
+								"current" => "soundcloud-test"
+						));
+						
+						?>
+						</div>
 					</div> <!--end section-->
 					<div id='bottom'>
 						<div id='footer'>

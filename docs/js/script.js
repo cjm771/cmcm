@@ -367,6 +367,30 @@ cmcmDocs = {
 				}
 			}
 		},
+		"widget" :  {
+			group : "fruntWidgetsBasic",
+			type : false,
+			description : "Returns a widget (HTML)",
+			_ret : "String (HTML)",
+			params : {
+				name : {
+					type : "String",
+					description : "Widget name and subgroup. If there is a subgroup then a dot would be used in between and subgroup. Ex: <i>simpleList, menu.horizontal, layout.slideshow</i>"	
+				},
+				data : {
+					type : "Varies",
+					description : "Data to use, depending on the widget. Generallly it is usually a set of projects, single project, etc."
+				},
+				"*opts" :  {
+					type : "Object",
+					description : "Various options for this method. Each widget will have different options, but for javascript you once again have the option of have async on or off, with a callback function. <p style='font-style: normal'>Below are the global options and their defaults for JS sdk.</p><p  style='font-style: normal; '><ul  style='font-style: normal;'>"+
+					"<li><b>async</b> : ajax boolean, true or false | <span class='light'>Default: </span> <i class='light'>  false</i></li>"+
+					"<li><b>load</b> : callback function (if async: true) | <span class='light'>Default: </span> <i class='light'> function(data){return false;}</i></li>"+
+					"</ul></p>"
+				}
+			}
+		},
+
 
 	},
 	//init

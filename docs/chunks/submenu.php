@@ -16,13 +16,19 @@
 <a href='#frunt-core-convert' id='frunt_core_convert'>Convert</a>
 <a href='#frunt-core-sort' id='frunt_core_sort'>Sort</a>
 <a href='#frunt-core-twig' id='frunt_core_twig'>Twig</a>
-<a class='bigger' href='#'>Widgets</a>
-<a href='#'>Basic widget</a>
-<a href='#'>Menus</a>
+<a href='#frunt-widgets' id='frunt_widgets' class='bigger'>Widgets</a>
+<a href='#frunt-widgets-basic' id='frunt_widgets_basic'>Basic widget</a>
+<a href='#frunt-widgets-menu' id='frunt_widgets_menu'>Menus
+	<span class='subItem' data-href='#frunt-menuVertical'>Vertical</span>
+	<span class='subItem' data-href='#frunt-menuHorizontal'>Horizontal</span>
+	<span class='subItem' data-href='#frunt-menuGrid'>Grid</span>
+</a>
+<a href='#frunt-widgets-preview' id='frunt_widgets_preview'>Preview</a>
 <a href='#'>Layouts</a>
 <a href='#'>Lists</a>
 <a href='#'>Media</a>
 <a href='#'>Modals</a>
+<a href='#frunt-widgets-responsive' id='frunt_widgets_responsive'>Responsive</a>
 <div class='sdk_wpr'>
 <div class='sdk_header'>
 SDK Type:

@@ -635,9 +635,10 @@
 	padding: 1px 0px 1px 5px;
 	text-decoration: none;
 }
-.verticalMenu a:hover, #menu .verticalMenu a.active{
+.verticalMenu a:hover,
+.verticalMenu a.active{
 	display: block;
-	color: #fff;
+	color: #fff !important;
 	background: #000;
 	word-break: break-word;
 	text-decoration: none;

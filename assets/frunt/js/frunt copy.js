@@ -37,12 +37,12 @@
 			//grab data
 			 this.get(this.CMCM_DIR+this.DATA_DIR+this.opts['file'],  function(resp){
 					that.data = resp;
-					that.templates = that.data.template;
+					that.templates = resp.template;
 					
 					//grab template keys
 					keys = {
-						'project' : Object.keys(that.templates.project),
-						'media' :  Object.keys(that.templates.media)
+						'project' : Object.keys(resp.template.project),
+						'media' :  Object.keys(resp.template.media)
 					};
 					
 					//PROJECTS
@@ -285,8 +285,8 @@
 		$.ajax(src, {
 			async : async,
 			success : function(resp){
-				RESP = $.parseJSON(resp);
-				onDone(RESP);
+				RESP = resp;
+				onDone(resp);
 			}
 		});
 		//for async - false
