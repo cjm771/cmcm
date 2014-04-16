@@ -22,11 +22,11 @@
 	 const DATA_DIR = "data/";
 	 
 	 //actual dir
-	 private $CMCM_DIR = ""; 
+	 public $CMCM_DIR = ""; 
 	 //url to cmcm
-	 private $CMCM_URL = ""; 
+	 public $CMCM_URL = ""; 
  	 //site url
- 	 private $SITE_URL = "";
+ 	 public $SITE_URL = "";
 	 private $config = "";
 	 private $data = "";
 	 private $templates = "";
@@ -160,6 +160,17 @@
 		unset($data->template);
 		return $data;	
 	}
+	
+	public function getItem($dataObj, $index){
+		$count = 0;
+		foreach ($dataObj as  $key=>$val){
+			if ($count==$index)
+				return $val;
+			$count++;
+		}
+		return false;	
+	}
+	
 	
 	//grab data file
 	public function getProjects(){

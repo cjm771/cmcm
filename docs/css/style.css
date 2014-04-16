@@ -172,7 +172,7 @@ body,html{
 
 .content{
 	position: absolute;
-	margin-right: 200px;
+	width: 550px;
 	padding-bottom: 100px;
 	z-index: 20;
 }
@@ -237,7 +237,7 @@ pre.prettyprint{
 	border-radius: 10px;
 	border: 1px solid #c0c0c0;
 }
-.section .caption{
+.section > .caption{
 	margin-top: -10px;
 	font-size: 9px;
 	text-align: center;
@@ -251,6 +251,10 @@ pre.prettyprint{
 	padding: 25px;
 	border-radius: 10px;
 	border: 1px solid #c0c0c0;
+}
+
+.box{
+	width: 100%;
 }
 
 .section .diagram ul,
@@ -330,3 +334,45 @@ hr{
 	border: 0;
 	border-bottom: 1px solid #999;
 }
+
+.modalGroupExample img{
+	width: 100px;
+	height: 100px;
+	margin: 10px;
+	
+}
+/*
+.frunt-preview-wpr{
+	width: 100%;
+	height: auto;
+	overflow: hidden;
+}
+*/
+
+.horizOutputExample.box{
+	width: 100%;
+}
+
+#fruntResponsiveRatioExample{
+	background: #333;
+	color: #fff;
+	position: relative;	
+}
+.ratioText{
+	width: 100px;
+	text-align: center;
+	height: 32px;
+	font-size: 32px;
+	position: absolute;
+	top:0;left:0;right:0;bottom:0;
+	margin: auto;
+}
+
+.exampleParent{
+	display: inline-block;
+	padding: 1px;
+	border: 1px solid #c0c0c0;
+	overflow: hidden;
+	margin-right: 30px;
+}
+

@@ -1,8 +1,8 @@
 {
 		"mediaFolder": "media/",
-		"title": "Alex Atwood1",
-		"subtitle": "Architecture   Design",
-		"description": "This is for neils site BLAM!!!",
+		"title": "Alex Atwood",
+		"subtitle": "Architecture Design",
+		"description": "This is for neils site BLAM!!! woohoo yeahh",
 		"sort": {
 				"by": "year",
 				"direction": "descending",
@@ -20,7 +20,7 @@
 								"required": 1,
 								"protected": 1,
 								"auto_increment": 1,
-								"counter": 28,
+								"counter": 29,
 								"hidden": 1,
 								"unique": 1
 						},
@@ -730,6 +730,41 @@
 										"type": "image",
 										"caption": "This is something..",
 										"thumb": "media/thumbnail/(6)12-sandbybarn-6sRGB.jpg"
+								}
+						}
+				},
+				"PROJ_28": {
+						"id": 28,
+						"published": 1,
+						"added": "15 April 2014 - 07:12 pm",
+						"cleanUrl": "basic-test",
+						"title": "Basic test",
+						"coverImage": "Q29zdGEgUmljYW4gRnJvZy5qcGc-",
+						"year": "2005",
+						"type_of_project": "product design",
+						"description": "This is a basic images test.",
+						"featured": 0,
+						"media": {
+								"Qm9zdG9uIENpdHkgRmxvdy5qcGc-": {
+										"src": "media/Boston City Flow.jpg",
+										"visible": 1,
+										"type": "image",
+										"thumb": "media/thumbnail/Boston City Flow.jpg",
+										"caption": ""
+								},
+								"Q29zdGEgUmljYW4gRnJvZy5qcGc-": {
+										"src": "media/Costa Rican Frog.jpg",
+										"visible": 1,
+										"type": "image",
+										"thumb": "media/thumbnail/Costa Rican Frog.jpg",
+										"caption": ""
+								},
+								"UGVuc2l2ZSBQYXJha2VldC5qcGc-": {
+										"src": "media/Pensive Parakeet.jpg",
+										"visible": 1,
+										"type": "image",
+										"thumb": "media/thumbnail/Pensive Parakeet.jpg",
+										"caption": ""
 								}
 						}
 				},

@@ -6,7 +6,7 @@ class CMCMSetup{
 	private $settings = "";
 	
 	function __construct() {
-		require_once("php/lib/Jdat.class.php");
+		require_once("assets/php/lib/Jdat.class.php");
 		$this->settings = Jdat::getSettings($this->root, 1);
 		$files = Jdat::getFileList($this->root."data/");
 		$this->settings->files = $files;
@@ -37,6 +37,7 @@ class CMCMSetup{
 	}
 	.slide_wpr{
 		width:300px;
+	
 		margin:0px auto;
 		margin-top:0px;
 		white-space: nowrap;
@@ -132,6 +133,7 @@ class CMCMSetup{
 	}
 	.loginBox{
 		display: none;
+		padding: 0px;
 	}
 	.errorBox,.successBox{
 		font-size: 10px;
@@ -376,6 +378,7 @@ class CMCMSetup{
 	
 	public function html(){
 ?>
+	<?php include("assets/chunks/header.html")?>
 	<div id="cmcm_setup" class='slide_wpr'>
 		<div class='slide'>
 			Welcome to the CMCM Initial Setup! Click Next and Previous to return to any step at any time.

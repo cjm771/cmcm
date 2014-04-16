@@ -284,6 +284,7 @@
 		var RESP = null;
 		$.ajax(src, {
 			async : async,
+			dataType : "text",
 			success : function(resp){
 				RESP = $.parseJSON(resp);
 				onDone(RESP);
@@ -677,7 +678,7 @@
 				for (var i in defaults_media){
 					whiteList = ["media_type", "modal_group", "caption"];
 					if ($.inArray(i, whiteList)==-1)
-						link.attr("data-"+i, this.opts[i]);
+						link.attr("data-"+i.replace(/_/gi, "-"), this.opts[i]);
 				}
 				console.log($(link).clone().wrap('<p>').parent().html());
 				return link;		

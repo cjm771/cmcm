@@ -2485,8 +2485,8 @@
 					//each project attr
 					$.each(proj_obj, function(k,v){
 						//if its got that attr and value is not in arr already
-						if (searchKey==k && $.inArray(v, arr)==-1){
-							arr.push(v);
+						if (searchKey==k && $.inArray(v+"", arr)==-1){
+							arr.push(v+"");
 						}
 					});
 				});

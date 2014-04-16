@@ -93,6 +93,10 @@ cmcmDocs = {
 			description : "Generic method of getting nth item in an object/array.",
 			_ret : "Object",
 			params : {
+				data :  {
+					type : "Array/Object",
+					description : "Data to extract from"
+				},
 				"index" :  {
 					type : "int",
 					description : "index of item (0 based)"
@@ -431,17 +435,21 @@ $(document).ready(function(){
 	});
 	
 	$(document).on("scroll", function(){
+		//affix
+		if ($("#main").position().top<$(document).scrollTop()){
+			wpr = $("<div class='submenu_wpr'></div>");
+			wpr.append($(".submenu").clone(true));
+			$(".submenu").replaceWith(wpr);
+		}else{
+			$(".submenu_wpr").replaceWith($(".submenu").clone(true));
+		}
+	
+		$(document).stop();
+		$(document).clearQueue();
 		clearTimeout(cmcmDocs.timer.scroller);
 		cmcmDocs.timer.scroller = setTimeout(function(){
 			
-			//affix
-			if ($("#main").position().top<$(document).scrollTop()){
-				wpr = $("<div class='submenu_wpr'></div>");
-				wpr.append($(".submenu").clone(true));
-				$(".submenu").replaceWith(wpr);
-			}else{
-				$(".submenu_wpr").replaceWith($(".submenu").clone(true));
-			}
+
 			
 			//scrollspy
 			last = 0;

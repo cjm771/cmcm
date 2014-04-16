@@ -1,20 +1,28 @@
 
 {% if just_thumbs==false %}
-	{# <---------- IMAGE PREVIEW -----------------> #}
+	
+	
+	{# <---------- IMAGE PREVIEW -----------------> #}	
 	{% if media.type == "image" %}
 		{% set mediaSrc = cmcm_url~media.src %}
-		{% set mediaOpts = media_opts.image %}
+		{% if mediaOpts is not defined or mediaOpts == false %}
+			{% set mediaOpts = media_opts.image %}
+		{% endif %}
 		
 	{# <---------- SOUND PREVIEW -----------------> #}
 	{% elseif media.type == "sound" %}
 	
 		{% set mediaSrc = media.src %}
-		{% set mediaOpts = media_opts.sound %}
+		{% if  mediaOpts is not defined or mediaOpts == false %}
+			{% set mediaOpts = media_opts.sound %}
+		{% endif %}
 			
 	{# <---------- VIDEO PREVIEW -----------------> #}
 	{% elseif media.type == "video" %}
 		{% set mediaSrc = media.src %}
-		{% set mediaOpts = media_opts.video %}
+		{% if  mediaOpts is not defined or  mediaOpts == false %}
+			{% set mediaOpts = media_opts.video %}
+		{% endif %}
 	{% endif %}
 
 {% else %}
@@ -41,6 +49,7 @@
 	{# <---- preview settings -----/ #}
 	
 	data-use-thumb='{{mediaOpts.use_thumb}}'
+	
 	data-mode='{{mediaOpts.mode}}'
 	data-visual='{{mediaOpts.visual}}'  
 	data-autoplay='{{mediaOpts.autoplay}}' 

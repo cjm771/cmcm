@@ -24,10 +24,15 @@
 	<span class='subItem' data-href='#frunt-menuGrid'>Grid</span>
 </a>
 <a href='#frunt-widgets-preview' id='frunt_widgets_preview'>Preview</a>
-<a href='#'>Layouts</a>
-<a href='#'>Lists</a>
-<a href='#'>Media</a>
-<a href='#'>Modals</a>
+<a href='#frunt-widgets-layout' id='frunt_widgets_layout'>Layouts
+	<span class='subItem' data-href='#frunt-layoutHorizontal'>Horizontal</span>
+	<span class='subItem' data-href='#frunt-layoutVertical'>Vertical</span>
+	<span class='subItem' data-href='#frunt-layoutSlideshow'>Slideshow</span>
+	<span class='subItem' data-href='#frunt-layoutGrid'>Grid</span>
+	
+</a>
+<a href='#frunt-widgets-list' id='frunt_widgets_list'>Lists</a>
+<a href='#frunt-widgets-modal' id='frunt_widgets_modal'>Modals</a>
 <a href='#frunt-widgets-responsive' id='frunt_widgets_responsive'>Responsive</a>
 <div class='sdk_wpr'>
 <div class='sdk_header'>

@@ -698,6 +698,604 @@ cmcm.fruntWidget.init();
 TXT
 )
 // END CODE SNIPPET
+,
+//CODE SNIPPET
+"frunt_preview" => array(
+"php" => <<<'TXT'
+	
+//grab project with id : 0
+$proj = $frunt->getProject(0);
+
+//display first media object which is an image
+echo $frunt->widget("preview", $frunt->getItem($proj['media'], 0), array(
+	"mode" => "modal",
+	//following used because our height is not defined so ignore parent height as a constraint
+	"bias" => "parent-width", 
+	"modal_group" => "preview widget example"
+));
+						
+TXT
+,
+"js" => <<<'TXT'
+
+//grab project with id : 0
+proj = frunt.getProject(0);
+
+//display first media object which is an image
+html =  frunt.widget("preview", frunt.getItem(proj.media, 0), {
+	async : false,
+	mode : "modal",
+	//following used because our height isn't defined so ignore it as a constraint
+	bias : "parent-width",
+	modal_group : "preview widget example"
+});
+//put it in the dom
+$("#container").html(html);
+
+//if this is after page load, make sure to reinit frunt.widgets.js
+cmcm.fruntWidget.init();
+		
+
+
+TXT
+)
+// END CODE SNIPPET
+,
+//CODE SNIPPET
+"frunt_preview2" => array(
+"php" => <<<'TXT'
+	
+//grab a project
+$proj = $frunt->getProject("soundcloud-test", "cleanUrl");
+
+//display a media object which is a video
+echo $frunt->widget("preview", $frunt->getItem($proj['media'], 3), array(
+	"mode" => "thumb",
+	//following used because our height is not defined so ignore parent height as a constraint
+	"bias" => "parent-width", 
+	"autoplay" => true
+));
+						
+TXT
+,
+"js" => <<<'TXT'
+
+//grab a project 
+proj = frunt.getProject("soundcloud-test", "cleanUrl");
+
+//display a media object which is an image
+html =  frunt.widget("preview", frunt.getItem(proj.media, 3), {
+	async : false,
+	mode : "thumb",
+	//following used because our height isn't defined so ignore it as a constraint
+	bias : "parent-width",
+	autoplay : true
+});
+//put it in the dom
+$("#container").html(html);
+
+//if this is after page load, make sure to reinit frunt.widgets.js
+cmcm.fruntWidget.init();
+		
+
+
+TXT
+)
+// END CODE SNIPPET
+,
+//CODE SNIPPET
+"frunt_horizScroll" => array(
+"php" => <<<'TXT'
+	
+//grab project
+$proj =$frunt->getProject("soundcloud-test", "cleanUrl");
+
+//display  media objects
+echo $frunt->widget("layout.horizontal", $proj['media'], array(
+	"slide_controls" => "numbers",
+	//we use thumb mode for sound and video, and modal mode for images
+	"media_opts" => array(
+		"sound" => array(
+			"mode" => "thumb",
+			"modal_group" => "horizontal scroll",
+			 //take parent-height, ignore parent-width
+			"bias" => "parent-height",
+			 //sync media dimensions to two parents up (img > wpr > slide)
+			"sync_parent" => 2
+		),
+		"video" => array(
+			"mode" => "thumb",
+			"modal_group" => "horizontal scroll",
+			"bias" => "parent-height",
+			"sync_parent" => 2
+		),
+		"image" => array(
+			"mode" => "modal",
+			"modal_group" => "horizontal scroll",
+			"bias" => "parent-height",
+			"sync_parent" => 2
+				
+		)
+	)
+));
+						
+TXT
+,
+"js" => <<<'TXT'
+
+//grab project
+proj = frunt.getProject("soundcloud-test", "cleanUrl");
+
+//display  media objects
+html = frunt.widget("layout.horizontal", proj['media'], {
+	slide_controls : "numbers",
+	//we use thumb mode for sound and video, and modal mode for images
+	media_opts : {
+		sound : {
+			mode : "thumb",
+			modal_group : "horizontal scroll",
+			 //take parent-height, ignore parent-width
+			bias : "parent-height",
+			 //sync media dimensions to two parents up (media > wpr > slide)
+			sync_parent : 2
+		},
+		video : {
+			mode : "thumb",
+			modal_group : "horizontal scroll",
+			bias : "parent-height",
+			sync_parent : 2
+		},
+		image : {
+			mode : "modal",
+			modal_group : "horizontal scroll",
+			bias : "parent-height",
+			sync_parent : 2
+				
+		}
+	}
+});
+
+//put it in the dom
+$("#container").html(html);
+
+//if this is after page load, make sure to reinit frunt.widgets.js
+cmcm.fruntWidget.init();
+
+TXT
+)
+// END CODE SNIPPET
+,
+//START CODE SNIPPET
+"frunt_horizScroll_css" => <<<'TXT'
+
+//Scroller wrapper defaults.. 
+//adjust dimensions to your liking
+.frunt-layout-horizontal  .frunt-slider{
+	width : auto;
+	height: 450px;
+	
+}
+
+//Individual slide defaults..
+//adjust dimensions to your liking
+.frunt-layout-horizontal .slide{
+	width: 100%;
+	height: 100%;
+}
+
+TXT
+// END CODE SNIPPET
+,
+//START CODE SNIPPET
+"frunt_vertScroll_css" => <<<'TXT'
+
+//Scroller wrapper defaults.. 
+//adjust dimensions to your liking
+ .frunt-layout-vertical  .frunt-slider{
+	 width: auto;
+	 height: 450px;
+}
+
+//Individual slide defaults..
+//adjust dimensions to your liking
+.frunt-layout-vertical .slide{
+	width: 100%;
+	height: 100%;
+}
+
+TXT
+// END CODE SNIPPET
+,
+//START CODE SNIPPET
+"frunt_slideshow_css" => <<<'TXT'
+
+//Scroller wrapper defaults.. 
+//adjust dimensions to your liking
+ .frunt-layout-slideshow  .frunt-slider{
+	 width: auto;
+	 height: 450px;
+}
+
+//Individual slide defaults..
+//adjust dimensions to your liking
+.frunt-layout-slideshow .slide{
+	width: 100%;
+	height: 100%;
+}
+
+TXT
+// END CODE SNIPPET
+,
+//CODE SNIPPET
+"frunt_vertScroll" => array(
+"php" => <<<'TXT'
+	
+//grab project
+$proj =$frunt->getProject("soundcloud-test", "cleanUrl");
+
+//display  media objects
+echo $frunt->widget("layout.vertical", $proj['media'], array(
+		"slide_controls" => "thumbs",
+		"media_opts" => array(
+			"sound" => array(
+				"mode" => "thumb",
+				"modal_group" => "vertical scroll",
+				 //take parent-width, ignore parent-height
+				"bias" => "parent-width",
+				 //sync media two parents up (media > wpr > slide)
+				"sync_parent" => 2
+			),
+			"video" => array(
+				"mode" => "thumb",
+				"modal_group" => "vertical scroll",
+				"bias" => "parent-width",
+				"sync_parent" => 2
+			),
+			"image" => array(
+				"mode" => "modal-noIcon",
+				"modal_group" => "vertical scroll",
+				"bias" => "parent-width",
+				"sync_parent" => 2
+					
+			)
+		)
+));
+						
+TXT
+,
+"js" => <<<'TXT'
+
+//grab project
+proj = frunt.getProject("soundcloud-test", "cleanUrl");
+
+//display  media objects
+html = frunt.widget("layout.vertical", proj['media'], {
+	slide_controls : "thumbs",
+	//we use thumb mode for sound and video, and modal mode for images
+	media_opts : {
+		sound : {
+			mode : "thumb",
+			modal_group : "vertical scroll",
+			 //take parent-width, ignore parent-height
+			bias : "parent-width",
+			 //sync media two parents up (media > wpr > slide)
+			sync_parent : 2
+		},
+		video : {
+			mode : "thumb",
+			modal_group : "verrtical scroll",
+			bias : "parent-width",
+			sync_parent : 2
+		},
+		image : {
+			mode : "modal-noIcon",
+			modal_group : "vertical scroll",
+			bias : "parent-width",
+			sync_parent : 2
+				
+		}
+	}
+});
+
+//put it in the dom
+$("#container").html(html);
+
+//if this is after page load, make sure to reinit frunt.widgets.js
+cmcm.fruntWidget.init();
+
+TXT
+)
+// END CODE SNIPPET
+,
+//CODE SNIPPET
+"frunt_slideshow" => array(
+"php" => <<<'TXT'
+	
+//grab project
+$proj =$frunt->getProject("soundcloud-test", "cleanUrl");
+
+//display  media objects
+echo $frunt->widget("layout.slideshow", $proj['media'], array(
+	"autoplay" => 5000,
+	"transition_effect" => "fade",
+	"slide_controls" => "dots",
+	"media_opts" => array(
+		"sound" => array(
+			"mode" => "thumb",
+			"modal_group" => "ss"
+			
+		),
+		"video" => array(
+			"mode" => "thumb",
+			"modal_group" => "ss"
+		),
+		"image" => array(
+			"mode" => "modal",
+			"modal_group" => "ss"
+				
+		)
+	)
+));
+						
+TXT
+,
+"js" => <<<'TXT'
+
+//grab project
+proj = frunt.getProject("soundcloud-test", "cleanUrl");
+
+//display  media objects
+html = frunt.widget("layout.slideshow", proj['media'], {
+	autoplay : 5000,
+	transition_effect : "fade",
+	slide_controls : "dots",
+	media_opts : {
+		sound : {
+			mode : "thumb",
+			modal_group : "ss"
+		},
+		video : {
+			mode : "thumb",
+			modal_group : "ss"
+		},
+		image : {
+			mode : "modal",
+			modal_group : "ss"
+				
+		}
+	}
+});
+
+//put it in the dom
+$("#container").html(html);
+
+//if this is after page load, make sure to reinit frunt.widgets.js
+cmcm.fruntWidget.init();
+
+TXT
+)
+// END CODE SNIPPET
+,
+//CODE SNIPPET
+"frunt_layoutGrid_css" =>  <<<'TXT'
+
+.frunt-layout-grid .thumb_wpr{
+	width: 100px;
+	display: inline-block;
+	 vertical-align: top;
+	height: 100px;
+	overflow: hidden;
+	padding: 0px;
+	margin: 5px;
+	position: relative;
+	opacity: 1;
+}
+
+TXT
+// END CODE SNIPPET
+,
+//CODE SNIPPET
+"frunt_layoutEvents" =>  <<<'TXT'
+
+//slide change event
+$("#myContainer .frunt-layout").on("frunt.slider.change", function(e){
+	console.log("slide changed! "+e.index+"!")
+});
+
+//goto slide function
+index = 3;
+cmcm.fruntWidget.slideshow_goto("#myContainer .frunt-layout", index);
+							
+TXT
+// END CODE SNIPPET
+,						
+//CODE SNIPPET
+"frunt_layoutGrid" => array(
+"php" => <<<'TXT'
+	
+//grab project
+$proj =$frunt->getProject("soundcloud-test", "cleanUrl");
+		
+//display  media objects
+echo $frunt->widget("layout.grid", $proj['media'], array(
+	"sort_by" => "type",
+	"media_opts" => array(
+		"sound" => array(
+			"mode" => "modal",
+			"modal_group" => "layout-grid"
+			
+		),
+		"video" => array(
+			"mode" => "modal",
+			"modal_group" => "layout-grid"
+		),
+		"image" => array(
+			"mode" => "modal",
+			"modal_group" => "layout-grid"
+				
+		)
+	)
+							
+));
+						
+TXT
+,
+"js" => <<<'TXT'
+
+//grab project
+proj = frunt.getProject("soundcloud-test", "cleanUrl");
+
+//display  media objects
+html = frunt.widget("layout.grid", proj['media'], {
+	sort_by : "type",
+	media_opts : {
+		sound : {
+			mode : "modal",
+			modal_group : "layout-grid"
+		},
+		video : {
+			mode : "modal",
+			modal_group : "layout-grid"
+		},
+		image : {
+			mode : "modal",
+			modal_group : "layout-grid"
+				
+		}
+	}
+});
+
+//put it in the dom
+$("#container").html(html);
+
+//if this is after page load, make sure to reinit frunt.widgets.js
+cmcm.fruntWidget.init();
+
+TXT
+)
+// END CODE SNIPPET
+,						
+//CODE SNIPPET
+"frunt_list" => array(
+"php" => <<<'TXT'
+
+//convert description value to working html	
+echo $frunt->widget("simpleList", $frunt->getProject(0), array(
+	"custom_format" => array(
+		"description" => array(
+			//convert description value to html
+			"value" => function($v) use ($frunt){
+				return $frunt->convert($v,'html');
+			}
+		)
+	)
+));
+						
+TXT
+,
+"js" => <<<'TXT'
+
+//convert description value to working html	
+html = frunt.widget("simpleList", frunt.getProject(0), {
+	custom_format : {
+		description : {
+			//convert description value to html
+			value : function(v){
+				return frunt.convert(v,'html');
+			}
+		}
+	}
+});
+
+//put it in the dom
+$("#container").html(html);
+
+//if this is after page load, make sure to reinit frunt.widgets.js
+cmcm.fruntWidget.init();
+
+TXT
+)
+// END CODE SNIPPET
+,						
+//CODE SNIPPET
+"frunt_list2" => array(
+"php" => <<<'TXT'
+
+//ignore some attributes and change template
+echo $frunt->widget("simpleList", $frunt->getProject(0), array(
+	"template" => "<span class='key'>[{{key}}]</span> <span class='val'>{{val}}</span>",
+	"ignore" => array("title","description")
+));
+						
+TXT
+,
+"js" => <<<'TXT'
+
+//ignore some attributes and change template
+html = frunt.widget("simpleList", frunt.getProject(0), {
+	template : "<span class='key'>[{{key}}]</span> <span class='val'>{{val}}</span>",
+	ignore : ["title","description"]
+});
+
+//put it in the dom
+$("#container").html(html);
+
+
+TXT
+)
+// END CODE SNIPPET
+,
+//CODE SNIPPET
+"frunt_modal" => <<<'TXT'
+
+<a href="cmcm/media/image-005.jpg" class="frunt-modal" title="modal demo" rel="modal demo 1">Modal Demo</a>
+					
+TXT
+// END CODE SNIPPET
+,
+//CODE SNIPPET
+"frunt_modal2" => <<<'TXT'
+
+<a href="cmcm/media/Pensive Parakeet.jpg" class="frunt-modal" title="caption!" rel="modal group demo">
+	<img src="cmcm/media/thumbnail/Pensive Parakeet.jpg">
+</a>
+<a href="cmcm/media/Costa Rican Frog.jpg" class="frunt-modal" title="caption!" rel="modal group demo">
+	<img src="cmcm/media/thumbnail/Costa%20Rican%20Frog.jpg">
+</a>
+<a href="cmcm/media/Boston City Flow.jpg" class="frunt-modal" title="caption!" rel="modal group demo">
+	<img src="cmcm/media/thumbnail/Boston City Flow.jpg">
+</a>
+									
+TXT
+// END CODE SNIPPET
+,
+//CODE SNIPPET
+"frunt_responsive" => <<<'TXT'
+
+<div class='box' style='height: 300px'>
+	<div id='fruntResponsiveRatioExample' class='frunt-responsive' ratio='[7,3]' data-fit='within'>
+		<span class='ratioText'>7:3</span>
+	</div>
+</div>
+				
+TXT
+// END CODE SNIPPET
+,
+//CODE SNIPPET
+"frunt_responsive2" => <<<'TXT'
+
+<!-- WITHIN OPTION -->
+<div class='exampleParent' style='height: 100px; width: 40%;'>
+	<img src="cmcm/media/Boston City Flow.jpg" class='frunt-responsive' data-fit='within' >
+</div>
+<!-- FILL OPTION -->
+<div class='exampleParent' style='height: 100px; width: 40%;'>
+	<img src="cmcm/media/Boston City Flow.jpg" class='frunt-responsive' data-fit='fill' >
+</div>	
+TXT
+// END CODE SNIPPET
+				
+
 );
 
 function render($var){

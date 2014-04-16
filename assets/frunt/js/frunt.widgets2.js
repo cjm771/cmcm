@@ -34,14 +34,23 @@
 			el.addClass(opts[sel])
 		},
 		onResize : function(){
+			that = this;
 			//handle responsive elements
 			clearTimeout(this.resizeTimer);
 			this.resizeTimer = setTimeout(function(){
 				$(".frunt-responsive, .frunt_responsive").each(function(){
 					_parent = $(this).parent();
-					if (!$(this).attr("data-ratio"))
-						ratio = [_parent.width(), _parent.height()];
-					else
+					if (!$(this).attr("data-ratio")){
+						//attempt to grab img
+						if ($(this).is("img")){
+							$(this).imagesLoaded(function(img){
+								$(this).attr("data-ratio", "["+img.width+","+img.height+"]");
+								//resize again..
+								that.onResize();
+							});
+						}else
+							ratio = [_parent.width(), _parent.height()];
+					}else
 						ratio = $.parseJSON($(this).attr("data-ratio"));
 						
 					//how to fit the object...is it filled (fill) or contained (within)..
@@ -836,6 +845,7 @@
 			wpr = $("<div class='frunt-preview-wpr'></div>");
 			switch (mediaObj.opts.mode){
 				//MODAL
+				default:
 				case "none":
 					mediaObj.opts.noIcons = true;
 				case "modal-noIcon":
@@ -946,10 +956,10 @@
 							e.stopPropagation();
 							thumb = $(this);
 							modalContent = that.mediaTypes[mediaObj.type].preview(mediaObj);
-							group  = "modal";
+							group  = thumb.attr("rel");
 							that.modal({
 								subject : thumb.attr("title"),
-								index : $(".frunt-modal[rel='modal']").index(thumb),
+								index : $(".frunt-modal[rel='"+group+"']").index(thumb),
 								group : group,
 								description : modalContent
 							});
@@ -970,7 +980,6 @@
 					break;
 				//DIRECT EMBED
 				case "direct_embed":
-				default:
 					mediaObj.opts.visual = 1;
 					ret =  that.mediaTypes[mediaObj.type].preview(mediaObj);
 					ret.addClass("frunt-modal");
@@ -1112,7 +1121,7 @@
 			});
 			modal_content.on("mousemove.frunt", function(e){
 				
-				nextOrPrev = ((e.clientX-$(this).offset().left) < .4 * $(slider).width()) ? -1 : 1;
+				nextOrPrev = ((e.clientX-$(this).offset().left) < .4 * $(this).width()) ? -1 : 1;
 
 				$(".frunt-modal-next, .frunt-modal-prev").removeClass("frunt-clickable-hover");
 				if (nextOrPrev==1)
@@ -1126,7 +1135,7 @@
 
 			
 			modal_content.on("click.frunt", function(e){
-				nextOrPrev = ((e.clientX-$(this).offset().left) < .4 * $(slider).width()) ? -1 : 1;
+				nextOrPrev = ((e.clientX-$(this).offset().left) < .4 * $(this).width()) ? -1 : 1;
 				 _index = (parseInt(modal_content.attr("data-id"))+nextOrPrev)%amount;
 				 if (_index<0)
 					_index = amount+_index;

@@ -75,27 +75,51 @@
 			"autoescape" => false, //we already escape everything
     	));
 	}
-	/*
-	 //soundPreview 
-	 public function soundPreview(){
-	 	$defaults = array(
-	 		"type" => "sound",
-			"subtype" => "soundcloud", //string, type of sound (soundcloud, local*) *not implemented yet 
-			"url" => false, //url for embedding
-			"visual" => false, //visual mode for soundcloud,
-			"embed" => "", //embed code (filled in later) 
-		);
-		//set user opts
-		$this->opts = $this->opts + $defaults;
-		switch ($this->opts['type']){
-			case "soundcloud":
-				$this->opts['embed'] = '<iframe width="100%" height="100%" scrolling="no" frameborder="no" src="https://w.soundcloud.com/player/?url='.$this->opts['url'].'&amp;auto_play=false&amp;hide_related=false&amp;visual='.$this->opts['visual'].'"></iframe>'; 
-				break;
+
+	//preview widget
+	 public function preview(){
+		
+		 $defaults = array(
+			"src" => false,
+			"thumb" => false,
+			"caption" => false,
+			"media_type" => "image",
+			"modal_group" => "modal",
+			"mode" => "none",
+			"responsive" => true,
+			"real-fit" => "within",
+			'bias' => false,
+			"sync-parent" => false,
+			"fit" => "fill",
+			"autoplay" => false,
+			"use-thumb" => false,
+			"no-ratio" => false
+		 );
+		 
+ 		//if user supplies media, we can grab most from just that
+		if (isset($this->data)){
+			$mediaObj = array(
+				"src" =>  isset($this->data['src']) ? $this->data['src'] : false,
+				"thumb" => isset($this->data['thumb']) ? $this->data['thumb'] : false,
+				"caption" =>  isset($this->data['caption']) ? $this->data['caption'] : false,
+				"media_type" => isset($this->data['type']) ? $this->data['type'] : false 
+			);
+			//extend it!
+			
+			$defaults =  $mediaObj + $defaults;
+			
 		}
-		 return $this->twig->render("preview_embed.php", array("opts"=>$this->opts));
+	
+		//set user opts
+		$this->opts = $this->opts + $defaults;	
+
+		//render media preview
+		return $this->twig->render('media_preview.php', array(
+			"cmcm_url" => $this->CMCM_URL,
+			"mediaOpts" => $this->opts,
+			"media" => $this->data
+		));
 	 }
-	 */
-	 
 	 
 	 //layout widget
 	 public function layout(){

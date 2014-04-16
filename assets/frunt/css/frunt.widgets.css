@@ -20,13 +20,21 @@
  ************************/
  
 .frunt-preview-wpr{
-	height: 100%;
 	position: relative;
+	display: inline-block;
+	width: 100%;
+	height: 100%;
 }
+
+.frunt-preview-wpr .frunt-preview-thumb{
+	vertical-align: middle;
+	display: block;
+}
+/*
 .frunt-preview-wpr .frunt-preview-thumb{
 	display: block;
 }
-
+*/
 .frunt-preview-wpr iframe{
 	display: block;
 }
@@ -223,6 +231,15 @@
 	 height: 450px;
 	overflow-x: hidden;
 }
+
+ .frunt-layout .frunt-preview-wpr{
+	 width: 100%;
+	 height: 100%;
+}
+ .frunt-layout-controls .frunt-preview-wpr{
+	 display: block;
+ }
+
 .frunt-layout-vertical .slide{
 	position: relative;
 	display: block;
@@ -553,7 +570,7 @@
 .frunt-layout-grid .thumb_wpr .caption{
 	position: absolute;
 	color: #000;
-	background: #fff;
+	background: rgba(255,255,255,.75);
 	bottom: 0;
 	width: 100%;
 	padding: 2px;

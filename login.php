@@ -21,14 +21,20 @@ if (Login::inSetupMode()){
 			border-color: #fff;
 		}
 		#container{
-			width: 100%;
+			width: 300px;
 			height: 100%;
+		}
+		.loginBox{
+			overflow: auto;
+			padding-bottom: 100px;
 		}
 		#header{
 			width: 300px;
+			
 			text-align: left;
 			margin:0px auto;
 			padding-bottom: 30px;
+			
 		}
 		#header h1{
 			float:inherit;
@@ -58,7 +64,6 @@ if (Login::inSetupMode()){
 				successBox : "#login_successBox",
 				errorBox : "#login_errorBox"
 			});
-
 		});
 	</script>
 	<?php if (isset($CMCM_SETUP)) $CMCM_SETUP->js() ?>
@@ -66,10 +71,11 @@ if (Login::inSetupMode()){
 <body>
 	<div id="container">
 		
-		<?php include("assets/chunks/header.html")?>
+
 		
 		<?php if (!isset($CMCM_SETUP)){ ?>
 		<div class='loginBox'>
+			<?php include("assets/chunks/header.html")?>
 		<div id='login_errorBox' class='errorBox'>
 			</div>
 			<div id='login_successBox' class='successBox'>
