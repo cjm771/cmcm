@@ -7,7 +7,7 @@
 	
 	//slideshow splash
 	$slideshow = $frunt->widget("layout.slideshow", $coverImages, array(
-		'autoplay'=> 1000,
+		'autoplay'=> 5000,
 		'transition_effect' => 'fade',
 		'next_on_click' => false,
 		'no_caption' => true

@@ -42,10 +42,10 @@
         	 "ascOrDesc" => "desc", //show list descending
         	 "collapse" => true,//collapse by header
         	 "collapse_multiple_fans" => false,  //only allow one fan at a time
-        	 "collapse_current" => 2018, //default group to show
+        	 "collapse_current" => false, //default group to show
         	"extras" => array(  //add additonal links
         		"Contact" => "contact.php",
-        		"About" => "#",
+        		"About" => "about.php",
         		
         	)
         ))

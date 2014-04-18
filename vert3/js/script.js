@@ -18,6 +18,7 @@ vertTemplate = {
 		});
 		*/
 		
+		/*
 		$(".frunt-list, .verticalMenu").each(function(){
 			
 			$(this).perfectScrollbar({
@@ -29,7 +30,40 @@ vertTemplate = {
 		  })
 		  
 		});
+		*/
+		
+		
+    $(".frunt-list, .verticalMenu").niceScroll({
+    	touchbehavior: true,
+    	cursorcolor:"#c0c0c0",
+    	cursorborder : "0px",
+    	cursoropacitymax:0.7,
+    	cursorwidth:3,
+    	//background:"#ccc",
+    	autohidemode:true
+    	});
+	
 
+		//mobile icon setup
+		$("#mobileIcon").on("click", function(){
+			if ($("#menu .verticalMenu").is(":visible")){
+				$("#menu .verticalMenu").slideUp();
+				$("#mobileIcon").removeClass("hover");
+			}else{
+				$("#menu .verticalMenu").slideDown();
+				$("#mobileIcon").addClass("hover");
+			}
+		});
+		
+		enquire.register("screen and (min-width : 320px) and (max-width : 800px)", {
+		    match : function() {
+			    $("#menu .verticalMenu").hide();
+		    },  
+		    unmatch : function() {
+		         $("#menu .verticalMenu").show();
+		           console.log('unmatch!');
+		    }
+		});
 	
 	},
 	resizeImg : function(img){

@@ -236,12 +236,14 @@
 			backup = currentSlide.clone(1,1);
 			currentSlide.replaceWith(backup);
 			*/
+			documentScroll = slider.attr("data-document-scroll");
 			
 			direction = (direction==undefined) ? "left" : direction;
 			slideID = id;
 			slider = $(el);
 			effect = slider.attr("data-effect");
 			duration = (slider.attr("data-duration")) ? slider.attr("data-duration") : 400;
+			
 			if (!effect)
 				effect = 'slide';
 			loop = slider.attr("data-loop");
@@ -259,14 +261,27 @@
 			case "slide":
 			default:
 				if (slider.find(".slide:eq("+(slideID)+")")[0]!=undefined){
-					if (direction=="left")
-							change = { scrollLeft : slider.find(".slide:eq("+(slideID)+")")[0].offsetLeft };
-					else
-						change = { scrollTop : slider.find(".slide:eq("+(slideID)+")")[0].offsetTop };
+					if (direction=="left"){
+							if (!documentScroll)
+								change = { scrollLeft : slider.find(".slide:eq("+(slideID)+")")[0].offsetLeft };
+							else
+								change = { scrollLeft : slider.find(".slide:eq("+(slideID)+")").offset().left };
+							
+					}else{
+						console.log('going down! document? '+documentScroll);
+						if (!documentScroll)
+							change = { scrollTop : slider.find(".slide:eq("+(slideID)+")")[0].offsetTop };
+						else
+							change = { scrollTop : slider.find(".slide:eq("+(slideID)+")").offset().top };
+						console.log(change);
+					}
 				}else{
 					change = false;
 				}
-				slider.find(".frunt-slider").animate(change, duration);
+				if (!documentScroll)
+					slider.find(".frunt-slider").animate(change, duration);
+				else
+					$("body").animate(change, duration);
 				break;
 			case "fade":
 				active = slider.find(".slide:eq("+(slider.attr("data-current"))+")");
@@ -330,10 +345,103 @@
 					that.slideshow_goto(slider, parseInt(slider.attr("data-current"))-1,  direction);
 				});
 		},
+		onScroll : function(slider, direction){
+			
+				var that = this;
+			 //	slider = $(this).closest(".frunt-layout");
+				clearTimeout(that.miscTimer.horizSlider);
+				that.miscTimer.horizSlider = null;
+			
+			that.miscTimer.horizSlider = setTimeout(function(){
+					//get slider scroll type..
+					documentScroll = slider.attr("data-document-scroll");
+					if (direction=="left"){
+						if (!documentScroll)
+							scrollPosition = slider.find(".frunt-slider").scrollLeft();
+						else
+							scrollPosition = $(document).scrollLeft();	
+					}else{
+						if (!documentScroll)
+							scrollPosition = slider.find(".frunt-slider").scrollTop();
+						else
+							scrollPosition = $(document).scrollTop();	
+					}currentSlide = parseInt(slider.attr("data-current"));
+					slideLefts = [];
+					//compare scroll position to all things within;
+					slider.find(".slide").each(function(){
+						if (direction=="left"){
+							if (!documentScroll)
+								slideLefts.push(this.offsetLeft);
+							else
+								slideLefts.push($(this).offset().left);
+						}else{
+							if (!documentScroll)
+								slideLefts.push(this.offsetTop);
+							else
+								slideLefts.push($(this).offset().top);
+						}
+					});
+					
+					last = 0;
+					found = 0;
+					slide = 1;
+					BUFFER=0;
+					while (found==0){
+						_current = slideLefts[slide];
+
+						//last slide
+						if (scrollPosition >= slideLefts[slideLefts.length-1]-5){
+							trueSlide = slideLefts.length-1;
+							slider.attr("data-current", trueSlide);
+							//trigger move event
+							slider.trigger({
+								'type' : 'frunt.slider.change',
+								'index' : trueSlide
+								});
+							found = 1;
+						
+						}else if (last-BUFFER<=scrollPosition && scrollPosition<_current+BUFFER){
+							trueSlide  = Math.max(0, slide-1);
+							if (trueSlide!=currentSlide){
+					
+								
+								slider.attr("data-current", trueSlide);
+								//trigger move event
+								slider.trigger({
+									'type' : 'frunt.slider.change',
+									'index' : trueSlide
+									});
+								found = 1;
+								
+							}
+						}
+						last = _current;
+						slide++;
+						if (slide>(slideLefts.length-1))
+							found=1;
+					};
+						
+				}, 10);
+
+		},
 		scrollSpy  : function(slider, direction){
 			direction = (direction == undefined) ? "left" : direction;
 			var that = this;
-			$(slider).find(".frunt-slider").on("scroll.frunt", function(){
+			
+			//get slider scroll type..
+			documentScroll = $(slider).attr("data-document-scroll");
+			if (!documentScroll){
+				$(slider).find(".frunt-slider").on("scroll.frunt", function(){
+					that.onScroll($(slider), direction);
+				});
+			}else{
+				$(document).on("scroll.frunt", function(){
+					that.onScroll($(slider), direction);
+				});
+
+			}
+			
+			/* function(){
 			 	
 			 	slider = $(this).closest(".frunt-layout");
 				clearTimeout(that.miscTimer.horizSlider);
@@ -396,7 +504,7 @@
 				}, 10);
 			
 			});
-			
+			*/
 		},
 		layoutWidget : function(){
 			var that = this;
@@ -1011,8 +1119,10 @@
 		},
 		 //<--------- CMCM ADAPTATIONS -------------->//
 	 		modal_move : function(_index, group){
- 				HEIGHTBUFFER = 100;
- 				WIDTHBUFFER = 300;
+ 				//HEIGHTBUFFER = 100;
+ 				//WIDTHBUFFER = 300;
+	 			HEIGHTBUFFER = $(window).height()*(.20); 
+	 			WIDTHBUFFER = $(window).width()*(.20); 
 	 			var that = this;
 	 			modal_content = $(".frunt-modal-content");
 		 		modal_content.attr("data-id", _index);
@@ -1095,8 +1205,12 @@
 				e.stopPropagation();
 				modal_bg.remove();
 			}
-			HEIGHTBUFFER = 100;
-			WIDTHBUFFER = 300;
+			//HEIGHTBUFFER = 100;
+			//WIDTHBUFFER = 300;
+			//20 percent of height + width as buffer?
+			HEIGHTBUFFER = $(window).height()*(.20); 
+			WIDTHBUFFER = $(window).width()*(.20); 
+			console.log(HEIGHTBUFFER+" "+WIDTHBUFFER);
 			amount  = $(".frunt-modal[rel='"+opts.group+"']").length;
 			modal_content.attr("data-id", opts.index);
 			modal_content.on("click.frunt", function(e){

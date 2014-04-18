@@ -861,6 +861,17 @@ a.frunt-modal:hover,
 .frunt-32.frunt-iconBox{ width: 52px; height: 52px; }
 .frunt-16.frunt-iconBox{ width: 36px; height: 36px; }
 
+.frunt-menu-icon{
+	background: url("img/icon-menu.svg");
+	padding: 20px;
+	background-repeat: no-repeat;
+	background-position: center center;
+}
+.frunt-menu-icon.black{
+	background: url("img/icon-menu-black.svg");
+	background-repeat: no-repeat;
+	background-position: center center;
+}
 
 .glyphicon.image_icon{
 	margin : 0px;

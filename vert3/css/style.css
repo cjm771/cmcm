@@ -1,13 +1,24 @@
 #body, html{
 	margin: 0px !important;
 	padding: 0;
-	height: 100%;
 	background: #fff;
 
 }
 .frunt-layout-vertical{
-	margin-top: 60px;
+	margin-top: 30px;
 }
+
+.genericContainer{
+	margin-left: 300px;	
+	margin-right: 100px;
+	font-size: 10px;
+	margin-top: 30px;
+	max-width: 700px;
+}
+.genericContainer p{
+	color: #888888;	
+}
+
 
 .frunt-layout-vertical .slide{
 	width: auto;
@@ -46,71 +57,45 @@
 	background: #000;
 	margin-bottom: 10px;
 }
-.frunt-menu{
-	margin-top: 20px;
-	width: 30%;
-	float: right;
-	margin-right: 225px;
-	border-right: 1px solid #c0c0c0;
-	height: 100%;
-	bottom: 300px;
-	-webkit-mask-image: -webkit-gradient(linear, left 90%, left bottom, from(rgba(0,0,0,1)), to(rgba(0,0,0,0)));
-}
-.frunt-menu .column{
-	height: 100%;
-	float: right;
-}
-.frunt-menu .header{
-	padding-right: 30px;
-}
-.frunt-menu .column:first-child .header{
-	padding-right: 0px;
-}
-.frunt-menu .col_content{
-	position: relative;
-	height: 100%;
-	overflow-y: hidden;
-	padding-right: 30px;
-}
+
 #menu{
 	display: block;
 	overflow: hidden;
 	position: fixed;
-	z-index: 0;
+	z-index: 20;
 	text-align: left;
 	margin: 0;
 	padding: 0;
 	height: 100%;
-	
 	width: 300px;
 }
 
 #content{
-	position: absolute;
+	position: relative;
 	display: block;
 	margin: 0;
 	padding: 0;
-	height: 100%;
 }
 .frunt-layout{
-	position: fixed;
 	top: 0;
 	margin-bottom: 0px !important;
-	right: 250px;
-	left: 300px;
+	margin-right: 250px;
+	margin-left: 300px;
 	bottom : 0;
 }
+
 body,html,
 #container,
 #content,
 .frunt-slider{
 	height: 100% !important;
 }
+
 .frunt-layout-controls{
 	margin-top: 0px;
-	left: -260px;
+	left:50px;
 	width: 200px;
-	position: absolute;
+	position: fixed;
 	z-index: 100;
 	background: none;
 	bottom: 20px;
@@ -139,13 +124,13 @@ body,html,
 }
 
 #header{
-	padding: 30px 40px;
+	padding: 0 30px 40px  30px;
 }
 
 #splash{
 	background: #fff;
 	height: 100%;
-
+	position: fixed;
 	width: 100%;
 }
 
@@ -171,9 +156,10 @@ body,html,
 	margin-left: 250px;
 }
 .verticalMenu{
-	top: 150px;
 	position: absolute;
-	bottom: 200px;
+	top: 100px;
+	width: 280px;
+	bottom: 230px;
 	overflow: hidden;
 	-webkit-mask-image: -webkit-gradient(linear, left 90%, left bottom, from(rgba(0,0,0,1)), to(rgba(0,0,0,0)));
 }
@@ -194,7 +180,7 @@ body,html,
 	right:0px;
 	background: #fff;
 	width: 100%;
-	bottom: 150px;
+	bottom: 50px;
 	top:0px;
 	width: 250px;
 	float: left;
@@ -251,4 +237,174 @@ body,html,
 	bottom: 20px;
 	left: 20px;
 }
+
+#mobileIcon{
+	display: none;
+	position: absolute;
+	top: 0;
+	right: 0;
+	margin: 10px;
+	z-index: 30;
+}
+#mobileIcon.hover{
+	background-color: #e5e5e5;
+}
+
+/* Smartphones (portrait and landscape) ----------- */
+@media only screen 
+and (min-width : 320px)
+and (max-width : 640px){
+	.genericContainer{
+		margin: 30px;
+		
+	}
+	/* Styles */
+	#mobileIcon{
+		background-color: #fff;
+		display: block;
+	}
+	
+	.frunt-layout{
+		position: relative;
+		right:0;
+		left:0;
+		margin-top: 0px;
+		width: 100%;
+		margin: 0px;
+	}
+	.frunt-layout .frunt-layout-controls{
+		display: none;	
+	}
+	#menu{
+		position: relative;
+		height: auto;
+		width: 100%;
+	}
+	#header{
+		margin-top: 30px;
+	}
+	.verticalMenu{
+		position: relative;
+		bottom : 0;
+		top:0;
+		display: none;
+		width: auto;
+		z-index: 5;
+		border-bottom: 1px solid #dddddd;
+		margin: 0px 20px;
+		padding: 20px 10px;
+		border-top: 1px solid #dddddd;
+		-webkit-mask-image: inherit;
+	}
+	.project_info{
+		position: relative;
+		top:0;
+		left:0;
+		bottom:0;
+		float: none;
+		width: auto;
+		height: auto;
+		-webkit-mask-image: inherit;
+
+		margin: 0;
+		padding: 0px 30px;
+		padding-bottom: 20px;
+	}
+	.frunt-list{
+		height: auto;
+		overflow: auto;
+	}
+
+
+
+}
+
+/* iPads (portrait and landscape) ----------- */
+@media only screen 
+and (min-width : 641px) 
+and (max-width : 800px) {
+/* Styles */
+	.genericContainer{
+		margin: 30px;
+		
+	}
+	#mobileIcon{
+		background-color: #fff;
+		display: block;
+	}
+	#header{
+		margin-top: 30px;
+	}
+	#container{
+		position: relative;
+	}
+	.frunt-layout{
+		position: relative;
+		right:auto;
+		left:auto;
+		margin-top: 0px;
+		margin-right: 20px;
+		margin-left: 200px;
+	}
+	.frunt-layout .frunt-layout-controls{
+		-webkit-box-shadow: 0px -30px 15px 0px rgba(255, 255, 255, 0.75);
+		-moz-box-shadow:    0px -30px 15px 0px rgba(255, 255, 255, 0.75);
+		box-shadow:         0px -30px 15px 0px rgba(255, 255, 255, 0.75);
+		background: #fff;
+		padding: 20px;
+		margin-left: -30px;
+		margin-bottom: -20px;
+		width:35%;
+	}
+	.frunt-layout-controls .prev_next{
+		display: none;
+	}
+	#menu{
+		position: relative;
+		height: auto;
+		width: 100%;
+	}
+	.verticalMenu{
+		position: relative;
+		z-index: 300;
+		width: auto;
+		bottom : auto;
+		top:0;
+		display: none;
+		z-index: 5;
+		border-bottom: 1px solid #dddddd;
+		margin: 30px 20px 30px 20px;
+		padding: 20px 10px;
+		border-top: 1px solid #dddddd;
+		-webkit-mask-image: inherit;
+		
+	}
+	.project_info{
+		position: relative;
+		top:0;
+		left:0;
+		z-index: 20;
+		bottom:0;
+		float: left;
+		width: 35%;
+		height: auto;
+		-webkit-mask-image: inherit;
+		margin: 0 10px;
+		padding: 0px 30px;
+	}
+	.frunt-list{
+		height: auto;
+		overflow: auto;
+	
+	}
+	
+	.project_info .frunt-list .val{
+		padding-right: 0px;
+	}
+
+
+
+
+}
+
 

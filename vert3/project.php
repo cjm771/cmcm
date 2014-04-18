@@ -14,6 +14,7 @@
 	    //image grid widget
 	    'img_gallery' => $frunt->widget('layout.vertical',  $project['media'], array(
 	    	"slide_controls" => "thumbs", 
+	    	"document_scroll" => true,
 	    	"no_caption" => false,
 	    	"media_opts" => array(
 				"image" => array(

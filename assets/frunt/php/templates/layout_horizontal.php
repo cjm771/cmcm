@@ -1,6 +1,6 @@
 {% spaceless %}
 
-<div class='frunt-layout frunt-layout-{{type}}'>
+<div class='frunt-layout frunt-layout-{{type}}'  {% if document_scroll %}data-document-scroll={{document_scroll}}{% endif %} >
 	{% if media|length > 0 %}
 		<div class='frunt-slider'>
 		{% set count = 0 %}
