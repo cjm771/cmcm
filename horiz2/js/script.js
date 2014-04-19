@@ -44,6 +44,49 @@ horizScript = {
 		});
 		
 		
+		$(".frunt-list").niceScroll({
+	    	touchbehavior: true,
+	    	cursorcolor:"#c0c0c0",
+	    	cursorborder : "0px",
+	    	cursoropacitymax:0.7,
+	    	cursorwidth:3,
+	    	//background:"#ccc",
+	    	autohidemode:true
+    	});
+			$(".frunt-menu").niceScroll({
+	    	touchbehavior: true,
+	    	cursorcolor:"#c0c0c0",
+	    	cursorborder : "0px",
+	    	cursoropacitymax:0.7,
+	    	cursorwidth:3,
+	    	//background:"#ccc",
+	    	autohidemode:true,
+	    	oneaxismousemode : false
+    	});
+		/*
+		//mobile icon setup
+		$("#mobileIcon").on("click", function(){
+			if ($("#menu").is(":visible")){
+				$("#menu").slideUp();
+				$("#mobileIcon").removeClass("hover");
+			}else{
+				$("#menu").slideDown();
+				console.log($(".frunt-menu")[0].scrollWidth);
+				$("#mobileIcon").addClass("hover");
+			}
+		});
+		
+		enquire.register("screen and (min-width : 320px) and (max-width : 800px)", {
+		    match : function() {
+			    $("#menu").hide();
+		    },  
+		    unmatch : function() {
+		         $("#menu").show();
+		    }
+		});
+		*/
+		
+		
 		window.onresize = function(){
 			$(".img_wpr > img").each(function(){
 				$(this).closest(".img_wpr").width($(this).width());

@@ -20,7 +20,7 @@
 								"required": 1,
 								"protected": 1,
 								"auto_increment": 1,
-								"counter": 29,
+								"counter": 30,
 								"hidden": 1,
 								"unique": 1
 						},
@@ -1143,6 +1143,27 @@
 										"caption": ""
 								}
 						}
+				},
+				"PROJ_29": {
+						"published": 1,
+						"added": "19 April 2014 - 04:46 am",
+						"title": "Dom Kennedy",
+						"year": 2012,
+						"type_of_project": "installation",
+						"description": "Hahaha yup...",
+						"featured": 1,
+						"media": {
+								"aHR0cDovL2FwaS5zb3VuZGNsb3VkLmNvbS9wbGF5bGlzdHMvMTY2ODkwMjM-": {
+										"src": "http://api.soundcloud.com/playlists/16689023",
+										"visible": 1,
+										"type": "sound",
+										"thumb": "media/thumbnail/artworks-000064858228-61rtj4-t500x500.jpg",
+										"caption": ""
+								}
+						},
+						"coverImage": "aHR0cDovL2FwaS5zb3VuZGNsb3VkLmNvbS9wbGF5bGlzdHMvMTY2ODkwMjM-",
+						"id": 29,
+						"cleanUrl": "dom-kennedy"
 				}
 		}
 }

@@ -33,7 +33,7 @@ vertTemplate = {
 		*/
 		
 		
-    $(".frunt-list, .verticalMenu").niceScroll({
+    $(".frunt-list").niceScroll({
     	touchbehavior: true,
     	cursorcolor:"#c0c0c0",
     	cursorborder : "0px",
@@ -42,6 +42,19 @@ vertTemplate = {
     	//background:"#ccc",
     	autohidemode:true
     	});
+    	
+    	  $(".verticalMenu").niceScroll({
+    	touchbehavior: true,
+    	cursorcolor:"#c0c0c0",
+    	cursorborder : "0px",
+    	cursoropacitymax:0.7,
+    	cursorwidth:3,
+    	//background:"#ccc",
+    	autohidemode:true,
+    	oneaxismousemode : true
+    	});
+    	
+    	
 	
 
 		//mobile icon setup

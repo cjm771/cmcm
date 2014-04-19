@@ -728,11 +728,15 @@
 			if ($(".frunt-menu.frunt-menu-horiz").length){
 				$(".frunt-menu.frunt-menu-horiz").each(function(){
 					menu = $(this);
+
 					$(this).find(".link").each(function(){
 						$(this).on("click.frunt", function(){
-
 							if (!$(this).hasClass("disabled")){
 								menu= $(this).closest(".frunt-menu.frunt-menu-horiz");
+								menu.animate({
+									scrollLeft : menu[0].scrollWidth
+								}, 1000);
+								
 								//$(this).closest(".col_content").scrollTop($(this).position().top);						
 								//define els						
 								column = $(this).closest(".column");
@@ -787,6 +791,7 @@
 																
 							} //<--end if not disabled
 						});
+						
 					});
 					
 					//pick default open fans..
@@ -794,7 +799,7 @@
 						active = $(menu).find(".active");
 						column = active.closest(".column");
 						active.closest(".column").find(".col_content").scrollTop(active.position().top);
-						//
+
 						$(".column").not(column).each(function(){
 							key = $(this).attr("data-att");
 							activeField = active.attr("data-"+key);
@@ -802,7 +807,7 @@
 								//link = this;
 								if (activeField==$(this).attr("data-val")){
 									$(this).trigger("click.frunt");
-									    
+									  
 									if ($(this).closest(".column").find(".col_content").length){
 										el = $(this).closest(".column").find(".col_content");
 										$(this).closest(".column").find(".col_content").scrollTop($(this).position().top);
@@ -812,6 +817,8 @@
 							});
 						});
 					}
+					
+					
 
 					
 				}); //<--end  each horiz menu

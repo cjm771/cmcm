@@ -12,6 +12,11 @@
 		<div class='project_title'>{{project.title}}</div>
 		{{projectInfo}}
 	</div>
+	{{img_gallery}}
+{% endblock %}
+
+{% block old %}
+
 	
 	<div class='img_slider'>
 	{% for media in project.media %}
@@ -38,7 +43,7 @@
 			
 		</div>
 	{% endfor %}
+	
 	</div>
+	
 {% endblock %}
-
-
