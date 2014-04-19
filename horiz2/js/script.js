@@ -63,7 +63,7 @@ horizScript = {
 	    	autohidemode:true,
 	    	oneaxismousemode : false
     	});
-		/*
+		
 		//mobile icon setup
 		$("#mobileIcon").on("click", function(){
 			if ($("#menu").is(":visible")){
@@ -76,7 +76,7 @@ horizScript = {
 			}
 		});
 		
-		enquire.register("screen and (min-width : 320px) and (max-width : 800px)", {
+		enquire.register("screen and (min-width : 320px) and (max-width : 640px)", {
 		    match : function() {
 			    $("#menu").hide();
 		    },  
@@ -84,7 +84,7 @@ horizScript = {
 		         $("#menu").show();
 		    }
 		});
-		*/
+		
 		
 		
 		window.onresize = function(){
