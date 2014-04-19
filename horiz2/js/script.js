@@ -15,7 +15,7 @@ horizScript = {
 		$("#menu .col_content").css({
 			"position" : "relative",
 			"overflow" : "hidden",
-			"overflow-y" : "scroll",
+			"overflow-y" : "hidden",
 			"height" : "100%"
 		});
 		
@@ -30,6 +30,7 @@ horizScript = {
 			  includePadding: true,
 			  suppressScrollX : true
 		  })
+		  	
 		  
 		});
 		$("#menu #info_toggle").click(function(){
@@ -53,6 +54,8 @@ horizScript = {
 	    	//background:"#ccc",
 	    	autohidemode:true
     	});
+    	
+    	
 			$(".frunt-menu").niceScroll({
 	    	touchbehavior: true,
 	    	cursorcolor:"#c0c0c0",
@@ -64,8 +67,10 @@ horizScript = {
 	    	oneaxismousemode : false
     	});
 		
-		//mobile icon setup
+		http://cmcm.chris-malcolm.com/media/thumbnail/(1)artworks-000056829441-we8g5u-t500x500.jpg//mobile icon setup
 		$("#mobileIcon").on("click", function(){
+			if ($(".project_info").is(":visible"))
+				$("#header #info_toggle").trigger("click");
 			if ($("#menu").is(":visible")){
 				$("#menu").slideUp();
 				$("#mobileIcon").removeClass("hover");
@@ -85,6 +90,15 @@ horizScript = {
 		    }
 		});
 		
+		enquire.register("screen and (min-width : 320px) and (max-width : 800px)", {
+		    match : function() {
+			    $("#header").append($("#menu #info_toggle").clone(true));
+			    
+		    },  
+		    unmatch : function() {
+		         $("#header #info_toggle").remove();
+		    }
+		});
 		
 		
 		window.onresize = function(){

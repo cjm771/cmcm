@@ -70,7 +70,7 @@
 	overflow: hidden;	
 	bottom: 0;
 }
-
+#header #info_toggle,
 #menu #info_toggle{
 	position: absolute;
 	top:0;
@@ -147,8 +147,8 @@
 }
 .frunt-list{
 	-webkit-mask-image: -webkit-gradient(linear, left 90%, left bottom, from(rgba(0,0,0,1)), to(rgba(0,0,0,0)));
-	height: 100%;
-	overflow: hidden;
+	height: 80%;
+	padding-bottom: 40px;
 }
 .frunt-list .key{
 	display: block;
@@ -162,6 +162,7 @@
 .project_info{
 	display: none;
 	position: fixed;
+	overflow: hidden;
 	top: 150px;
 	right: 0;
 	z-index: 12;
@@ -275,31 +276,37 @@ and (max-width : 640px) {
 	}
 	#content{
 		bottom: 0;
+		
 	}
 	.project_info{
+		position: fixed;
 		width: 100%;
 		bottom:0;
 	}
+	
 	.frunt-layout-controls{
 		display: none;
 	}
 	#menu{
 		display: none;
 	}
+	#menu #info_toggle{
+		display: none;
+	}
+	#header #info_toggle{
+		top: 100px;
+	}
 }
 
 @media only screen 
-and (min-width : 320px)
+and (min-width : 641px)
 and (max-width : 800px) {
 /* Styles */
-
-	#menu #info_toggle{
-		display: block !important;
-		position: fixed;
+	#header #info_toggle{
 		top: 80px;
-		right: 5px;
-		bottom: auto;
-		left: auto;
+	}
+	#menu #info_toggle{
+		display: none;
 	}
 
 }
