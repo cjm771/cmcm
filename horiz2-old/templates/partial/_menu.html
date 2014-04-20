@@ -1,0 +1,5 @@
+<div class='verticalMenu'>
+{% for projId,proj in projects %}
+	<a href='{{site_url}}projects/{{proj.cleanUrl}}' {% if proj.cleanUrl == currentPage %}class='active'{% endif %}>{{proj.title}}</a>
+{% endfor %}
+</div>

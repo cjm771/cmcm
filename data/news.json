@@ -1,0 +1,134 @@
+{
+		"mediaFolder": "media/",
+		"title": "My Projects",
+		"subtitle": "Bob Somebody",
+		"description": "These are my projects",
+		"sort": {
+				"by": "",
+				"direction": "descending",
+				"mode": "list"
+		},
+		"thumb": {
+				"max_width": 200,
+				"max_height": 200,
+				"crop": 1
+		},
+		"template": {
+				"project": {
+						"id": {
+								"type": "int",
+								"required": 1,
+								"protected": 1,
+								"auto_increment": 1,
+								"counter": 4,
+								"hidden": 1
+						},
+						"cleanUrl": {
+								"type": "string",
+								"required": 1,
+								"protected": 1,
+								"hidden": 1
+						},
+						"published": {
+								"type": "bool",
+								"required": 1,
+								"protected": 1,
+								"def": 1
+						},
+						"added": {
+								"type": "timestamp",
+								"required": 1,
+								"protected": 1
+						},
+						"title": {
+								"type": "string",
+								"required": 1,
+								"protected": 1
+						},
+						"coverImage": {
+								"type": "string",
+								"protected": 1,
+								"hidden": 1
+						},
+						"description": {
+								"type": "text",
+								"required": 1
+						}
+				},
+				"media": {
+						"src": {
+								"type": "string",
+								"required": 1,
+								"protected": 1
+						},
+						"visible": {
+								"type": "bool",
+								"required": 1,
+								"protected": 1,
+								"def": 1
+						},
+						"type": {
+								"type": "choice",
+								"required": 1,
+								"protected": 1,
+								"hidden": 1,
+								"choices": "image,sound,video"
+						},
+						"thumb": {
+								"type": "string",
+								"protected": 1,
+								"required": 0
+						},
+						"caption": {
+								"type": "text",
+								"required": 0
+						}
+				}
+		},
+		"projects": {
+				"PROJ_3": {
+						"published": 1,
+						"added": "20 April 2014 - 06:57 pm",
+						"title": "New post",
+						"description": "asdasda",
+						"media": {
+								
+						},
+						"id": 3,
+						"cleanUrl": "new-post"
+				},
+				"PROJ_2": {
+						"published": 1,
+						"added": "20 April 2014 - 04:17 pm",
+						"title": "Easter Event",
+						"description": "Today is easter.",
+						"media": {
+								
+						},
+						"id": 2,
+						"cleanUrl": "easter-event"
+				},
+				"PROJ_1": {
+						"published": 1,
+						"added": "12 April 2014 - 08:35 pm",
+						"title": "Chris Starts CMCM",
+						"description": "I started CMCM to help designers create fast dynamic backends and sweet simple websites.",
+						"media": {
+								
+						},
+						"id": 1,
+						"cleanUrl": "chris-starts-cmcm"
+				},
+				"PROJ_0": {
+						"published": 1,
+						"added": "09 April 2014 - 04:35 pm",
+						"title": "First Post",
+						"description": "Welcome to my new site",
+						"media": {
+								
+						},
+						"id": 0,
+						"cleanUrl": "first-post"
+				}
+		}
+}

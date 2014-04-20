@@ -14,6 +14,7 @@
 	
 	));
 	
+	
 	//extra variables to grab for this template, for defaults check config.php
 	$relations = array_merge($relations, array(
 	   /*

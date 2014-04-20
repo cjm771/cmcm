@@ -18,7 +18,7 @@
 
 	//instantiate new object while pointing to cmcm dir
 	$frunt = new Frunt($CMCM_ROOT, $EXTRA_URL.$CMCM_URL, $EXTRA_URL.$SITE_URL, array(
-		"file" => "data.json", //set another file thats not current
+		//"file" => "data.json", //set another file thats not current
 	));
 	
 	//grab all data of current config file
@@ -47,7 +47,7 @@
         	 "collapse_current" => 2018, //default group to show
         	"extras" => array(  //add additonal links
         		"Contact" => "contact.php",
-        		"About" => "about.php",
+        		"About" => "#",
         		
         	)
         ))

@@ -1,12 +1,14 @@
 horizScript = {
-	timer : {},
 	infoVisible : 0,
-	scrolling : false,
 	infoRevealed : 0,
 	buttonText : "Text",
-	prettyScroll : function(){
-		//prep elemnts for pretty scroll
-		$(".column").css({
+	init : function(){
+		var that=this;
+		
+		
+		
+		//pretty scrollbar on menu
+		$(" .frunt-menu, .column").css({
 			"height" : "100%"
 		});
 		
@@ -17,31 +19,13 @@ horizScript = {
 			"height" : "100%"
 		});
 		
-		$(".frunt-list").css({
-		"position" : "relative",
-		"overflow" : "hidden",
-		"overflow-y" : "hidden"
-		});
-			
-			
-		$(".frunt-menu").css({
-			"overflow" : "hidden",
-			"overflow-y" : "hidden",
-			width : "100%"
-		});
-			  
-		 $(".genericContainer").css({
-			"position" : "relative",
-			"overflow" : "hidden",
-		});
-	
-		//initialize scroll bars
+		
 		
 		$("#menu .col_content").each(function(){
 			
 			$(this).perfectScrollbar({
 			  wheelSpeed: 2,
-			  wheelPropagation: 0,
+			  wheelPropagation: 1,
 			  minScrollbarLength: 20,
 			  includePadding: true,
 			  suppressScrollX : true
@@ -49,36 +33,7 @@ horizScript = {
 		  	
 		  
 		});
-
-		$(".frunt-list").perfectScrollbar({
-		  wheelSpeed: 2,
-		  wheelPropagation: 0,
-		  minScrollbarLength: 20,
-		  includePadding: true,
-		  suppressScrollX : true
-		 });
-		  
-	  	$(".frunt-menu").perfectScrollbar({
-		  wheelSpeed: 2,
-		  wheelPropagation: 0,
-		  minScrollbarLength: 20,
-		  includePadding: true,
-		  suppressScrollY : true
-		 })
-	
-			
-		  $(".genericContainer").perfectScrollbar({
-			  wheelSpeed: 2,
-			  wheelPropagation: 0,
-			  minScrollbarLength: 20,
-			  includePadding: true,
-			  suppressScrollX : true
-		  })
-	},
-	buttonEvents : function(){
-		var that=this;
-		
-		 $("#menu #info_toggle").click(function(){
+		$("#menu #info_toggle").click(function(){
 			that.infoVisible=(!that.infoVisible);
 			if (that.infoVisible){
 				$(".project_info").show('slow');	
@@ -89,6 +44,30 @@ horizScript = {
 			}
 		});
 		
+		
+		$(".frunt-list").niceScroll({
+	    	touchbehavior: true,
+	    	cursorcolor:"#c0c0c0",
+	    	cursorborder : "0px",
+	    	cursoropacitymax:0.7,
+	    	cursorwidth:3,
+	    	//background:"#ccc",
+	    	autohidemode:true
+    	});
+    	
+    	
+			$(".frunt-menu").niceScroll({
+	    	touchbehavior: true,
+	    	cursorcolor:"#c0c0c0",
+	    	cursorborder : "0px",
+	    	cursoropacitymax:0.7,
+	    	cursorwidth:3,
+	    	//background:"#ccc",
+	    	autohidemode:true,
+	    	oneaxismousemode : false
+    	});
+		
+		http://cmcm.chris-malcolm.com/media/thumbnail/(1)artworks-000056829441-we8g5u-t500x500.jpg//mobile icon setup
 		$("#mobileIcon").on("click", function(){
 			if ($(".project_info").is(":visible"))
 				$("#header #info_toggle").trigger("click");
@@ -101,14 +80,7 @@ horizScript = {
 				$("#mobileIcon").addClass("hover");
 			}
 		});
-	},
-	init : function(){
-		//initialize scrollbars
-		this.prettyScroll();
-		//initialize click events;
-		this.buttonEvents();
 		
-		//Media query events		
 		enquire.register("screen and (min-width : 320px) and (max-width : 640px)", {
 		    match : function() {
 			    $("#menu").hide();
@@ -120,12 +92,22 @@ horizScript = {
 		
 		enquire.register("screen and (min-width : 320px) and (max-width : 800px)", {
 		    match : function() {
-			    $("#header").append($("#menu #info_toggle").clone(true)); 
+			    $("#header").append($("#menu #info_toggle").clone(true));
+			    
 		    },  
 		    unmatch : function() {
 		         $("#header #info_toggle").remove();
 		    }
-		});		
+		});
+		
+		
+		window.onresize = function(){
+			$(".img_wpr > img").each(function(){
+				$(this).closest(".img_wpr").width($(this).width());
+			});
+		}
+		
+		
 	}
 }
 
