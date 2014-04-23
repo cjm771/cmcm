@@ -46,7 +46,7 @@
         	 "collapse_current" => 2018, //default group to show
         	"extras" => array(  //add additonal links
         		"Contact" => "contact.php",
-        		"About" => "#",
+        		"About" => "about.php",
         		
         	)
         ))

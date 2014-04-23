@@ -54,7 +54,7 @@
 		
 		<script src="../assets/js/jquery-2.1.0.min.js"></script>
 		<script src="../assets/frunt/js/frunt.js"></script>
-		<script src="../assets/frunt/js/frunt.widgets2.js"></script>
+		<script src="../assets/frunt/js/frunt.widgets.js"></script>
 		<script src="../assets/frunt/js/lib/twig.js"></script>
 		<script>
 			frunt = new Frunt("../", "../", "./", "data.json", {

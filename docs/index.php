@@ -32,7 +32,7 @@
 		<link rel='stylesheet' href='css/style.css' />
 		<script src="../assets/js/jquery-2.1.0.min.js"></script>
 		<script src="../assets/frunt/js/frunt.js"></script>
-		<script src="../assets/frunt/js/frunt.widgets2.js"></script>
+		<script src="../assets/frunt/js/frunt.widgets.js"></script>
 		<script src="../assets/frunt/js/lib/twig.js"></script>
 		<script src="js/google-prettify/run_prettify.js?skin=sunburst"></script>
 		<script src="js/script.js"></script>
@@ -728,6 +728,9 @@
 								<b>slide_controls : </b>  <span class='light'>false or String, Slide controls display mode...options are 'numbers', 'dots', 'thumbs'</span> / <i>Default : false</i>
 								</li>
 								<li>
+								<b>document_scroll : </b>  <span class='light'>true or false, If slide controls should track document scroll or actual frunt-slider scroll.</span> / <i>Default : false</i>
+								</li>
+								<li>
 									<b>media_opts : </b>  <span class='light'>Set of Objects, options for each media type.. </span> / <i>Default : {image : media opts, sound : media opts, video : media opts}</i>
 									<p>
 										Each media type can have seperate options.
@@ -811,6 +814,10 @@
 								<li>
 								<b>slide_controls : </b>  <span class='light'>false or String, Slide controls display mode...options are 'numbers', 'dots', 'thumbs'</span> / <i>Default : false</i>
 								</li>
+								<li>
+								<b>document_scroll : </b>  <span class='light'>true or false, If slide controls should track document scroll or actual frunt-slider scroll.</span> / <i>Default : false</i>
+								</li>
+
 								<li>
 									<b>media_opts : </b>  <span class='light'>Set of Objects, options for each media type.. </span> / <i>Default : {image : media opts, sound : media opts, video : media opts}</i>
 									<p>
@@ -910,6 +917,7 @@
 								<li>
 								<b>slide_controls : </b>  <span class='light'>false or String, Slide controls display mode...options are 'numbers', 'dots', 'thumbs'</span> / <i>Default : false</i>
 								</li>
+								
 								<li>
 									<b>media_opts : </b>  <span class='light'>Set of Objects, options for each media type.. </span> / <i>Default : {image : media opts, sound : media opts, video : media opts}</i>
 									<p>
@@ -1225,6 +1233,7 @@
 						<a name='frunt-responsive'></a>
 						<h3 class='widgetName'>Responsive</h3>
 						<p>Used to have elements scale in certian ways, when parent has unknown or relative dimension(s). This utility can be used by adding the <b>.frunt-responsive</b> class to an HTML element and using the following <b>data attributes</b> as options.
+						</p>
 						<p>
 					
 						<ul>

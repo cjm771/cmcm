@@ -7,18 +7,20 @@
 				{% endif %}
 			{% for projId, proj in group %}
 			<div class='thumb_wpr {% if proj.cleanUrl == context.current %}active{% endif %}'>
-				<a href='{{context.site_url}}{{context.url_rewrite}}{{proj.cleanUrl}}' title='{{proj.title}}'>
+			<a href='{{context.site_url}}{{context.url_rewrite}}{{proj.cleanUrl}}' title='{{proj.title}}'> 
 					<div class='media_wpr'>
-					{% if proj.media[proj.coverImage] %}
-						<img src='{{ context.cmcm_url }}{{ proj.media[proj.coverImage].thumb }}'>
-					{% else %}
-						<div class='noImage'><span>{{ proj.title|slice(0,1) }}</span></div>
-					{% endif %}
+					
+						{% if proj.media[proj.coverImage] %}
+							<img src='{{ context.cmcm_url }}{{ proj.media[proj.coverImage].thumb }}'>
+						{% else %}
+							<div class='noImage'><span>{{ proj.title|slice(0,1) }}</span></div>
+						{% endif %}
+				
 					</div>
 					{% if context.no_title==false %}
 					<div class='title_wpr'><span>{{proj.title}}</span></div>
 					{% endif %}
-				</a>
+			</a> 
 			</div>
 			{% endfor %}
 			</div>

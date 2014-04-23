@@ -17,10 +17,11 @@
 	<script type="text/javascript" src="assets/js/jquery.filetree.js"></script>
 	<script type="text/javascript" src="assets/js/jquery.resize.min.js"></script>
 	<script type="text/javascript" src="assets/js/jquery.placeholder.js"></script>
+		<script type="text/javascript" src="assets/js/jquery.insertAtCaret.js"></script>
 	<!-- Bootstrap js -->
 	<script type="text/javascript" src="assets/js/bootstrap.min.js"></script>
 	<!-- Jquery UI custom -->
-	<script type="text/javascript" src="assets/js/jquery-ui-1.10.4.sortable-autocomplete-tooltip.js"></script>
+	<script type="text/javascript" src="assets/js/jquery-ui-1.10.4.sortable-autocomplete-tooltip-draggable.js"></script>
 	<!--<script type="text/javascript" src="assets/js/jquery.dropdown.js"></script>-->
 	<!-- Json utils -->
 	<script type="text/javascript" src="assets/js/jsonUtils.js"></script>

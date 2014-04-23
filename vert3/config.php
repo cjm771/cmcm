@@ -40,6 +40,7 @@
         	"current" => (isset($_GET['id'])) ? $_GET['id'] : basename($_SERVER['PHP_SELF']), //indicate current page..project or file
         	 "sort_by" => "year", //sort by..creates headers
         	 "ascOrDesc" => "desc", //show list descending
+        	 'headers' => array('Projects', 'Info'),
         	 "collapse" => true,//collapse by header
         	 "collapse_multiple_fans" => false,  //only allow one fan at a time
         	 "collapse_current" => false, //default group to show

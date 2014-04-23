@@ -61,11 +61,9 @@ horizScript = {
 	  	$(".frunt-menu").perfectScrollbar({
 		  wheelSpeed: 2,
 		  wheelPropagation: 0,
-		  minScrollbarLength: 20,
-		  includePadding: true,
 		  suppressScrollY : true
-		 })
-	
+		 });
+		 
 			
 		  $(".genericContainer").perfectScrollbar({
 			  wheelSpeed: 2,
@@ -97,12 +95,13 @@ horizScript = {
 				$("#mobileIcon").removeClass("hover");
 			}else{
 				$("#menu").slideDown();
-				console.log($(".frunt-menu")[0].scrollWidth);
+				//console.log($(".frunt-menu")[0].scrollWidth);
 				$("#mobileIcon").addClass("hover");
 			}
 		});
 	},
 	init : function(){
+
 		//initialize scrollbars
 		this.prettyScroll();
 		//initialize click events;

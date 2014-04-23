@@ -644,6 +644,13 @@
 	position: relative;
 }
 
+.verticalMenu .vertHeader{
+	color: #c0c0c0;
+	padding: 1px 0px 1px 5px;
+	font-size: 11px;
+	margin-bottom: 5px;
+}
+
 .verticalMenu a{
 	display: block;
 	text-transform: capitalize;
@@ -661,7 +668,11 @@
 	text-decoration: none;
 }
 
-.verticalMenu .extras{
+.verticalMenu .extras.top{
+	margin-bottom: 20px;
+}
+
+.verticalMenu .extras.bottom{
 	margin-top: 20px;
 }
 

@@ -723,6 +723,7 @@
 					"loop_slides" : true, //true or false, if next is clicked on last slide, it should return to first
 					"slide_controls" : false, //false, numbers,dots,or thumbs
 					//GENERAL
+					"document_scroll" : false, //true or false, whether controls should track document or slider scroll
 					"just_thumbs" : false, //true or false, for just thumb
 					"use_thumb" : false, //true or false, for image type media
 					"media_opts" : {

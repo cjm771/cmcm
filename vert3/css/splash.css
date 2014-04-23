@@ -65,6 +65,41 @@
 	.frunt-layout .frunt-slider{
 		height: 100%;
 	}
+	.frunt-layout .frunt-preview-wpr img.frunt-responsive {
+		position: absolute;
+		top: 0; left: 0; right: 0; bottom: 0;
+		margin: auto;
+	}
+	
+	.verticalMenu .vertHeader{
+		z-index: 20;
+		background: inherit;
+		top: 20px;
+		color: #fff;
+		opacity: .75;
+	}
+	
+	/* news */
+	
+	.news{
+		bottom: 0;
+		right :0;
+		padding: 20px;
+		
+		position: absolute;
+		z-index: 40;
+		width: 300px;
+		color: #fff;
+		
+		font-size : 10px;
+	}
+	.news li{
+		list-style: none;
+		text-align: right;
+		padding: 10px 0;
+		border-bottom: 1px solid rgba(255,255,255,.5);
+	}
+	
 	
 	/* Smartphones (portrait and landscape) ----------- */
 	@media only screen 
@@ -87,9 +122,12 @@
 		}
 		#menu{
 			position: absolute;
-			width: 100%;
+			width: 50%;
 			background: none !important;
 			z-index: 20;
+		}
+		.news{
+			width: 50%;
 		}
 	
 	}

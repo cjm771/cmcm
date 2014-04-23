@@ -1,44 +1,10 @@
 {% block css %}
+<!-- extra splash css -->
+<link rel="stylesheet" href="{{site_url}}css/splash.css">
 <style>
-	#menu{
-		width: 100%;
-		background: none;
-		
-	}
-	#menu .group_list a, 
-	#menu .group_header,
-	#menu .extras a{
-		color: #fff !important;
-		max-width: 300px;
-		/*text-shadow: 1px 1px 3px #666;*/
-	}
-	#menu .group_header:hover{
-		color: #000 !important;
-	}
-	#header,
-	.site_description{
-		display: block;
-		text-align: right;
-		color: #fff !important;
-		/*text-shadow: 1px 1px 3px #666;*/
-		float: right;
-
-	}
-	html,body,#container,#content{
-		height: 100%;
-	}
-	#content{
-		max-width: none;
-		margin-left: inherit;
-		
-	}
-	.frunt-layout{
-		margin: 0;
-		height: 100%;
-	}
-	.frunt-layout .frunt-slider{
-		height: 100%;
-	}
+.frunt-layout{
+	padding:0;
+}
 </style>
 {% endblock %}
 
@@ -46,6 +12,12 @@
 {% block content %}
 	<div id='splash'>
 	{{content}}
+		<ul class='news'>
+		{% for index, item in news %}
+			<li><b>{{item.added}}</b> / {{item.title}}</li>
+		{% endfor %}
+		</ul>
+
 	</div>
 {% endblock %}
 

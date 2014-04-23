@@ -4,6 +4,17 @@
 	{{project.title}}
 {% endblock %}
 
+
+{% block js %}
+	<script>
+	$(document).ready(function(){
+		//initialize slideshow 9,6 ratio [responsive]
+		slideshowTmpl.projectPage();
+	});
+	</script>
+{% endblock %}
+
+
 {% block content %}
 	<div class='project_info'>
 		{#

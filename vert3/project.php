@@ -26,15 +26,17 @@
 					"mode" => "thumb",
 					"fit" => "fill",
 					"real_fit" => "fill",
-					"no_ratio" => true,
-					'responsive' => false
+					"bias" => "parent-width",
+					"sync_parent" => 2,
+					'responsive' => true
 				),
 				"sound" => array(
 					"mode" => "thumb",
 					"fit" => "fill",
 					"real_fit" => "fill",
-					"no_ratio" => true,
-					'responsive' => false
+					"bias" => "parent-width",
+					"sync_parent" => 2,
+					'responsive' => true
 				)
 			),
 	    )),

@@ -3174,10 +3174,28 @@
 					
 					tdVal = $("<td class='val'></td>");
 					tdVal.attr("data-attr", k); 
-					
-				
+			
+			
+					//if textbox or textarea, make droppable
+					if (val.is("textarea") || val.is("input[type='text']")){
+						//droppable test..
+						$(val).droppable({
+							 accept: ".media_wpr", 
+							drop :function(event, ui) {
+								cmcmCode = "{{MEDIA_SRC: "+that.$_GET('id')+"//"+ui.draggable.attr("data-id")+"}}";
+								insert =  (that.draft.media[ui.draggable.attr("data-id")].type=="image") ?  "<img src='"+cmcmCode+"' />" : cmcmCode;
+								$(this).insertAtCaret(insert);
+								$(this).trigger("change");
+							}
+						})
+					}
+		
+		
 					//val should be an element
 					tdVal.append(val);
+					
+			
+					
 					
 					//if textbox ...initiate autocomplete	
 					isTextBox = tdVal.find("input[type='text']");

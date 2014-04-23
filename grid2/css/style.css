@@ -1,18 +1,22 @@
-#body, html{
+/* layouts */
+body, html{
 	margin: 0px !important;
 	padding: 0;
 	height: 100%;
 	background: #fff;
 
 }
-#container{
-	overflow: auto;
+.genericContainer{
+	padding: 30px;
+	font-size: 10px;
 }
 #menu{
 	display: block;
 	position: fixed;
 	z-index: 10;
 	background: #fff;
+	top:0;
+	left:0;
 	margin: 0;
 	float: left;
 	padding: 0;
@@ -27,29 +31,15 @@
 	max-width: 800px;
 	margin: 0;
 	padding: 0;
-	overflow-x: hidden;
-	height: 100%;
 	margin-left: 300px;
-}
-
-.frunt-layout{
-	padding-right: 20px;
-}
-
-.frunt-layout .thumb_wpr{
-	margin: 5px;
-	width: 250px;
-	height: 200px;
-}
-
-.frunt-layout .thumb_wpr .caption{
-	background: rgba(255,255,255,.9);
 }
 
 #splash{
 	background: #fff;
 }
 
+
+/* header */
 #header{
 	padding: 20px 40px;
 }
@@ -70,10 +60,25 @@
 	font-size: 10px;
 	color: #999;
 }
-.frunt-menu {
-	padding-bottom: 200px;
 
+/* grid layout */
+
+.frunt-layout{
+	padding-right: 20px;
 }
+
+.frunt-layout .thumb_wpr{
+	margin: 5px;
+	width: 250px;
+	height: 200px;
+}
+
+.frunt-layout .thumb_wpr .caption{
+	background: rgba(255,255,255,.9);
+}
+
+/* menu */
+
 .frunt-menu .extras{
 		color: #666;
 }
@@ -84,6 +89,8 @@
 	display: block;
 	text-decoration: inherit;
 }
+
+/* project info */
 
 .project_info{
 	right:20px;
@@ -107,32 +114,180 @@
 	display: block;
 
 }
-.img_slider{
-	overflow-x:hidden;
-	padding: 0;
-	overflow-y: scroll;
-	height: auto;
-	min-height: 100%;
-	margin-left: 300px;
-	background-color: #c0c0c0;
-}
-.img_wpr{
 
-	position: relative;
-	margin: 0px auto;
-	display: block;
-	padding: 0;
-	
-	overflow: hidden;
-}
-.img_wpr .caption{
-	padding: 5px;
-	 background: #000;
-	 display: inline-block;
+/* media queries */
+
+/* misc */
+
+#mobileIcon{
+	display: none;
 	position: absolute;
-	color: #fff;
-	font-size: 12px;
-	bottom: 20px;
-	left: 20px;
+	top: 0;
+	right: 0;
+	margin: 10px;
+	z-index: 30;
 }
+#mobileIcon.hover{
+	background-color: #e5e5e5;
+}
+
+
+/* Smartphones (portrait and landscape) ----------- */
+@media only screen 
+and (min-width : 320px)
+and (max-width : 640px){
+	.genericContainer{
+		padding: 10px;
+	}
+	
+	#content{
+		width: auto;
+		max-width: none;
+		margin:  0px 30px;
+	}
+	/* Styles */
+	#mobileIcon{
+		background-color: #fff;
+		display: block;
+	}
+	.frunt-layout .thumb_wpr{
+		margin: 5px;
+		width: 45%;
+		height: 100px;
+	}
+	#menu{
+		position: relative;
+		height: auto;
+			
+		-webkit-mask-image: inherit;
+		width: 100%;
+			margin-bottom: 20px;
+	}
+	#header{
+		padding-left: 30px;
+		margin-top: 30px;
+	}
+	.verticalMenu{
+		position: relative;
+		bottom : auto;
+		top:auto;
+		display: none;
+		height: auto;
+		width: auto;
+		z-index: 5;
+		border-bottom: 1px solid #dddddd;
+		margin: 0px 20px;
+		padding: 20px 10px;
+		border-top: 1px solid #dddddd;
+	
+	}
+
+	.frunt-list{
+		height: auto;
+		overflow: auto;
+	}
+
+	.project_info{
+		width: 100%;
+		padding-right: 0px;
+	}
+
+	.frunt-layout{
+		padding-right: 0px;
+	}
+		.project_info .frunt-list .val{
+			padding-right: 0px;
+	}
+
+}
+
+/* iPads (portrait and landscape) ----------- */
+@media only screen 
+and (min-width : 641px) 
+and (max-width : 800px) {
+/* Styles */
+
+	.genericContainer{
+		margin: 10px;
+	}
+	#content{
+		width: 100%;
+		max-width: none;
+		margin-left: 0px;
+	}
+	.project_info{
+		width: 100%;
+		padding-right: 0px;
+	}
+	.project_info .frunt-list .val{
+			padding-right: 0px;
+	}
+	#mobileIcon{
+		background-color: #fff;
+		display: block;
+	}
+	#header{
+		margin-top: 30px;
+	}
+	#container{
+		position: relative;
+	}
+
+	#menu{
+		position: relative;
+		height: auto;
+		width: 100%;
+	
+	}
+	.verticalMenu{
+		position: relative;
+		z-index: 300;
+		width: auto;
+		height: auto;
+		bottom : auto;
+		top:0;
+		display: none;
+		z-index: 5;
+		border-bottom: 1px solid #dddddd;
+		margin: 30px 20px 30px 20px;
+		padding: 20px 10px;
+		border-top: 1px solid #dddddd;
+	}
+	
+		.frunt-layout .thumb_wpr{
+		margin: 5px;
+		width: 45%;
+		height: 150px;
+	}
+	.frunt-layout{
+		float: right;
+		width: 60%;
+		padding-right: 0px;
+	}
+	.project_info{
+		position: relative;
+		top:0;
+		left:0;
+		z-index: 20;
+		bottom:0;
+		float: left;
+		width: 35%;
+		height: auto;
+		-webkit-mask-image: inherit;
+		margin: 0 10px;
+		padding: 0px 30px;
+	}
+	.frunt-list{
+		height: auto;
+		overflow: auto;
+	
+
+
+
+
+
+}
+
+
+
 

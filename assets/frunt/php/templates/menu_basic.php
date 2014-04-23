@@ -1,3 +1,18 @@
+{% macro extrasList(extras, location, context) %}
+	<div class='extras {{location}}'>
+	{% if context.headers != false %}
+		<div class='vertHeader'>
+			{{context.headers[1]}}	
+		</div>
+	{% endif %}
+	{% for name,link in extras %}
+		<a href='{{context.site_url}}{{link}}' {% if link == context.current %}class='active'{% endif %}>{{name}}</a>
+	{% endfor %}
+	</div>
+{% endmacro %}
+
+
+
 
 {% macro subList(name, projects, more, index, context) %}
 	{% if index is not defined %}
@@ -27,7 +42,20 @@
 {% import _self as macros %}
 
 {% spaceless %}
+
+
+	
+	
 <div class='verticalMenu {% if collapse and sort_by %}collapsed{% endif %} {% if collapse_multiple_fans==false and sort_by %}noMulti{% endif %}'  {% if collapse_current %}data-current='{{ collapse_current }}'{% endif %}>
+	{% if extras_location=="top" %}
+		{{ macros.extrasList(extras, "top", _context) }}
+	{% endif %}
+	
+	{% if headers != false %}
+		<div class='vertHeader'>
+			{{headers[0]}}	
+		</div>
+	{% endif %}
 {% if sort_by==false %}
 	{{ macros.subList(false, projects, 0, 0, _context) }}
 {% else %}
@@ -35,12 +63,9 @@
 {% endif %}
 
 
-
-	<div class='extras'>
-	{% for name,link in extras %}
-		<a href='{{site_url}}{{link}}' {% if link == current %}class='active'{% endif %}>{{name}}</a>
-	{% endfor %}
-	</div>
+	{% if extras_location==false or extras_location=="bottom" %}
+		{{ macros.extrasList(extras, "bottom", _context) }}
+	{% endif %}
 </div>
 
 {% endspaceless %}

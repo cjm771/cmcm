@@ -1,4 +1,6 @@
-#body, html{
+/* layout */
+
+body, html{
 	margin: 0px !important;
 	padding: 0;
 	height: 100%;
@@ -6,34 +8,14 @@
 
 }
 
-#menu{
-	display: block;
-	position: fixed;
-	z-index: 10;
-	background: #fff;
-	margin: 0;
-	float: left;
-	padding: 0;
-	height: 100%;
-	-webkit-mask-image: -webkit-gradient(linear, left 90%, left bottom, from(rgba(0,0,0,1)), to(rgba(0,0,0,0)));
-	width: 300px;
-}
-
 #content{
 	position: relative;
 	display: block;
-	max-width: 800px;
+	max-width: 1100px;
 	margin: 0;
 	padding: 0;
 	height: 100%;
 	margin-left: 300px;
-}
-.frunt-layout{
-	margin-bottom: 40px;
-	margin-right: 40px;
-}
-.frunt-layout .thumb_wpr .caption{
-	background: rgba(255,255,255,.9);
 }
 
 #splash{
@@ -41,6 +23,16 @@
 	height: 100%;
 	width: 100%;
 }
+
+.genericContainer{
+	padding: 50px;
+	font-size: 10px;
+	max-width: 800px;
+	padding-top: 125px;
+	
+}
+
+/* header */
 
 #header{
 	padding: 20px 40px;
@@ -62,6 +54,41 @@
 	font-size: 10px;
 	color: #999;
 }
+
+/* menu */
+
+#menu{
+	display: block;
+	position: fixed;
+	z-index: 10;
+	background: #fff;
+	margin: 0;
+	float: left;
+	padding: 0;
+	height: 100%;
+	-webkit-mask-image: -webkit-gradient(linear, left 90%, left bottom, from(rgba(0,0,0,1)), to(rgba(0,0,0,0)));
+	width: 300px;
+}
+
+
+/* slideshow */
+
+.frunt-layout{
+	margin-bottom: 40px;
+	padding-top: 125px;
+	margin-right: 40px;
+	width: 100%;
+}
+.frunt-layout-slideshow .frunt-slider{
+	height: 600px;
+}
+.frunt-layout .thumb_wpr .caption{
+	background: rgba(255,255,255,.9);
+}
+
+
+/* menu */
+
 .frunt-menu {
 	padding-bottom: 200px;
 
@@ -77,12 +104,18 @@
 	text-decoration: inherit;
 }
 
+/* project info */
+
 .project_info{
 	right:20px;
 	z-index: 10;
 	top:20px;
 	color: #000;
+	float: right;
+	margin-left: 30px;
+	width: 30%;
 	padding: 30px 0px;
+	padding-top: 125px;
 }
 .project_info .project_title{
 	text-transform: capitalize;
@@ -99,32 +132,201 @@
 	display: block;
 
 }
-.img_slider{
-	overflow-x:hidden;
-	padding: 0;
-	overflow-y: scroll;
-	height: auto;
-	min-height: 100%;
-	margin-left: 300px;
-	background-color: #c0c0c0;
-}
-.img_wpr{
 
-	position: relative;
-	margin: 0px auto;
-	display: block;
-	padding: 0;
-	
-	overflow: hidden;
-}
-.img_wpr .caption{
-	padding: 5px;
-	 background: #000;
-	 display: inline-block;
+/* misc */
+
+#mobileIcon{
+	display: none;
 	position: absolute;
-	color: #fff;
-	font-size: 12px;
-	bottom: 20px;
-	left: 20px;
+	top: 0;
+	right: 0;
+	margin: 10px;
+	z-index: 30;
 }
+#mobileIcon.hover{
+	background-color: #e5e5e5;
+}
+
+
+/* mobile ----------- */
+@media only screen 
+and (min-width : 320px) 
+and (max-width : 641px) {
+/* Styles */
+	body,html,#container{
+		height: auto;
+	}
+	.genericContainer{
+		margin: 10px;
+		padding: 20px;
+	}
+	#content{
+		width: auto;
+		max-width: none;
+		margin-left: 0px;
+	}
+	.project_info{
+		width: auto;
+		padding-right: 0px;
+	}
+	.project_info .frunt-list .val{
+			padding-right: 0px;
+	}
+	#mobileIcon{
+		background-color: #fff;
+		display: block;
+	}
+	#header{
+		padding: 0px;
+		margin: 30px;
+	}
+	#container{
+		position: relative;
+	}
+
+	#menu{
+		position: relative;
+		height: auto;
+		width: 100%;
+	
+	}
+	.verticalMenu{
+		position: relative;
+		z-index: 300;
+		width: auto;
+		height: auto;
+		bottom : auto;
+		top:0;
+		display: none;
+		z-index: 5;
+		border-bottom: 1px solid #dddddd;
+		margin: 30px 20px 30px 20px;
+		padding: 20px 10px;
+		border-top: 1px solid #dddddd;
+	}
+	
+	.project_info{
+		float: none;
+		padding: 0px;
+		margin: 0 30px;
+	}
+	.frunt-list{
+		height: auto;
+		overflow: auto;
+	}
+
+	.frunt-layout{
+		width: auto;
+		padding: 0px;
+		margin: 30px 0;
+		margin-top: 80px;
+		position: relative;
+		
+	}
+	.frunt-slider{
+		margin: 0px auto;
+		
+	}
+	.frunt-layout-controls{
+		position: absolute;
+		bottom: 100%;
+		z-index: 30;
+		padding: 0 30px;
+	}
+
+
+
+}
+
+
+
+/* iPads (portrait and landscape) ----------- */
+@media only screen 
+and (min-width : 641px) 
+and (max-width : 800px) {
+/* Styles */
+	body,html,#container{
+		height: auto;
+	}
+	.genericContainer{
+		margin: 10px;
+		padding: 20px;
+	}
+	#content{
+		width: auto;
+		max-width: none;
+		margin-left: 0px;
+	}
+	.project_info{
+		width: auto;
+		padding-right: 0px;
+	}
+	.project_info .frunt-list .val{
+			padding-right: 0px;
+	}
+	#mobileIcon{
+		background-color: #fff;
+		display: block;
+	}
+	#header{
+		padding: 0px;
+		margin: 30px;
+	}
+	#container{
+		position: relative;
+	}
+
+	#menu{
+		position: relative;
+		height: auto;
+		width: 100%;
+	
+	}
+	.verticalMenu{
+		position: relative;
+		z-index: 300;
+		width: auto;
+		height: auto;
+		bottom : auto;
+		top:0;
+		display: none;
+		z-index: 5;
+		border-bottom: 1px solid #dddddd;
+		margin: 30px 20px 30px 20px;
+		padding: 20px 10px;
+		border-top: 1px solid #dddddd;
+	}
+	
+	.project_info{
+		float: none;
+		padding: 0px;
+		margin: 0 30px;
+	}
+	.frunt-list{
+		height: auto;
+		overflow: auto;
+	}
+
+	.frunt-layout{
+		width: auto;
+		padding: 0px;
+		margin: 30px;
+		margin-top: 50px;
+		position: relative;
+		
+	}
+	.frunt-slider{
+		margin: 0px auto;
+		
+	}
+	.frunt-layout-controls{
+		position: absolute;
+		top: -40px;
+		z-index: 30;
+	}
+
+
+
+}
+
 

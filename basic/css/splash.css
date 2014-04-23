@@ -1,0 +1,137 @@
+	
+	#menu{
+		position: absolute;
+		width: 100%;
+		height: 100%;
+		background: none !important;
+		z-index: 20;
+	}
+	.verticalMenu .vertHeader{
+		z-index: 20;
+		background: inherit;
+		top: 20px;
+		color: #fff;
+		opacity: .75;
+	}
+	#menu .group_list a, 
+	#menu .link, 
+	#menu .header,
+	#menu .group_header,
+	#menu .extras a{
+		color: #fff !important;
+		max-width: 300px;
+		text-shadow: 1px 1px 0px #666;
+	}
+	#menu .header{
+		color: #ebebeb !important;
+	}
+	#menu .group_header:hover{
+		color: #000 !important;
+	}
+	#header,
+	.site_description{
+		display: block;
+		text-align: right;
+		color: #fff !important;
+		text-shadow: 1px 1px 0px #666;
+		float: right;
+
+	}
+	html,body,#container,#content{
+		height: 100%;
+	}
+	.frunt-menu{
+		border-color: #fff !important;
+	}
+	#content{
+		
+		max-width: none;
+		margin-left: inherit;
+		
+	}
+	#header{
+		margin-top: 20px;
+		display: inline-block;
+	}
+	.verticalMenu{
+		position: relative;
+		top: auto;
+		bottom: auto;
+		padding-bottom: 0px;
+		height: 100%;
+		margin-top: 20px;
+		 
+	}
+	.frunt-layout{
+		top : 0;
+		left: 0 !important;
+		right: auto !important;
+		bottom: auto !important;
+		width: 100%;
+		margin: 0;
+		height: 100%;
+	}
+	.frunt-layout .frunt-slider{
+		height: 100%;
+	}
+	
+	/* news */
+	
+	.news{
+		bottom: 0;
+		right :0;
+		padding: 20px;
+		position: absolute;
+		z-index: 40;
+		width: 300px;
+		color: #fff;
+		font-size : 10px;
+	}
+	.news li{
+		list-style: none;
+		text-align: right;
+		padding: 10px 0;
+		border-bottom: 1px solid rgba(255,255,255,.5);
+	}
+	
+	/* Smartphones and ipads (portrait and landscape) ----------- */
+	@media only screen 
+	and (min-width : 320px)
+	and (max-width : 800px) {
+		#projectHeader{
+			display: none;
+		}
+		#header,.site_description{
+			text-align: left;
+			float: none;
+			padding-bottom: 0px;
+			margin-bottom: 0px;
+		}
+		#header{
+			padding-left: 35px;
+		}
+		.news{
+			width: 50%;
+		}
+		.verticalMenu{
+			position: relative;
+			top: auto;
+			bottom: auto;
+			width: 50%;
+			margin-left: 20px;
+			height: 100%;
+			margin-top: 20px;
+				padding-bottom: 175px;
+			border: 1px solid #ff0000;
+			border: 0;
+		}
+		#menu{
+			position: absolute;
+			width: 100%;
+			height: 100%;
+		
+			background: none !important;
+			z-index: 20;
+		}
+	
+	}
