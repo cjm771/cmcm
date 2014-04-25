@@ -213,6 +213,11 @@ body,html,
 	padding-bottom: 20px;
 }
 
+.frunt-list img{
+	width: 100%;
+	height: auto;
+}
+
 /* misc */
 
 #mobileIcon{

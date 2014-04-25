@@ -1,0 +1,393 @@
+{
+		"mediaFolder": "media/",
+		"title": "My Projects",
+		"subtitle": "Bob Somebody",
+		"description": "These are my projects",
+		"sort": {
+				"by": "",
+				"direction": "descending",
+				"mode": "grid"
+		},
+		"thumb": {
+				"max_width": 220,
+				"max_height": 150,
+				"crop": 1
+		},
+		"template": {
+				"project": {
+						"id": {
+								"type": "int",
+								"required": 1,
+								"protected": 1,
+								"auto_increment": 1,
+								"counter": 6,
+								"hidden": 1
+						},
+						"cleanUrl": {
+								"type": "string",
+								"required": 1,
+								"protected": 1,
+								"hidden": 1
+						},
+						"published": {
+								"type": "bool",
+								"required": 1,
+								"protected": 1,
+								"def": 1
+						},
+						"added": {
+								"type": "timestamp",
+								"required": 1,
+								"protected": 1
+						},
+						"title": {
+								"type": "string",
+								"required": 1,
+								"protected": 1
+						},
+						"coverImage": {
+								"type": "string",
+								"protected": 1,
+								"hidden": 1
+						},
+						"demo_url": {
+								"type": "string",
+								"required": 0
+						},
+						"description": {
+								"type": "text",
+								"required": 1
+						},
+						"widgets_used": {
+								"type": "string",
+								"required": 0
+						}
+				},
+				"media": {
+						"src": {
+								"type": "string",
+								"required": 1,
+								"protected": 1
+						},
+						"visible": {
+								"type": "bool",
+								"required": 1,
+								"protected": 1,
+								"def": 1
+						},
+						"type": {
+								"type": "choice",
+								"required": 1,
+								"protected": 1,
+								"hidden": 1,
+								"choices": "image,sound,video"
+						},
+						"thumb": {
+								"type": "string",
+								"protected": 1,
+								"required": 0
+						},
+						"caption": {
+								"type": "text",
+								"required": 0
+						}
+				}
+		},
+		"projects": {
+				"PROJ_4": {
+						"published": 1,
+						"added": "25 April 2014 - 05:09 pm",
+						"title": "Basic",
+						"demo_url": "../basic/",
+						"description": "blah blah",
+						"widgets_used": "menu.vertical,layout.vertical,layout.slideshow,simpleList",
+						"media": {
+								"YmFzaWMzLmpwZWc-": {
+										"src": "media/basic3.jpeg",
+										"visible": 1,
+										"type": "image",
+										"thumb": "media/thumbnail/basic3.jpeg",
+										"caption": ""
+								},
+								"YmFzaWMxLmpwZWc-": {
+										"src": "media/basic1.jpeg",
+										"visible": 1,
+										"type": "image",
+										"thumb": "media/thumbnail/basic1.jpeg",
+										"caption": ""
+								},
+								"YmFzaWMyLmpwZWc-": {
+										"src": "media/basic2.jpeg",
+										"visible": 1,
+										"type": "image",
+										"thumb": "media/thumbnail/basic2.jpeg",
+										"caption": ""
+								},
+								"YmFzaWMtaXBhZC5qcGc-": {
+										"src": "media/basic-ipad.jpg",
+										"visible": 1,
+										"type": "image",
+										"thumb": "media/thumbnail/basic-ipad.jpg",
+										"caption": ""
+								},
+								"YmFzaWMtaXBob25lLmpwZw--": {
+										"src": "media/basic-iphone.jpg",
+										"visible": 1,
+										"type": "image",
+										"thumb": "media/thumbnail/basic-iphone.jpg",
+										"caption": ""
+								}
+						},
+						"coverImage": "YmFzaWMxLmpwZWc-",
+						"id": 4,
+						"cleanUrl": "basic"
+				},
+				"PROJ_1": {
+						"id": 1,
+						"cleanUrl": "horizontal",
+						"published": 1,
+						"added": "25 April 2014 - 01:21 am",
+						"title": "Horizontal",
+						"coverImage": "aG9yaXoxLmpwZw--",
+						"demo_url": "../horiz2/",
+						"description": "horizontal template",
+						"widgets_used": "menu.horizontal,layout.horizontal,layout.slideshow,simpleList",
+						"media": {
+								"aG9yaXoxLmpwZw--": {
+										"src": "media/horiz1.jpg",
+										"visible": 1,
+										"type": "image",
+										"thumb": "media/thumbnail/horiz1.jpg",
+										"caption": ""
+								},
+								"aG9yaXozLmpwZw--": {
+										"src": "media/horiz3.jpg",
+										"visible": 1,
+										"type": "image",
+										"thumb": "media/thumbnail/horiz3.jpg",
+										"caption": ""
+								},
+								"aG9yaXoyLmpwZw--": {
+										"src": "media/horiz2.jpg",
+										"visible": 1,
+										"type": "image",
+										"thumb": "media/thumbnail/horiz2.jpg",
+										"caption": ""
+								},
+								"aG9yaXotaXBob25lLmpwZw--": {
+										"src": "media/horiz-iphone.jpg",
+										"visible": 1,
+										"type": "image",
+										"thumb": "media/thumbnail/horiz-iphone.jpg",
+										"caption": ""
+								},
+								"aG9yaXotaXBhZC5qcGc-": {
+										"src": "media/horiz-ipad.jpg",
+										"visible": 1,
+										"type": "image",
+										"thumb": "media/thumbnail/horiz-ipad.jpg",
+										"caption": ""
+								}
+						}
+				},
+				"PROJ_2": {
+						"published": 1,
+						"added": "25 April 2014 - 03:44 pm",
+						"title": "Vertical",
+						"demo_url": "../vert3/",
+						"description": "Vertical scroll with spaces",
+						"widgets_used": "menu.vertical,layout.vertical,layout.slideshow,simpleList",
+						"media": {
+								"dmVydDMuanBn": {
+										"src": "media/vert3.jpg",
+										"visible": 1,
+										"type": "image",
+										"thumb": "media/thumbnail/vert3.jpg",
+										"caption": ""
+								},
+								"dmVydDEuanBn": {
+										"src": "media/vert1.jpg",
+										"visible": 1,
+										"type": "image",
+										"thumb": "media/thumbnail/vert1.jpg",
+										"caption": ""
+								},
+								"dmVydDIuanBn": {
+										"src": "media/vert2.jpg",
+										"visible": 1,
+										"type": "image",
+										"thumb": "media/thumbnail/vert2.jpg",
+										"caption": ""
+								},
+								"dmVydC1pcGFkLmpwZw--": {
+										"src": "media/vert-ipad.jpg",
+										"visible": 1,
+										"type": "image",
+										"thumb": "media/thumbnail/vert-ipad.jpg",
+										"caption": ""
+								},
+								"dmVydC1pcGhvbmUuanBn": {
+										"src": "media/vert-iphone.jpg",
+										"visible": 1,
+										"type": "image",
+										"thumb": "media/thumbnail/vert-iphone.jpg",
+										"caption": ""
+								}
+						},
+						"coverImage": "dmVydDIuanBn",
+						"id": 2,
+						"cleanUrl": "vertical"
+				},
+				"PROJ_3": {
+						"published": 1,
+						"added": "25 April 2014 - 04:42 pm",
+						"title": "Slideshow",
+						"demo_url": "../slideshow/",
+						"description": "Slideshow",
+						"widgets_used": "menu.vertical,layout.slideshow,simpleList",
+						"media": {
+								"c2xpZGVzaG93My5qcGc-": {
+										"src": "media/slideshow3.jpg",
+										"visible": 1,
+										"type": "image",
+										"thumb": "media/thumbnail/slideshow3.jpg",
+										"caption": ""
+								},
+								"c2xpZGVzaG93LTEuanBn": {
+										"src": "media/slideshow-1.jpg",
+										"visible": 1,
+										"type": "image",
+										"thumb": "media/thumbnail/slideshow-1.jpg",
+										"caption": ""
+								},
+								"c2xpZGVzaG93Mi5qcGc-": {
+										"src": "media/slideshow2.jpg",
+										"visible": 1,
+										"type": "image",
+										"thumb": "media/thumbnail/slideshow2.jpg",
+										"caption": ""
+								},
+								"c2xpZGVzaG93LWlwYWQuanBn": {
+										"src": "media/slideshow-ipad.jpg",
+										"visible": 1,
+										"type": "image",
+										"thumb": "media/thumbnail/slideshow-ipad.jpg",
+										"caption": ""
+								},
+								"c2xpZGVzaG93LWlwaG9uZS5qcGc-": {
+										"src": "media/slideshow-iphone.jpg",
+										"visible": 1,
+										"type": "image",
+										"thumb": "media/thumbnail/slideshow-iphone.jpg",
+										"caption": ""
+								}
+						},
+						"coverImage": "c2xpZGVzaG93LTEuanBn",
+						"id": 3,
+						"cleanUrl": "slideshow"
+				},
+				"PROJ_5": {
+						"id": 5,
+						"cleanUrl": "grid",
+						"published": 1,
+						"added": "25 April 2014 - 05:29 pm",
+						"title": "Grid",
+						"coverImage": "Z3JpZDEuanBn",
+						"demo_url": "../grid2/",
+						"description": "blah blah",
+						"widgets_used": "menu.vertical,layout.grid,menu.grid,simpleList",
+						"media": {
+								"Z3JpZDEuanBn": {
+										"src": "media/grid1.jpg",
+										"visible": 1,
+										"type": "image",
+										"thumb": "media/thumbnail/grid1.jpg",
+										"caption": ""
+								},
+								"Z3JpZDIuanBn": {
+										"src": "media/grid2.jpg",
+										"visible": 1,
+										"type": "image",
+										"thumb": "media/thumbnail/grid2.jpg",
+										"caption": ""
+								},
+								"Z3JpZDMuanBn": {
+										"src": "media/grid3.jpg",
+										"visible": 1,
+										"type": "image",
+										"thumb": "media/thumbnail/grid3.jpg",
+										"caption": ""
+								},
+								"Z3JpZC1pcGFkLmpwZw--": {
+										"src": "media/grid-ipad.jpg",
+										"visible": 1,
+										"type": "image",
+										"thumb": "media/thumbnail/grid-ipad.jpg",
+										"caption": ""
+								},
+								"Z3JpZC1pcGhvbmUuanBn": {
+										"src": "media/grid-iphone.jpg",
+										"visible": 1,
+										"type": "image",
+										"thumb": "media/thumbnail/grid-iphone.jpg",
+										"caption": ""
+								}
+						}
+				},
+				"PROJ_0": {
+						"id": 0,
+						"cleanUrl": "full",
+						"published": 1,
+						"added": "24 April 2014 - 11:55 pm",
+						"title": "Full",
+						"coverImage": "ZnVsbDMuanBn",
+						"demo_url": "../full/",
+						"description": "Full screen slideshow and menu grid homepage.",
+						"widgets_used": "menu.grid,layout.slideshow,simpleList",
+						"media": {
+								"ZnVsbDEuanBn": {
+										"src": "media/full1.jpg",
+										"visible": 1,
+										"type": "image",
+										"thumb": "media/thumbnail/full1.jpg",
+										"caption": ""
+								},
+								"ZnVsbDIuanBn": {
+										"src": "media/full2.jpg",
+										"visible": 1,
+										"type": "image",
+										"thumb": "media/thumbnail/full2.jpg",
+										"caption": ""
+								},
+								"ZnVsbDMuanBn": {
+										"src": "media/full3.jpg",
+										"visible": 1,
+										"type": "image",
+										"thumb": "media/thumbnail/full3.jpg",
+										"caption": ""
+								},
+								"ZnVsbDQuanBn": {
+										"src": "media/full4.jpg",
+										"visible": 1,
+										"type": "image",
+										"thumb": "media/thumbnail/full4.jpg",
+										"caption": ""
+								},
+								"ZnVsbC1pcGhvbmUuanBn": {
+										"src": "media/full-iphone.jpg",
+										"visible": 1,
+										"type": "image",
+										"thumb": "media/thumbnail/full-iphone.jpg",
+										"caption": ""
+								},
+								"ZnVsbC1pcGFkLmpwZw--": {
+										"src": "media/full-ipad.jpg",
+										"visible": 1,
+										"type": "image",
+										"thumb": "media/thumbnail/full-ipad.jpg",
+										"caption": ""
+								}
+						}
+				}
+		}
+}

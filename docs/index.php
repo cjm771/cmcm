@@ -4,7 +4,7 @@
 	
 
     // frunt php
-    require_once('../assets/frunt/php/frunt.php');
+    require_once('ecmcm/assets/frunt/php/frunt.php');
     
     /*******************
      * 
@@ -18,7 +18,9 @@
      *
      *******************/
 
-     $frunt = new Frunt("../", "../", "./", array());
+     $frunt = new Frunt("cmcm/", "cmcm/", "./", array(
+     	"file" => "data.json" 
+     ));
 
 ?>
 
@@ -27,13 +29,13 @@
 	<head>
 		<title> CMCM - Frunt Docs</title>
 		<link rel='stylesheet' href='css/sunburst.css' />
-		<link rel='stylesheet' href='../assets/frunt/css/frunt.widgets.css' />
+		<link rel='stylesheet' href='cmcm/assets/frunt/css/frunt.widgets.css' />
 		<link href="http://fonts.googleapis.com/css?family=Gudea:400,700,400italic" rel="stylesheet" type='text/css'>
 		<link rel='stylesheet' href='css/style.css' />
-		<script src="../assets/js/jquery-2.1.0.min.js"></script>
-		<script src="../assets/frunt/js/frunt.js"></script>
-		<script src="../assets/frunt/js/frunt.widgets.js"></script>
-		<script src="../assets/frunt/js/lib/twig.js"></script>
+		<script src="cmcm/assets/js/jquery-2.1.0.min.js"></script>
+		<script src="cmcm/assets/frunt/js/frunt.js"></script>
+		<script src="cmcm/assets/frunt/js/frunt.widgets.js"></script>
+		<script src="cmcm/assets/frunt/js/lib/twig.js"></script>
 		<script src="js/google-prettify/run_prettify.js?skin=sunburst"></script>
 		<script src="js/script.js"></script>
 	</head>
@@ -468,6 +470,8 @@
 							<li><b>url_rewrite : </b> <span class='light'>String, desired link url to project followed by identifier</span> / <i>Default : 'projects/'</i></li>
 							<li><b>ascOrDesc : </b> <span class='light'>String, Sort direction</span> / <i>Default : 'desc'</i></li>
 							<li><b>extras : </b> <span class='light'>false or Object, Additional links to append to bottom of menu ex. {about : "about.html", contact : "contact.html"} </span> / <i>Default : false</i></li>
+							<li><b>extras_location : </b> <span class='light'>String "top" or "bottom", Location of additional links in reference to projects</span> / <i>Default : "bottom"</i></li>
+							<li><b>headers : </b> <span class='light'>false or Array-String(2), optional headers above extras and projects..ex ['projects', 'info']</span> / <i>Default : false</i></li>
 							<li><b>sort_by : </b> <span class='light'>False, String or Array, Create nested subgroups in menu </span> / <i>Default : false</i></li>
 							<li><b>collapse : </b> <span class='light'>True or False, if sort_by, collapse groups or not</span> / <i>Default : true</i></li>
 							<li><b>collapse_multiple_fans : </b> <span class='light'>True or False,if sort_by, Allow multiple groups to be open at same time or not</span> / <i>Default : false</i></li>

@@ -1,6 +1,6 @@
 <div id='header'>
 	<span class='title'>
-		CMCM 
+		CMCM
 	</span>
 	<span class='subtitle'>
 		A dope content manager for designers.

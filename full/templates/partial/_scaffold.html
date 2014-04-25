@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        {% block head %}
+            {% include 'partial/_assets.html' %}
+            <title>
+            	{{title}} - {{subtitle}} - {% block title %}{% endblock %}
+            </title>
+         {% block css %} 
+         {% endblock %}
+         {% block js %} 
+         {% endblock %}    
+        {% endblock %}
+    </head>
+    <body>
+		<div id='container'>
+			<div id="about">
+				 {% include 'partial/_header.html' %}
+				   {% block about %}
+				   		{{ about }}
+				   {% endblock %}
+				   		<!-- news -->
+				   		<div class='colWrapper'>
+				   			<div class='subhead'>News</div>
+					   		<ul class='news'>
+							{% for index, item in news %}
+								<li><b>{{item.added}}</b> / {{item.title}}</li>
+							{% endfor %}
+							</ul>
+				   		</div>
+				   		<!-- about -->
+				   		 <div class='colWrapper'>
+				   			<div class='subhead'>About</div>
+				   				<p>
+									Contrary to popular belief, Lorem Ipsum is not simply random text. It has roots in a piece of classical Latin literature from 45 BC, making it over 2000 years old. Richard McClintock, a Latin professor at Hampden-Sydney College in Virginia, looked up one of the more obscure Latin words, consectetur, from a Lorem Ipsum passage, and going through the cites of the word in classical literature, discovered the undoubtable source. Lorem Ipsum comes from sections 1.10.32 and 1.10.33 of "de Finibus Bonorum et Malorum" (The Extremes of Good and Evil) by Cicero, written in 45 BC. This book is a treatise on the theory of ethics, very popular during the Renaissance. The first line of Lorem Ipsum, "Lorem ipsum dolor sit amet..", comes from a line in section 1.10.32.
+								</p>
+								<p>
+							The standard chunk of Lorem Ipsum used since the 1500s is reproduced below for those interested. Sections 1.10.32 and 1.10.33 from "de Finibus Bonorum et Malorum" by Cicero are also reproduced in their exact original form, accompanied by English versions from the 1914 translation by H. Rackham.
+								</p>
+								<p>
+									Website powered by <a href='http://cmcm.io'>CMCM</a>
+								</p>
+				   		 </div>
+				   		<!-- contact -->
+				   		 <div class='colWrapper'>
+				   			<div class='subhead'>Contact</div>
+				   				<p>
+									For inquiries, please feel free to contact me:
+								</p>
+								<p>
+									<a href='mailto:chris@example.com'>chris@example.com</a>
+								</p>
+				   		 </div>
+			</div>
+			<div id='nav'>
+				<span id='infoLink'>Info</span>
+				<span id='aboutLink'>About</span>
+				<span id='projectsLink'><a href='{{site_url}}'>Projects</a></span>
+			</div>
+			<div id="content">
+				 {% block content %}{% endblock %}
+			</div>
+		</div>
+    </body>
+</html>

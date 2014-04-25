@@ -294,6 +294,12 @@ cmcmDocs = {
 					"<li><b>'plain'</b> <i class='light'>Strips a String of any HTML entities (which would be encoded by default).</i></li>"+
 					"<li><b>'html'</b> <i class='light'>Converts HTML entites(encoded by default) into working HTML.</i></li>"+
 					"<li><b>'breaks'</b> <i class='light'>Coverts line breaks '\\n' into break tags. </i></li>"+
+					"<li><b>'cmcm_code'</b> <i class='light'>Our version of bbCode...in handlebars type syntax, good to use if you are using html and media in your attribute. general syntax is {{COMMAND:ARG1//ARG2//..}} Special commands inserted in textareas/inputs will be converted to their corresponding values. </i><p>"+
+					"Below are the possible commands and what they'll transform into.<ul>"+
+					"<li>MEDIA_SRC <i class='light'>Transforms into the src URL attribute of a media object. (drag a media thumb into a textarea or input to insert!)...example.. ex: show proj (id 20) - media (id XYZLM)  '{{MEDIA_SRC: 20//XYZLM}'</i></li>"+
+						"<li>CMCM_URL <i class='light'>Transforms into cmcm_url specified in this frunt instance ex. '{{CMCM_URL}}'</i></li>"+
+						"<li>SITE_URL <i class='light'>Transforms into site_url specified in this frunt instance ex. '{{SITE_URL}}'</i></li>"+
+					"</ul></p></li>"+
 					"<li><b>'timestamp'</b> <i class='light'>Coverts timestamp type attributes (which is a string by default) into it's unix numeric based counterpart. </i></li>"+
 					"<li><b>'date'</b> <i class='light'>Coverts timestamp type attribute into a date formatted string (matches php date() formatting). Extra parameter would be the desired format string ex. 'm/d/y' or whatever. </i></li>"+
 					"</ul></p>"

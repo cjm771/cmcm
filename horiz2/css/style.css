@@ -25,7 +25,7 @@ body, html{
 	font-size: 10px;
 }
 .genericContainer p{
-	max-width: 750px;
+	max-width: 800px;
 }
 
 #content{
@@ -252,7 +252,9 @@ and (max-width : 640px) {
 	}
 	#content{
 		bottom: 0;
-		
+	}
+	.frunt-layout{
+		position: absolute;
 	}
 	.project_info{
 		position: fixed;
@@ -284,6 +286,9 @@ and (max-width : 800px) {
 	}
 	#menu #info_toggle{
 		display: none;
+	}
+	.frunt-layout{
+		position: absolute;
 	}
 	.frunt-list-key-description .val{
 		padding-bottom: 40px;

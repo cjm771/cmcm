@@ -10,17 +10,19 @@ vertTemplate = {
 	    	//background:"#ccc",
 	    	autohidemode:true
     	});
-    	
-	    $(".verticalMenu").niceScroll({
-	    	touchbehavior: true,
-	    	cursorcolor:"#c0c0c0",
-	    	cursorborder : "0px",
-	    	cursoropacitymax:0.7,
-	    	cursorwidth:3,
-	    	//background:"#ccc",
-	    	autohidemode:true,
-	    	oneaxismousemode : true
-	    });
+	    
+	    $(".verticalMenu").css({
+			"overflow" : "hidden",
+			"overflow-y" : "hidden",
+			"height": "100%",
+			"position" : "relative"
+		});
+	    
+	   $(".verticalMenu").perfectScrollbar({
+		  wheelSpeed: 2,
+		  wheelPropagation: 0,
+		  suppressScrollX : true
+		 });
 	},
 	buttonEvents : function(){
 		//mobile icon setup

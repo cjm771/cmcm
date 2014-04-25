@@ -4,6 +4,13 @@
 	{{project.title}}
 {% endblock %}
 
+{% block js %}
+<script>
+$(document).ready(function(){
+	$(".verticalMenu").perfectScrollbar("destroy");
+});
+</script>
+{% endblock %}
 {% block content %}
 	<div class='project_info'>
 		{#

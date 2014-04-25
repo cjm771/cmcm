@@ -115,14 +115,16 @@
 			position: relative;
 			top: auto;
 			bottom: auto;
-			height: 100%;
+			width: 50%;
+			margin-left: 20px;
 			margin-top: 20px;
-			border: 1px solid #ff0000;
+			padding-bottom: 175px;
 			border: 0;
 		}
 		#menu{
 			position: absolute;
-			width: 50%;
+			width: 100%;
+			height: 100%;
 			background: none !important;
 			z-index: 20;
 		}

@@ -38,7 +38,9 @@
 	    	"showDefaultIgnores" => false, //true or false, show default ignoreS?
 	    	"custom_format" => array(
 	    		"description" => array(
-	    			"value" => function($v){return nl2br(html_entity_decode($v));}
+	    			"value" => function($v) use ($frunt){
+	    				return $frunt->convert($v, "html,breaks,cmcm_code");
+	    			}
 	    		)
 	    	)
 	    ))

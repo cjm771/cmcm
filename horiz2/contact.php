@@ -12,6 +12,7 @@
 	</p>
 	<p>
 	<a href='mailto:chris@example.com'>chris@example.com</a>
+	</p>
 	</div>"
 	));
 	//we use templates in the adjacent templates/ folder

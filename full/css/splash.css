@@ -1,0 +1,130 @@
+	
+	#splash{
+	background: none;
+	}
+	
+	/* grid menu */
+	.frunt-menu-grid {
+		padding: 0px;
+			background: #c0c0c0;
+	}
+	.frunt-menu-grid .thumb_wpr{
+		margin: 0px;
+		padding: 0px;
+		width: 20%;
+		
+	}
+	.frunt-menu-grid .thumb_wpr:hover{
+		opacity: inherit;
+	}
+	.frunt-menu-grid .thumb_group {
+		margin-bottom: 0px;
+	}
+	
+	.frunt-menu-grid .title_wpr {
+		background: none;
+		color: #fff;
+		padding: 10px;
+		text-shadow: 1px 1px 0px #666;
+		text-transform: capitalize;
+		display: none;
+	}
+	
+	
+	
+	/* menu */
+	
+	
+	#infoLink,
+	#projectsLink{
+		display: none;
+	}
+
+	/* about */
+	
+	#about{
+		overflow: auto;
+		width: 100%;
+		padding: 20px;
+		background: #333;
+		z-index: 31;
+		display: none;
+	}
+	#header{
+		display: block;
+		text-align: right;
+		color: #f4f4f4 !important;
+		
+		float: right;
+
+	}
+	#header .site_title,
+	#header .site_subtitle{
+		font-size: 1em;
+	}
+	html,body,#container,#content{
+		height: 100%;
+		background: #c0c0c0;
+	}
+	.frunt-menu{
+		border-color: #fff !important;
+	}
+	#content{
+	
+		max-width: none;
+		margin-left: inherit;
+		
+	}
+	#header{
+		padding: 10px;
+	}
+	.verticalMenu{
+		position: relative;
+		top: auto;
+		bottom: auto;
+		height: 100%;
+	}
+	.frunt-layout{
+		top : 0;
+		left: 0 !important;
+		right: auto !important;
+		bottom: auto !important;
+		width: 100%;
+		margin: 0;
+		height: 100%;
+	}
+	.frunt-layout .frunt-slider{
+		height: 100%;
+	}
+
+	
+	/* Smartphones (portrait and landscape) ----------- */
+	@media only screen 
+	and (min-width : 320px)
+	and (max-width : 640px) {
+		.frunt-menu-grid .thumb_wpr{
+			margin: 0px;
+			padding: 0px;
+			width: 50%;
+			
+		}
+		#header{
+			margin: 0px;
+		}
+	}
+	
+		/* Smartphones (portrait and landscape) ----------- */
+	@media only screen 
+	and (min-width : 641px)
+	and (max-width : 800px) {
+		.frunt-menu-grid .thumb_wpr{
+			margin: 0px;
+			padding: 0px;
+			width: 25%;
+			
+		}
+
+	}
+	}
+	
+
