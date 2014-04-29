@@ -225,24 +225,69 @@ class ExternalMedia{
 	    curl_setopt($process, CURLOPT_HTTPHEADER, $headers);         
 	    curl_setopt($process, CURLOPT_HEADER, 0);         
 	    curl_setopt($process, CURLOPT_USERAGENT, $useragent);         
-	    curl_setopt($process, CURLOPT_TIMEOUT, 30);         
-	    curl_setopt($process, CURLOPT_RETURNTRANSFER, 1);         
+	    //curl_setopt($process, CURLOPT_TIMEOUT, 30);         
+	    curl_setopt($process, CURLOPT_RETURNTRANSFER, 1);   
+	    
+	    //check if safe mode
+	    if (ini_get('open_basedir') == '' && ini_get('safe_mode' == 'Off')){
+
 	    curl_setopt($process, CURLOPT_FOLLOWLOCATION, 1);         
-	    $return = curl_exec($process);         
+	    $return = curl_exec($process);      
+
+	    }else{
+
+		$return = $this->curl_redir_exec($process);
+		
+		}      
+   
 	    curl_close($process);         
 	    return $return;     
 	} 
+	
+	private function curl_redir_exec($ch, $maxredirect=5) {
+		if (ini_get('open_basedir') == '' && ini_get('safe_mode' == 'Off')) {
+		    curl_setopt($ch, CURLOPT_FOLLOWLOCATION, true);
+		} else {
+		    curl_setopt($ch, CURLOPT_FOLLOWLOCATION, false);
+		    $newurl = curl_getinfo($ch, CURLINFO_EFFECTIVE_URL);
+		
+		    $rch = curl_copy_handle($ch);
+		    curl_setopt($rch, CURLOPT_HEADER, true);
+		    curl_setopt($rch, CURLOPT_NOBODY, true);
+		    curl_setopt($rch, CURLOPT_RETURNTRANSFER, true);
+		    do {
+		        curl_setopt($rch, CURLOPT_URL, $newurl);
+		        $header = curl_exec($rch);
+		        if (curl_errno($rch)) {
+		            $code = 0;
+		        } else {
+		            $code = curl_getinfo($rch, CURLINFO_HTTP_CODE);
+		            if ($code == 301 || $code == 302) {
+		                preg_match('/Location:(.*?)\n/', $header, $matches);
+		                $newurl = trim(array_pop($matches));
+		            } else {
+		                $code = 0;
+		            }
+		        }
+		    } while ($code && $maxredirect--);
+		    curl_close($rch);
+		    curl_setopt($ch, CURLOPT_URL, $newurl);
+		}
+		return curl_exec($ch);
+    }
 
 	public static function make_thumb( $image_path, $thumb_path, $max_width = 1200, $max_height = 1200, $force_size, $software='gd2') {
 
-		/*		  
-		 if (extension_loaded('imagick')) {
-			 $software = "im";
-		}
-		*/
+
+		ini_set("gd.jpeg_ignore_warning", 1);
+		
 		$thumbQuality = 95;
 		list( $image_width, $image_height, $image_type ) = GetImageSize( $image_path );
 		
+		//check validity of image
+		if (!isset($image_type) || !in_array($image_type, array(IMAGETYPE_PNG, IMAGETYPE_JPEG, IMAGETYPE_GIF))) {
+		 	return false;
+		}
 		//if aspect ratio is to be constrained set crop size
 		if ( $force_size ) {
 			$newAspect = $max_width/$max_height;
@@ -377,8 +422,18 @@ class ExternalMedia{
 		curl_setopt($ch, CURLOPT_URL, $url);
 		curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
 		curl_setopt($ch, CURLOPT_CONNECTTIMEOUT, $timeout);
-		curl_setopt($ch, CURLOPT_FOLLOWLOCATION, TRUE);
-		$data = curl_exec($ch);
+		
+		//check if safe mode
+	    if (ini_get('open_basedir') == '' && ini_get('safe_mode' == 'Off')){
+
+	    curl_setopt($ch, CURLOPT_FOLLOWLOCATION, 1);         
+	    $data = curl_exec($ch);      
+
+	    }else{
+
+		$data = $this->curl_redir_exec($ch);
+		
+		}     
 		curl_close($ch);
 		return $data;
 	}

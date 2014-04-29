@@ -53,7 +53,7 @@
 	 	//widget vars
 	 	$this->data = $data;
 	 	$this->wName = $widgetName;
-	 	$this->opts = $widgetOpts;
+	 	$this->opts = ($widgetOpts=="") ? array() : $widgetOpts;
 	 	
 	 	//initiate twig
 	 	$this->twig = $this->twig();
@@ -221,7 +221,7 @@
 	 public function simpleList(){
 		//default opts
 		$defaults = array(
- 			"template" => "<span class='key'>{{key}}</span>: <span class='val'>{{val}}</span>", //template for each list item
+ 			"template" => "<span class='key'>{{key}}:</span> <span class='val'>{{val}}</span>", //template for each list item
  			//default for everything
  			"default_format" => array(
  				"key" => function($k){return str_replace("_", " ", $k);},

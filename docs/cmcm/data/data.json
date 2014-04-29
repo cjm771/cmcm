@@ -91,6 +91,7 @@
 						},
 						"thumb": {
 								"type": "string",
+								"protected": 1,
 								"required": 0
 						},
 						"caption": {

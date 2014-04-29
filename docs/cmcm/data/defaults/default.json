@@ -50,10 +50,6 @@
 								"protected": 1,
 								"hidden": 1
 						},
-						"year": {
-								"type": "int",
-								"required": 1
-						},
 						"description": {
 								"type": "text",
 								"required": 1

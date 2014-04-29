@@ -1982,6 +1982,8 @@
 						onMixLoad : function(){
 							//if skipping animation..then use existing order
 							sortArr = (opts.skipAnimation) ?  ['custom', $(".img_grid").find(".img_wpr")] : ['data-cat', ascOrDesc];
+							//if it is a timestamp type...then custom sort
+							//[coming soon] haha
 							$('.img_grid').mixitup('sort',sortArr);
 						
 						},
@@ -3106,6 +3108,11 @@
 				});
 
 			},
+			_generateMediaId : function(str, dataObj){
+				var that = this;
+				console.log(that.getUniqueKey(base64_encode(str).replace(/[^a-z0-9]/gi, '-'), dataObj));
+				return that.getUniqueKey(base64_encode(str).replace(/[^a-z0-9]/gi, '-'), dataObj);
+			},
 			_simpleList : function(obj){
 				ul = $("<ul></ul>");
 				$.each(obj, function(k,v){
@@ -3460,7 +3467,7 @@
 												$(me.el).find(".successBox").html(json_encode(respObj.data)).show();
 													$.each(respObj.data, function(index, exMedia){
 															wpr = $("<div class='media_wpr' data-id=''></div>");	
-															 mediaId = that.getUniqueKey(base64_encode(exMedia.src).replace(/=/gi, '-'), that.draft.media);
+															 mediaId = that._generateMediaId(exMedia.src, that.draft.media);
 															 wpr.attr("data-id", mediaId);
 															//add to that.draft.media with template
 															that.addMediaToProject(mediaId, {
@@ -3536,7 +3543,7 @@
 				       wpr = $("<div class='media_wpr'></div>");
 				       //replace = with - for attribute spec
 				      
-				       wpr.attr("data-id", base64_encode(file.name).replace(/=/gi, '-'));
+				       wpr.attr("data-id",  that._generateMediaId(file.name, that.draft.media));
 				      
 				      fileInfo = that.fileValidator(file);
 				      
@@ -3618,7 +3625,7 @@
 			        	});
 			        	
 			        	file = data.result.files[0];
-						data.context.attr("data-id", base64_encode(file.name).replace(/=/gi, '-'));
+						data.context.attr("data-id", that._generateMediaId(file.name, that.draft.media));
 							
 			        	//check if error
 				       	if (file.error){

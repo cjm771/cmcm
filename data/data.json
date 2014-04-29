@@ -87,6 +87,7 @@
 						},
 						"thumb": {
 								"type": "string",
+								"protected": 1,
 								"required": 0
 						},
 						"caption": {
@@ -119,6 +120,27 @@
 										"visible": "1",
 										"type": "sound",
 										"thumb": "media/thumbnail/artworks-000050195071-zvcd77-t500x500.jpg",
+										"caption": ""
+								},
+								"aHR0cDovL3d3dy55b3V0dWJlLmNvbS93YXRjaD92PXZSZk5iaHlQUEtz": {
+										"src": "http://www.youtube.com/watch?v=vRfNbhyPPKs",
+										"visible": 1,
+										"type": "video",
+										"thumb": "media/thumbnail/(4)sddefault.jpg",
+										"caption": ""
+								},
+								"aHR0cDovL3ZpbWVvLmNvbS8xNjU4MDIzOQ--": {
+										"src": "http://vimeo.com/16580239",
+										"visible": 1,
+										"type": "video",
+										"thumb": "media/thumbnail/(1)101738607_640.jpg",
+										"caption": ""
+								},
+								"aHR0cDovL2FwaS5zb3VuZGNsb3VkLmNvbS90cmFja3MvMTQ1OTg5NTUz": {
+										"src": "http://api.soundcloud.com/tracks/145989553",
+										"visible": 1,
+										"type": "sound",
+										"thumb": "media/thumbnail/(1)artworks-000077301942-k4ye7c-t500x500.jpg",
 										"caption": ""
 								}
 						}

@@ -54,13 +54,17 @@
 								"type": "string",
 								"required": 0
 						},
-						"description": {
-								"type": "text",
-								"required": 1
-						},
 						"widgets_used": {
 								"type": "string",
 								"required": 0
+						},
+						"designed_by": {
+								"type": "string",
+								"required": 1
+						},
+						"description": {
+								"type": "text",
+								"required": 1
 						}
 				},
 				"media": {
@@ -95,12 +99,16 @@
 		},
 		"projects": {
 				"PROJ_4": {
+						"id": 4,
+						"cleanUrl": "basic",
 						"published": 1,
 						"added": "25 April 2014 - 05:09 pm",
 						"title": "Basic",
-						"demo_url": "../basic/",
-						"description": "blah blah",
+						"coverImage": "YmFzaWMxLmpwZWc-",
+						"demo_url": "gallery/basic/",
 						"widgets_used": "menu.vertical,layout.vertical,layout.slideshow,simpleList",
+						"designed_by": "Chris Malcolm",
+						"description": "Basic Left menu , Right Content Layout. Vertical Scroll, and no frunt-responsive enabled. Everything is styled and sized via css.",
 						"media": {
 								"YmFzaWMzLmpwZWc-": {
 										"src": "media/basic3.jpeg",
@@ -137,10 +145,7 @@
 										"thumb": "media/thumbnail/basic-iphone.jpg",
 										"caption": ""
 								}
-						},
-						"coverImage": "YmFzaWMxLmpwZWc-",
-						"id": 4,
-						"cleanUrl": "basic"
+						}
 				},
 				"PROJ_1": {
 						"id": 1,
@@ -149,9 +154,10 @@
 						"added": "25 April 2014 - 01:21 am",
 						"title": "Horizontal",
 						"coverImage": "aG9yaXoxLmpwZw--",
-						"demo_url": "../horiz2/",
-						"description": "horizontal template",
+						"demo_url": "gallery/horiz2/",
 						"widgets_used": "menu.horizontal,layout.horizontal,layout.slideshow,simpleList",
+						"designed_by": "Chris Malcolm",
+						"description": "Horizontal template. Horizontal Scroll with Horizontal menu.",
 						"media": {
 								"aG9yaXoxLmpwZw--": {
 										"src": "media/horiz1.jpg",
@@ -191,12 +197,16 @@
 						}
 				},
 				"PROJ_2": {
+						"id": 2,
+						"cleanUrl": "vertical",
 						"published": 1,
 						"added": "25 April 2014 - 03:44 pm",
 						"title": "Vertical",
-						"demo_url": "../vert3/",
-						"description": "Vertical scroll with spaces",
+						"coverImage": "dmVydDIuanBn",
+						"demo_url": "gallery/vert3/",
 						"widgets_used": "menu.vertical,layout.vertical,layout.slideshow,simpleList",
+						"designed_by": "Chris Malcolm",
+						"description": "Vertical scroll, similar to basic except with a collapsable vertical menu and 'jump to' thumbnails. ",
 						"media": {
 								"dmVydDMuanBn": {
 										"src": "media/vert3.jpg",
@@ -233,18 +243,19 @@
 										"thumb": "media/thumbnail/vert-iphone.jpg",
 										"caption": ""
 								}
-						},
-						"coverImage": "dmVydDIuanBn",
-						"id": 2,
-						"cleanUrl": "vertical"
+						}
 				},
 				"PROJ_3": {
+						"id": 3,
+						"cleanUrl": "slideshow",
 						"published": 1,
 						"added": "25 April 2014 - 04:42 pm",
 						"title": "Slideshow",
-						"demo_url": "../slideshow/",
-						"description": "Slideshow",
+						"coverImage": "c2xpZGVzaG93LTEuanBn",
+						"demo_url": "gallery/slideshow/",
 						"widgets_used": "menu.vertical,layout.slideshow,simpleList",
+						"designed_by": "Chris Malcolm",
+						"description": "Same layout as vertical, but instead of vertical page scroll, we have a Slideshow format. ",
 						"media": {
 								"c2xpZGVzaG93My5qcGc-": {
 										"src": "media/slideshow3.jpg",
@@ -281,10 +292,7 @@
 										"thumb": "media/thumbnail/slideshow-iphone.jpg",
 										"caption": ""
 								}
-						},
-						"coverImage": "c2xpZGVzaG93LTEuanBn",
-						"id": 3,
-						"cleanUrl": "slideshow"
+						}
 				},
 				"PROJ_5": {
 						"id": 5,
@@ -293,9 +301,10 @@
 						"added": "25 April 2014 - 05:29 pm",
 						"title": "Grid",
 						"coverImage": "Z3JpZDEuanBn",
-						"demo_url": "../grid2/",
-						"description": "blah blah",
+						"demo_url": "gallery/grid2/",
 						"widgets_used": "menu.vertical,layout.grid,menu.grid,simpleList",
+						"designed_by": "Chris Malcolm",
+						"description": "Grid has a grid layout homepage, and features media thumbs grouped by type on the project page.",
 						"media": {
 								"Z3JpZDEuanBn": {
 										"src": "media/grid1.jpg",
@@ -318,18 +327,18 @@
 										"thumb": "media/thumbnail/grid3.jpg",
 										"caption": ""
 								},
-								"Z3JpZC1pcGFkLmpwZw--": {
-										"src": "media/grid-ipad.jpg",
-										"visible": 1,
-										"type": "image",
-										"thumb": "media/thumbnail/grid-ipad.jpg",
-										"caption": ""
-								},
 								"Z3JpZC1pcGhvbmUuanBn": {
 										"src": "media/grid-iphone.jpg",
 										"visible": 1,
 										"type": "image",
 										"thumb": "media/thumbnail/grid-iphone.jpg",
+										"caption": ""
+								},
+								"Z3JpZC1pcGFkLmpwZw--": {
+										"src": "media/grid-ipad.jpg",
+										"visible": 1,
+										"type": "image",
+										"thumb": "media/thumbnail/grid-ipad.jpg",
 										"caption": ""
 								}
 						}
@@ -341,9 +350,10 @@
 						"added": "24 April 2014 - 11:55 pm",
 						"title": "Full",
 						"coverImage": "ZnVsbDMuanBn",
-						"demo_url": "../full/",
-						"description": "Full screen slideshow and menu grid homepage.",
+						"demo_url": "gallery/full/",
 						"widgets_used": "menu.grid,layout.slideshow,simpleList",
+						"designed_by": "Chris Malcolm",
+						"description": "Full screen slideshow and menu grid homepage.",
 						"media": {
 								"ZnVsbDEuanBn": {
 										"src": "media/full1.jpg",

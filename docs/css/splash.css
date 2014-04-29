@@ -1,0 +1,278 @@
+@font-face {
+    font-family: 'socicon';
+    src: url('font/socicon-webfont.eot');
+    src: url('font/socicon-webfont.eot?#iefix') format('embedded-opentype'),
+         url('font/socicon-webfont.woff') format('woff'),
+         url('font/socicon-webfont.ttf') format('truetype'),
+         url('font/socicon-webfont.svg#sociconregular') format('svg');
+    font-weight: normal;
+    font-style: normal;
+}
+/* splash stuff */
+
+	body,html{
+		padding: 0px;
+		margin: 0px;
+		height: 100%;
+	}
+	
+	#container{
+		width: auto;
+		padding: 0px;
+		height: 100%;
+	}
+	#top{
+		margin: 0px;
+		padding: 10px 30px 20px 30px;
+	}
+	#main{
+		width: 100%;
+	
+	}
+	.bar{
+		position: relative;
+		width: 100%;
+		background: #333;
+		padding: 30px 20px;
+		color: #c0c0c0;
+	}
+	.bar.black{
+		background: #000;
+	}
+	.bar.center{
+		text-align: center;
+	}
+	.bar_wpr{
+		max-width: 800px;
+		margin: 0px auto;
+	}
+	.content{
+		width: auto;
+		position: relative;
+	}
+	#bottom{
+		margin: 0px;
+		width: 100%;
+		
+		background: #fff;
+		border: 0;
+		padding: 30px;
+	}
+	#footer{
+		color: #333;
+	}
+	.socicon {
+		
+	    font-family: 'socicon' !important;
+	}
+	
+
+	.button_group .socicon{
+		font-size: 24px;
+		margin: 10px;
+		color: #fff;
+	}
+
+	.button_group .socicon:hover{
+		cursor: pointer;
+		color: #00a3ff;
+	}
+	.frunt-menu-grid{
+		padding: 20px 0px;
+	}
+	.frunt-menu-grid .thumb_wpr{
+		width: 220px;
+		height: 170px;
+		margin-left: 0px;
+	}
+	
+	.frunt-menu-grid .thumb_wpr .media_wpr{
+		width: 220px;
+		height: 150px;
+		display: block;
+		padding: 1px;
+		border: 1px solid #c0c0c0;
+	
+	}
+	.frunt-menu-grid .thumb_wpr .title_wpr{
+		background: none;
+		color: #fff;
+	}
+	.big{
+		font-family: helvetica, arial, sans-serif;
+		font-size: 32px;
+		padding: 30px 0px 0px 0;
+		color: #fff;
+		vertical-align: middle;
+	}
+	.button_group{
+		margin: 50px 0;
+	}
+
+	.button_group.block .button{
+			margin: 5px 0;
+	}
+
+	.button{
+		padding: 10px;
+		font-weight: bold;
+		text-align: center;
+		font-family: helvetica, arial, sans-serif;
+		border: 1px solid #c0c0c0;
+		display: inline-block;
+		cursor: pointer;
+	}
+	
+	.button.big{
+		font-size: 14px;
+		padding: 15px 24px;
+		min-width: 100px;
+	
+	}
+	.button .light{
+		font-size: .8em;
+		font-weight: normal;
+	}
+	
+	.button:hover{
+		border-color: #00a3ff;
+		background-color: #00a3ff;
+	}
+	a{
+		color: #6d94b6;
+	}
+	.returnLink{
+		font-size: 12px;
+		margin-top: 5px;
+		text-decoration: none;
+	}
+	a.button{
+		text-decoration: inherit;
+		color: #fff;
+	}
+	
+	.featureBox{
+		display:inline-block; 
+		text-align: left; 
+		vertical-align:top;
+		max-width: 300px;
+	}
+	
+	/* social */
+	.social.button_group a{
+		color: inherit;
+		text-decoration: inherit;
+	}
+	
+	/* getting started */
+	.big .frunt-logo{
+		height: 28px;
+		vertical-align: middle; 
+		width: auto;
+		margin-top: -5px;
+		margin-left: -5px;
+	}
+	.step_group{
+		margin-top: 20px;
+	}
+	
+	#videoSplash{
+		height: 700px;
+		position: relative;
+		padding: 0px;
+	}
+	.cmcm_frunt_group .step img{
+		width: 80px;
+		height: auto;
+		border: none;
+	}
+		.cmcm_frunt_group .step {
+			width: 40%;
+			margin-right: 2%;
+		}
+	.step{
+		display: inline-block;
+		width: 30%;
+		margin-right: 2%;
+		padding: 0px;
+		vertical-align: top;
+	}
+	.step:last-child{
+		margin-right: 0px;
+	}
+	.step_title{
+		margin-bottom: 20px;
+		font-size: 24px;
+		color: #fff;
+		vertical-align: bottom;
+	}
+	.step_img_wpr{
+		vertical-align: middle;
+	}
+	
+	.step_img_wpr .diagram{
+		font-size: 60px;
+		color: #fff;
+		display: inline-block;
+		line-height: inherit;
+		margin: 20px;
+	
+	}
+	#json_icon{
+	}
+	
+	
+	.step img{
+		width: 100%;
+		border: 1px solid #c0c0c0;
+		
+		height: auto;
+		border-radius: 20px;
+		margin: 20px 0;
+	}
+	
+	/* template gallery*/
+	.template_info{
+		padding: 30px;
+		display: inline-block;
+		width: 30%;
+		text-align: left;
+		vertical-align: top;
+	}
+	.template_info .frunt-list .key{
+		display: block;
+		padding: 10px 0;
+	}
+	.template_info .buttons{
+		margin-top: 20px;
+	}
+	.template_info .buttons .button{
+		margin: 10px 10px 0 0;
+	}
+	.frunt-layout-slideshow{
+		padding: 30px;
+		display: inline-block;
+		vertical-align: top;
+		width: 60%;
+		max-width: 800px;
+	}
+	.frunt-layout-slideshow .frunt-slider{
+		box-shadow: rgba(0, 0, 0, 0.3) 0px 0px 20px 4px;
+		-webkit-box-shadow: rgba(0, 0,0, 0.3) 0px 0px 20px 4px;
+	}
+	.frunt-layout-slideshow .frunt-layout-controls .next,
+	.frunt-layout-slideshow .frunt-layout-controls .prev,
+	.frunt-layout-slideshow .frunt-layout-controls .info{
+		display: none;
+	}
+		.frunt-layout-slideshow .frunt-layout-controls {
+			margin-top: 30px;
+		}
+	.frunt-layout-slideshow .frunt-layout-controls .jump_to img{
+		height: 50px;
+	}
+	.frunt-layout-slideshow .frunt-slider .slide{
+		background: #fff;	
+		
+	}
+	

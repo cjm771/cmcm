@@ -111,7 +111,7 @@
 	}
 	
 	//run widget
-	public function widget($type="", $data, $opts=""){
+	public function widget($type="", $data, $opts=false){
 		//subtype was specified in the type
 		if (strrpos($type, ".")!==false){
 			$opts['type'] = substr($type, strrpos($type, ".")+1);
