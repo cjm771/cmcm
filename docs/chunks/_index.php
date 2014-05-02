@@ -23,6 +23,7 @@ A Simple Content Manager for Designers
 <script>
  videojs.options.flash.swf = "video/video-js.swf"
 $(document).ready(function(){
+	/*
 	var myPlayer = videojs('introVid');
 	myPlayer.controls(false);
 	myPlayer.on("click", function(){
@@ -38,6 +39,7 @@ $(document).ready(function(){
 	  myPlayer.play();
 	
 	});
+	*/
 });
 </script>
 
@@ -45,19 +47,19 @@ $(document).ready(function(){
 
 {% block content %}
 <div id='videoSplash' class='bar black center'>
-<!--
+
 <iframe width="100%" height="100%" src="http://www.youtube.com/embed/k301LpT0h3o?autoplay=1&color1=0xFF0099&color2=0xFFFFFF&showinfo=0&iv_load_policy=3&controls=0&loop=1&playlist=k301LpT0h3o" width="100%" height="100%" frameborder="0" allowfullscreen></iframe>
--->
+
 <!--
 <iframe src="//player.vimeo.com/video/93567492?title=0&amp;byline=0&amp;portrait=0&amp;autoplay=1&amp;loop=1" class='frunt-responsive' data-ratio='[16,9]' width="100%" height="100%" frameborder="0" webkitallowfullscreen mozallowfullscreen allowfullscreen></iframe>
 
 -->
-<video id="introVid" class="video-js vjs-default-skin"
+<!--<video id="introVid" class="video-js vjs-default-skin"
   controls preload="auto" width=100% height="100%"
   poster="images/CMCM-BIG-youtube-art.jpg"
   data-setup='{"example_option":true}' autoplay loop>
- <source src="videos/CMCM.m4v" type='video/mp4'/>
-</video>
+ <source src="videos/CMCM.m4v" type='video/x-m4v'/>
+</video>-->
 </div>
 <div class='bar black center'>
 	<div class='bar_wpr'>

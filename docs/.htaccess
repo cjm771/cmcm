@@ -1,3 +1,10 @@
 RewriteEngine on
 RewriteRule ^templates/([^/\.]+)/?$ templates.php?id=$1 [L]
 Options -Indexes
+
+#Video MIME Types:
+AddType video/x-m4v .m4v
+AddType video/m4v .m4v
+AddType video/ogg .ogv
+AddType video/mp4 .mp4
+AddType video/webm .webm
