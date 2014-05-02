@@ -2,6 +2,7 @@
 class Jdat{
 	
 	//relative to php folder 
+	const DEMO_MODE = 0;
 	const DATA_DIR = "../../data";  
 	const PROJ_ID_PRE = "PROJ_";
 	const ROOT_DIR = "../../";
@@ -334,6 +335,8 @@ class Jdat{
 	*
 	*/
 	public static function set($f, $content, $flag="", $dataDir=""){
+		if (self::DEMO_MODE)
+			return false;
 		if ($dataDir=="") $dataDir = self::DATA_DIR."/";
 		//check unique, return false if not
 		if ($flag==1){
@@ -358,6 +361,7 @@ class Jdat{
 		}
 		//dir should be
 		$path = ($dataDir.$f);
+		
 		if (file_put_contents($path, self::sanitize($content))){
 			return $f;
 		}else{

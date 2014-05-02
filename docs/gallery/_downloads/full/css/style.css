@@ -1,0 +1,286 @@
+/* menu */
+
+#nav{
+	position: absolute;
+	z-index: 30;
+	top:0px;
+	padding: 10px;
+	left: 10px;
+	color: #fff;
+}
+#nav span{
+	cursor: pointer;
+	padding: 5px;
+	margin-right: 10px;
+}
+#nav span:last-child{
+	margin-right: 0px;
+}
+#nav span a{
+	color: inherit;
+	background: inherit;
+	text-decoration: inherit;
+}
+#nav span:hover{
+	background: #000;
+	color: #fff;
+	}
+
+
+/* layout */
+
+body, html{
+	margin: 0px !important;
+	padding: 0;
+	height: 100%;
+	background: #fff;
+
+}
+#container{
+	height: 100%;
+}
+
+#content{
+	position: relative;
+	display: block;
+	margin: 0;
+	
+	padding: 0;
+	height: 100%;
+}
+
+#splash{
+	background: #fff;
+	height: 100%;
+	width: 100%;
+}
+
+.genericContainer{
+	padding: 50px;
+	font-size: 10px;
+	max-width: 800px;
+	padding-top: 125px;
+	
+}
+
+/* header */
+
+#header{
+	padding: 20px 40px;
+}
+#header .site_title{
+	font-size: 24px;
+	margin-bottom: 2px;
+}
+#header .site_title a{
+	color: inherit;
+	text-decoration: inherit;
+	
+}
+#header .site_subtitle{
+	font-size: 14px;
+	margin-bottom: 10px;
+}
+#header .site_description{
+	font-size: 10px;
+	color: #999;
+}
+
+/* menu */
+
+#menu{
+	display: block;
+	position: fixed;
+	z-index: 10;
+	background: #fff;
+	margin: 0;
+	float: left;
+	padding: 0;
+	height: 100%;
+	-webkit-mask-image: -webkit-gradient(linear, left 90%, left bottom, from(rgba(0,0,0,1)), to(rgba(0,0,0,0)));
+	width: 300px;
+}
+
+
+/* slideshow */
+
+.frunt-layout{
+	position: relative;
+	top: 0;
+	left: 0;
+	height: 100%;
+	width: 100%;
+}
+
+.frunt-layout-slideshow .frunt-slider .frunt-preview-wpr iframe.frunt-responsive{
+	top :0px;
+	height: auto;
+	bottom: 70px;
+}
+
+.frunt-layout-slideshow .frunt-slider{
+	height: 100%;
+}
+.frunt-layout-slideshow .frunt-layout-controls{
+	position: absolute;
+	bottom:0px;
+	color: #fff;
+	padding: 0px;
+	right: 10px;
+}
+
+.frunt-layout-controls .info,
+.frunt-layout-controls .prev, 
+.frunt-layout-controls .next{
+	color: rgba(255,255,255,.75);
+	display: none;
+}
+.frunt-layout-slideshow .frunt-layout-controls .jump_to.dot.active{
+	ba: #fff;
+	background: #000;
+}
+.frunt-layout-slideshow .frunt-layout-controls .jump_to.dot{
+	background: #fff;
+	border: 0px;
+	width: 3px;
+	height: 3px;
+	opacity: .75;
+	margin-left: 5px;
+}
+.frunt-layout-slideshow .frunt-slider .frunt-preview-thumb.frunt-responsive{
+	position: absolute;
+	top:0;left:0;right:0;bottom:0;
+	margin: auto;
+}
+
+.frunt-layout-slideshow .frunt-slider .caption{
+	background: none;
+	color: #fff;
+	z-index: 30;
+}
+
+
+
+	
+/* news */
+
+.news{
+	position: relative;
+	color: #fff;
+	font-size : 10px;
+	padding: 0px;
+}
+.news li{
+	list-style: none;
+	text-align: left;
+	padding: 10px 0;
+	border-bottom: 1px solid rgba(255,255,255,.5);
+}
+
+/* about */
+
+#about{
+	overflow: auto;
+	width: 100%;
+	padding: 20px;
+	background: #333;
+	z-index: 20;
+	display: none;
+}
+#about .colWrapper .subhead{
+	font-weight: bold;
+	font-size: 12px;
+	margin-bottom: 10px;
+}
+#about .colWrapper{
+	display: inline-block;
+	margin-top: 30px;
+	padding: 10px;
+	margin-right: 30px;
+	vertical-align: top;
+	width: 20%;
+	font-size: 10px;
+	color: #f6f6f6;
+}
+#header{
+	display: block;
+	text-align: right;
+	color: #f4f4f4;
+	float: right;
+
+}
+#header .site_title,
+#header .site_subtitle{
+	font-size: 1em;
+}
+html,body,#container,#content{
+	height: 100%;
+}
+/* project info */
+
+.project_info{
+	color: #000;
+	float: right;
+	width: 200px;
+	height: 100%;
+	overflow: hidden;
+	display: none;
+	padding: 20px;
+}
+.project_info img{
+	width: 100%;
+}
+.project_info .project_title{
+	text-transform: capitalize;
+	font-weight: bold;
+	vertical-align: bottom;
+	margin-bottom: 20px;
+	word-break: break-word;
+}
+.project_info .frunt-list .val{
+	font-size: 10px;
+	word-break: break-word;
+	padding: 5px 0;
+	padding-right: 20px;
+	display: block;
+
+}
+
+/* misc */
+
+#mobileIcon{
+	display: none;
+	position: absolute;
+	top: 0;
+	right: 0;
+	margin: 10px;
+	z-index: 30;
+}
+#mobileIcon.hover{
+	background-color: #e5e5e5;
+}
+
+
+/* mobile ----------- */
+@media only screen 
+and (min-width : 320px) 
+and (max-width : 800px) {
+	#about #header{
+		width: 100%;
+		padding: 20px 0px;
+	}
+	.project_info{
+		max-width: 50%;
+	}
+	#about .colWrapper:first-child{
+		background: #000;
+	}
+	#about .colWrapper{
+		display: block;
+		width: auto;
+		margin-right: 0px;
+	}
+}
+
+
+

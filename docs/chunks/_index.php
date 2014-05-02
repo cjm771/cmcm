@@ -7,16 +7,58 @@ A Simple Content Manager for Designers
 
 {% block head %}
 <link rel='stylesheet' href='css/splash.css' />
+<style>
+#top{
+	position: absolute;
+	-webkit-box-shadow: 0px 10px 18px 0px rgba(50, 50, 50, 0.3);
+	-moz-box-shadow:    0px 10px 18px 0px rgba(50, 50, 50, 0.3);
+	box-shadow:         0px 10px 18px 0px rgba(50, 50, 50, 0.3);
+}
+#main{
+	padding-top: 100px;
+}
+</style>
+<link rel='stylesheet' href='css/video-js.min.css' />
+<script type='text/javascript' src='js/video.js'> </script>
 <script>
+ videojs.options.flash.swf = "video/video-js.swf"
+$(document).ready(function(){
+	var myPlayer = videojs('introVid');
+	myPlayer.controls(false);
+	myPlayer.on("click", function(){
+		if (!myPlayer.paused())
+			myPlayer.pause();
+		else
+			myPlayer.play();
+	});
+	videojs("introVid").ready(function(){
+	  var myPlayer = this;
+	
+	  // EXAMPLE: Start playing the video.
+	  myPlayer.play();
+	
+	});
+});
 </script>
+
 {% endblock %}
 
 {% block content %}
 <div id='videoSplash' class='bar black center'>
-<iframe width="100%" height="100%" src="http://www.youtube.com/embed/HM04bKL4oq4?autoplay=1&color1=0xFF0099&color2=0xFFFFFF&showinfo=0&iv_load_policy=3&controls=0&loop=1&playlist=HM04bKL4oq4" frameborder="0" allowfullscreen></iframe>
+<!--
+<iframe width="100%" height="100%" src="http://www.youtube.com/embed/k301LpT0h3o?autoplay=1&color1=0xFF0099&color2=0xFFFFFF&showinfo=0&iv_load_policy=3&controls=0&loop=1&playlist=k301LpT0h3o" width="100%" height="100%" frameborder="0" allowfullscreen></iframe>
+-->
+<!--
+<iframe src="//player.vimeo.com/video/93567492?title=0&amp;byline=0&amp;portrait=0&amp;autoplay=1&amp;loop=1" class='frunt-responsive' data-ratio='[16,9]' width="100%" height="100%" frameborder="0" webkitallowfullscreen mozallowfullscreen allowfullscreen></iframe>
+
+-->
+<video id="introVid" class="video-js vjs-default-skin"
+  controls preload="auto" width=100% height="100%"
+  poster="images/CMCM-BIG-youtube-art.jpg"
+  data-setup='{"example_option":true}' autoplay loop>
+ <source src="videos/CMCM.mp4" type='video/mp4'/>
+</video>
 </div>
-
-
 <div class='bar black center'>
 	<div class='bar_wpr'>
 	<div class='big'>
@@ -46,7 +88,7 @@ A Simple Content Manager for Designers
 					Frontend tools.
 					</div>
 					<div class='caption'>
-					Frunt (included as part of CMCM) is an optional set of tools and widgets available in PHP and JS to help you build out a personal site easier. It includes core functions as well as menus, slideshows, and more. Check out the <a href='docs.php#frunt-setup'>docs</a> for more info.
+					Frunt (included as part of CMCM) is an optional set of tools and widgets available in PHP and JS to help you build out a personal site easier. It includes core functions as well as menus, slideshows, and more. Check out the <a href='gallery/_widgetsdemo/' target="_blank">widgets available</a>, and check out the <a href='docs.php#frunt-setup'>docs</a> for more info. 
 					</div>
 				</div>
 			</div>

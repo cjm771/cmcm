@@ -54,6 +54,10 @@
 								"type": "string",
 								"required": 0
 						},
+						"download": {
+								"type": "string",
+								"required": 1
+						},
 						"widgets_used": {
 								"type": "string",
 								"required": 0
@@ -106,6 +110,7 @@
 						"title": "Basic",
 						"coverImage": "YmFzaWMxLmpwZWc-",
 						"demo_url": "gallery/basic/",
+						"download": "basic.zip",
 						"widgets_used": "menu.vertical,layout.vertical,layout.slideshow,simpleList",
 						"designed_by": "Chris Malcolm",
 						"description": "Basic Left menu , Right Content Layout. Vertical Scroll, and no frunt-responsive enabled. Everything is styled and sized via css.",
@@ -155,6 +160,7 @@
 						"title": "Horizontal",
 						"coverImage": "aG9yaXoxLmpwZw--",
 						"demo_url": "gallery/horiz2/",
+						"download": "horiz2.zip",
 						"widgets_used": "menu.horizontal,layout.horizontal,layout.slideshow,simpleList",
 						"designed_by": "Chris Malcolm",
 						"description": "Horizontal template. Horizontal Scroll with Horizontal menu.",
@@ -204,6 +210,7 @@
 						"title": "Vertical",
 						"coverImage": "dmVydDIuanBn",
 						"demo_url": "gallery/vert3/",
+						"download": "vert3.zip",
 						"widgets_used": "menu.vertical,layout.vertical,layout.slideshow,simpleList",
 						"designed_by": "Chris Malcolm",
 						"description": "Vertical scroll, similar to basic except with a collapsable vertical menu and 'jump to' thumbnails. ",
@@ -253,6 +260,7 @@
 						"title": "Slideshow",
 						"coverImage": "c2xpZGVzaG93LTEuanBn",
 						"demo_url": "gallery/slideshow/",
+						"download": "slideshow.zip",
 						"widgets_used": "menu.vertical,layout.slideshow,simpleList",
 						"designed_by": "Chris Malcolm",
 						"description": "Same layout as vertical, but instead of vertical page scroll, we have a Slideshow format. ",
@@ -302,6 +310,7 @@
 						"title": "Grid",
 						"coverImage": "Z3JpZDEuanBn",
 						"demo_url": "gallery/grid2/",
+						"download": "grid2.zip",
 						"widgets_used": "menu.vertical,layout.grid,menu.grid,simpleList",
 						"designed_by": "Chris Malcolm",
 						"description": "Grid has a grid layout homepage, and features media thumbs grouped by type on the project page.",
@@ -351,6 +360,7 @@
 						"title": "Full",
 						"coverImage": "ZnVsbDMuanBn",
 						"demo_url": "gallery/full/",
+						"download": "full.zip",
 						"widgets_used": "menu.grid,layout.slideshow,simpleList",
 						"designed_by": "Chris Malcolm",
 						"description": "Full screen slideshow and menu grid homepage.",

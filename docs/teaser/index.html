@@ -1,0 +1,300 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<title>CMCM | Coming Soon</title>
+		<meta name='description' content='The bestest content manager yet!'> 
+		<meta property="og:image" content="http://cmcm.io/images/cmcm-200.jpg" />
+		<meta name="thumbnail" content="http://cmcm.io/images/cmcm-200.jpg" />
+		<link rel="icon" href="http://cmcm.io/images/CMCM.ico" type="image/x-icon">
+		<link rel="stylesheet" href="http://cmcm.io/css/fonts.css" type="text/css">
+		<link href="http://fonts.googleapis.com/css?family=Gudea:400,700,400italic" rel="stylesheet" type="text/css">
+	
+		<script type="text/javascript" src='http://code.jquery.com/jquery-1.11.0.min.js'></script>
+		<script type="text/javascript" src='js/audio.js'></script>
+
+		<style>
+		
+			@-webkit-keyframes rumble {
+			    0% {-webkit-transform: rotate(0deg);}
+			    25% {-webkit-transform: translate(2px, 0px) rotate(-3deg);}
+			    50% {-webkit-transform: translate(0px, -2px) rotate(0deg);}
+			    75% {-webkit-transform: translate(-2px, 0px) rotate(3deg);}
+			    100% {-webkit-transform: translate(0px, 2px) rotate(0deg);} 
+			}
+			
+			.rumble, .rumble-hover:hover, .rumble-active:active {
+			    -webkit-animation: rumble .25s infinite linear;
+			}
+			body,html{
+				margin: 0;
+				font-family: helvetica,arial,sans-serif;
+				padding: 0;
+				  -webkit-user-select: none;  /* Chrome all / Safari all */
+				  -moz-user-select: none;     /* Firefox all */
+				  -ms-user-select: none;      /* IE 10+ */
+				  cursor: pointer;
+				  overflow: hidden;
+				 height: 100%;
+			}
+			.info{
+				width: 100%;
+				position: absolute;
+				bottom: 0;
+				white-space: nowrap;
+				z-index: 2;
+				left: 0;
+				font-weight: normal;
+				background: #fff;
+				color: #333;
+			}
+			.info.invert{
+				color: #787878;
+				background: #000;
+				-webkit-filter: inherit;
+			}
+			.info .info_wpr{
+				margin: 10px 20px;
+				border-top: 1px solid #5d5d5d;
+				font-size: 10px;
+				font-weight: normal;
+			}
+			.info p{
+				display: inline-block;
+				white-space: normal;
+				vertical-align: top;
+				font-family: 'Gudea', sans-serif;
+				width: 50%;
+				padding: 30px;
+			}
+			.info b{
+				display: block;
+				font-size: 14px;
+			}
+			.wpr{
+				top: 0;
+				bottom: 0;
+				left: 0;
+				background: #fff;
+				position: absolute;
+				z-index: 50;
+				width: 100%;
+			}
+			.teaser{
+				position: absolute;
+				margin: auto;
+				text-align: center;
+				width: 140px;
+				height: 50px;
+				top: 0;left:0;right:0;bottom:0;
+			}
+			.teaser img{
+				height: 100%;
+				width: auto;
+			}
+			.teaser img, .teaser span{
+				vertical-align: middle;
+				font-weight: bold;
+				 transition: all .5s ease-out;
+				
+			}
+			.invert_blur{
+				 -webkit-filter: invert(100%) blur(5px);
+				 
+			}
+			.invert{
+				 -webkit-filter:  invert(100%);
+			}
+			.justforfun{
+				padding: 20px;
+				transition: all .5s ease-out;
+				
+			}
+			.me{
+				position: absolute;
+				top: 0;
+				font-size: 10px;
+				padding: 20px;
+				right: 0;
+			}
+			.container{
+				position: absolute;
+				bottom: 0px;
+				padding: 20px;
+			}
+			.container img, .container span{
+				vertical-align: middle;
+				font-size: 18px;
+			}
+			.cmcm{
+				height: 30px;
+				width: auto;
+			}
+			.frunt{
+				height: 20px;
+				width: auto;
+			}
+			.comingsoon{
+				position: absolute;
+				display: inline-block;
+				right: 0;
+				font-size: 12px;
+				bottom: 0;
+				padding: 20px;
+			}
+			a{
+				color: inherit;
+				text-decoration: inherit;
+			}
+			#visualisation{
+				position: absolute;
+				top: 20px;
+				left: 50px;
+				height: 50px;
+	
+			}
+			#visualisation.invert_blur  div{
+			}
+			#visualisation > div{
+				background: #000;
+				width: 4px;
+				z-index: 10;
+				margin-left: 1px;
+				display: inline-block;
+				vertical-align: top;
+			}
+		</style>
+	</head>
+	<body>
+		<div class='info'>
+		<div class='info_wpr'>
+			<p><b>CMCM</b> is a simple sexy content manager for designers, built with PHP and Javascript, and a database-less storage tactic. That means you can download, drag the folders to your server, and your ready to go! </p>
+			<p><b>Frunt</b> is the Front end counterpart to CMCM, and is included. It is a toolkit for developers and template makers to quickly develop dope boy websites. Frunt includes core access methods to your CMCM files, but also useful widgets like menus, slideshows, scrollers, modals, and more. Consider it the bootstrap for cmcm.</p>
+		</div>
+		</div>
+		<div class='wpr'>
+			<div class='teaser rumble-hover'>
+			<img  src='images/cmcm-logo.png'> <span>+</span>
+			<img  src='images/frunt-ico.png'>
+			</div>
+			<div class='container rumble-hover'>
+				<span class='cmcm'>CMCM + </span>
+				<img class='frunt' src='images/frunt-full-logo.png'>
+				
+			</div>
+			<span class='comingsoon rumble-hover'>Coming vurrry soon <3</span>
+			<span class='me rumble-hover'>2014 &copy; <a href='http://chris-malcolm.com'>Chris Malcolm</a></span>
+			<div class='justforfun'>
+					<audio id="player">
+						<source src="mp3s/xoxo-813.mp3" type="audio/mp3">
+						<source src="mp3s/dime-masuka.mp3" type="audio/mp3">
+						<source src="mp3s/hueboy-tielsie.mp3" type="audio/mp3">
+						<source src="http://catsticker.com/mp3s/jamesdeen-ryanhems.mp3" type="audio/mp3">
+						<source src="mp3s/milomills-ocean-gang.mp3" type="audio/mp3">
+						<source src="mp3s/PARTNEXTDOOR-BREAK.mp3" type="audio/mp3">
+						<source src="mp3s/ricolove-they-dont-know.mp3" type="audio/mp3">
+						<source src="mp3s/angora-s-pus-from-basenji.mp3" type="audio/mp3">
+						<source src="http://catsticker.com/mp3s/noi-mary-iam.mp3" type='audio/mp3'>
+						 <source src="mp3s/basenji-dawn.mp3" type='audio/mp3'>
+						 <source src="http://catsticker.com/mp3s/marvin-gay-trippyhoodboi.mp3" type='audio/mp3'>
+						
+					</audio>
+					<span id='magicButton' class='glyphicon glyphicon-play'></span>
+					<div id='visualisation'></div>
+				</object>
+			</div>
+		</div>
+	</body>
+		<script>
+		x = true;
+		old = ["http://catsticker.com/mp3s/marvin-gay-trippyhoodboi.mp3"];
+		origWidth  =  $(".teaser").width();
+		origHeight  =  $(".teaser").height();
+		function toggle(){
+			x = !x;
+			switch (x){
+			case false:
+			case 0:
+				$(".wpr").animate({
+					bottom : $(".info").outerHeight()+"px"
+				});
+				break;
+			case true:
+			case 1:
+				$(".wpr").animate({
+					bottom : "0px"
+				});
+			}
+		}
+		function rando(items){
+			item =  items[Math.floor(Math.random()*items.length)];
+			return item;
+		}
+		function playPause(){
+			  var myAudio = document.getElementById("player");
+			  if (myAudio.paused) {
+			    myAudio.play();
+			   
+			  } else {
+			    myAudio.pause();
+			   
+			  }
+		}
+		function flicker(amount){
+			timer = null;
+			i = !i;
+			switch (i){
+				default:
+				case 0:
+				case false:
+					$(".wpr").css({
+						background : "#000"
+					});
+					$("body img, body span, #visualisation").addClass('invert_blur');
+					$(".justforfun span, .info").addClass('invert');
+					break;
+				case true:
+					$(".wpr").css({
+						background : "#fff"
+					});
+					$("body img, body span, .justforfun span, #visualisation, .info").removeClass('invert_blur').removeClass('invert');
+					break;
+			}
+			//console.log("i"+" "+i+" "+amount);
+			if (amount>0){
+			clearTimeout(timer);
+			timer = setTimeout(function(){
+				flicker(amount-1);	
+				}, rando([250, 180, 100]));
+			}
+		}
+		
+		$("#magicButton").on("click", function(){playPause()});
+		$("#magicButton").trigger("click");
+		i = false;
+		started = 0;
+		flicker(1);
+		function init(){
+			flicker(0);
+			intervalTime = 10000;
+			setInterval(function(){
+				flicker(4);
+			}, intervalTime);
+		}
+		window.onresize = function(){
+			if ($(".wpr").css("bottom")!="0px"){
+				$(".wpr").css("bottom", $(".info").outerHeight());
+			}
+		}
+		//16310: basenji
+		//1600: angora
+		//19500: rico
+		//16500: pnd
+		//7000: milo
+		//11700 : ryan
+		//49750 : tielsie
+		//28060 : masuka-dime
+		
+		setTimeout(function(){init()}, 36000);
+		$(".container,.teaser,.comingsoon").on("click", function(){toggle()});
+	</script>
+</html>

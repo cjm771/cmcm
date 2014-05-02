@@ -27,10 +27,13 @@ Template Gallery - {{template_name}}
 				<a href='{{dir}}downloads.php#templates'>Return to Template Gallery</a>
 			</div>
 			<div class='big'>{{template_name}}</div>
+				<div class='disclaimer'> <i class='glyphicon glyphicon-exclamation-sign'></i> Disclaimer: Neither creators of this template or CMCM claim ownership of images or other media used in demo templates. If you are the owner of an image and wish it to be taken down, please contact us. Thank you.
+			</div>
 			{{template_info}}
+		
 			<div class='buttons'>
 			<a class='button big' href='{{dir}}{{template.demo_url}}' target="_blank">View</a>
-			<a class='button big' href='{{dir}}{{template.demo_url}}' target="_blank">Download</a>
+			<a class='button big' href='{{dir}}downloads?t=t&f={{template.download}}' target="_blank">Download</a>
 			</div>
 			
 		</div>

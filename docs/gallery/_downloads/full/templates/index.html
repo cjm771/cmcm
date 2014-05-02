@@ -1,0 +1,27 @@
+{% block css %}
+<!-- extra splash css -->
+<link rel="stylesheet" href="{{site_url}}css/splash.css">
+<style>
+.frunt-layout{
+	padding:0;
+}
+</style>
+{% endblock %}
+
+{% block js %}
+<!-- extra splash js -->
+<script >
+$(document).ready(function(){
+	slideshowTmpl.splashScale();
+	slideshowTmpl.splashRollover();
+});
+</script>
+{% endblock %}
+
+
+{% extends "partial/_scaffold.html" %}
+{% block content %}
+	<div id='splash'>
+	{{content}}
+	</div>
+{% endblock %}

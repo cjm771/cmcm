@@ -40,7 +40,7 @@
         'menu' => $frunt->widget("menu", $frunt->convert($data->projects, 'array'), array(
         	"type" => "horizontal",
         	"current" => (isset($_GET['id'])) ? $_GET['id'] : basename($_SERVER['PHP_SELF']), //indicate current page..project or file
-        	 "sort_by" => array("year", "type_of_project"), //sort by..creates headers
+        	 "sort_by" => array("year"), //sort by..creates headers
         	 "ascOrDesc" => "desc", //show list descending
         	 "cols" => 2,
         	 "collapse" => true,//collapse by header

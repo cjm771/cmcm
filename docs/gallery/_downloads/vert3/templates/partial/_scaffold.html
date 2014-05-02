@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        {% block head %}
+            {% include 'partial/_assets.html' %}
+            <title>
+            	{{title}} - {{subtitle}} - {% block title %}{% endblock %}
+            </title>
+         {% block css %} 
+         {% endblock %}  
+         {% block js %} 
+         {% endblock %} 
+        {% endblock %}
+    </head>
+    <body>
+		<div id='container'>
+			<div id='mobileIcon' class='frunt-menu-icon black'>
+			</div>
+			<div id="menu">
+				 {% include 'partial/_header.html' %}
+				   {% block menu %}
+				 {{ menu }}
+				    {% endblock %}
+			</div>
+			<div id="content">
+				 {% block content %}{% endblock %}
+			</div>
+		</div>
+    </body>
+</html>

@@ -1,3 +1,20 @@
+{% set source_credits = {
+	'PHP':'http://php.net',
+	'Jquery':'http://jquery.com',
+	'Jquery UI':'http://jqueryui.com',
+	'Bootstrap':'http://getbootstrap.com/',
+	'blueimp-jqueryFileUpload':'http://blueimp.github.io/jQuery-File-Upload/',
+	'jquery-filetree':'http://www.abeautifulsite.net/blog/2008/03/jquery-file-tree/',
+	'moment.min.js' :'http://momentjs.com/',
+	'eventsource.js' :'https://github.com/Yaffle/EventSource/',
+	'Mixitup.io':'http://mixitup.io',
+	'php.js': 'http://phpjs.org/',
+	'Twig' :'http://twig.sensiolabs.org/',
+	'twig.js': 'https://github.com/justjohn/twig.js/wiki',
+	} 
+%}
+
+
 {% extends '_scaffold.php' %}
 
 {% block title %}
@@ -36,17 +53,21 @@ function gen_contact(lhs,rhs,subject,body)
 			<p>
 		Yo get at me! :)
 			</p>
-		<div class='button_group block'>
+		<div class='button_group aboutGroup'>
 			<script>
 				gen_contact("chrisishere", "gmail.com", "[cmcm.io] - Inquiry");
 			</script>
 			<br>
+				<a class='button big' href='https://github.com/cjm771/cmcm/'>
+				<span class='socicon'>Q</span> Github
+			</a><br>
 			<a class='button big' href='donate.php'>
 				Donate
 			</a><br>
 			<a class='button big' href='donate.php#share'>
 				Share
 			</a>
+		
 		</div>
 		<hr class='hr'>
 	<div class='big'>
@@ -61,10 +82,27 @@ function gen_contact(lhs,rhs,subject,body)
 	</div>
 	<p>During development I had a teaser page where I would update music pretty frequently. A few people have asked about the tracklist so access to that is below, as well as the playlist.</p>
 	<p>
-		<a href='#'>Original Teaser Site</a><br>
-		<a href='#'>Playlist</a>
+		<a href='teaser/'>Original Teaser Site</a> (Made for Chrome)<br>
+		<a href='https://soundcloud.com/cjm771/sets/cmcm-io'>Playlist</a>
 	</p>
-
+		<hr class='hr'>
+	<div class='big'>
+		Open Source Credits
+		
+	</div>
+	<p>
+			Big ups to the following softwares for being free and open. CMCM uses these as assets, and couldn't have been developed without.
+		</p>
+		<p>
+			<ul style='display: inline-block;text-align: left; vertical-align:top; margin-right:20px;'>
+			{% for sourceName, link in source_credits %}
+				<li><a href='{{link}}'>{{sourceName}}</a></li>
+				{% if loop.index%6==0 %}
+				</ul><ul style='display: inline-block;text-align: left;vertical-align:top;'>
+				{% endif %}
+			{% endfor %}
+			</ul>
+		</p>
 
 	</div>
 </div>
@@ -82,5 +120,6 @@ function gen_contact(lhs,rhs,subject,body)
 			</p>
 		{% endif %}
 	</div>
+	<br><br>
 </div>
 {% endblock %}

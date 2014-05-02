@@ -57,6 +57,11 @@ body,html{
 	display: block;
 	margin: 20px 0 0px 0;
 }
+#header .title a{
+	color: inherit;
+	border: 0;
+	text-decoration: inherit;
+}
 #menu{
 	font-family: helvetica, arial, sans-serif;
 	margin: 20px 0;
@@ -86,7 +91,8 @@ body,html{
 	background: #e8e8e8;
 }
 
-#menu li.active{
+#menu li.active,
+#menu li.active a:hover{
 	background: #000;
 	color: #fff;
 }

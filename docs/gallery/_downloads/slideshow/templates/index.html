@@ -1,0 +1,26 @@
+{% block css %}
+<!-- extra splash css -->
+<link rel="stylesheet" href="{{site_url}}css/splash.css">
+<style>
+.frunt-layout{
+	padding:0;
+}
+</style>
+{% endblock %}
+
+{% extends "partial/_scaffold.html" %}
+{% block content %}
+	<div id='splash'>
+	{{content}}
+		<ul class='news'>
+		{% for index, item in news %}
+			<li><b>{{item.added}}</b> / {{item.title}}</li>
+		{% endfor %}
+		</ul>
+
+	</div>
+{% endblock %}
+
+{% block menu %}
+	{{menu}}
+{% endblock %}

@@ -1,0 +1,7 @@
+{
+  "src": "data.json",
+  "loginEnabled": 1,
+  "setupMode": 1,
+  "users": {
+  }
+}

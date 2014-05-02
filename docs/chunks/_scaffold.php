@@ -2,6 +2,7 @@
 <html>
 	<head>
 		<title>CMCM - {% block title %}{% endblock %}</title>
+		{% include 'meta.php' %}
 		{% include 'assets.php' %}
 		{% block head %}
 		
@@ -20,7 +21,7 @@
 				</div> <!--end content -->
 					<div id='bottom'>
 						<div id='footer'>
-							2014 &copy; Chris Malcolm
+							{% include 'footer.php' %}
 						</div>
 					</div>
 			

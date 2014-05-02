@@ -1,0 +1,22 @@
+{# <--- WE USE SCAFFOLD BELOW AS TEMPLATE (base for pages) ----> #}
+{% extends "partial/_scaffold.html" %}
+
+{# <------------ EXTRA CSS -------------------> #}
+{% block css %}
+<style>
+	#info_toggle{
+		display: none;
+	}
+</style>
+{% endblock %}
+
+
+{# <------------ BELOW APPENDS TO TITLE TAG -------------------> #}
+{% block title %}
+	{{page_title}}
+{% endblock %}
+
+{# <----- BELOW GOES INTO MAIN CONTENT BLOCK (#content) -------> #}
+{% block content %}
+	{{content}}
+{% endblock %}

@@ -24,10 +24,12 @@
 	#top{
 		margin: 0px;
 		padding: 10px 30px 20px 30px;
+		border-bottom: 0;
+		background: #fff;
+		z-index: 30;
 	}
 	#main{
 		width: 100%;
-	
 	}
 	.bar{
 		position: relative;
@@ -53,13 +55,29 @@
 	#bottom{
 		margin: 0px;
 		width: 100%;
-		
+		z-index: 30;
 		background: #fff;
 		border: 0;
 		padding: 30px;
 	}
 	#footer{
 		color: #333;
+		
+	}
+	
+	#footer .footerMenu{
+		margin: 0px;
+		float: left;
+		padding: 0px;
+	}
+	#footer a{
+		color: inherit;
+		text-decoration: inherit;
+	}
+	#footer .footerMenu li{
+		list-style: none;
+		margin-right: 10px;
+		display: inline-block;
 	}
 	.socicon {
 		
@@ -67,7 +85,7 @@
 	}
 	
 
-	.button_group .socicon{
+	.button_group.social .socicon{
 		font-size: 24px;
 		margin: 10px;
 		color: #fff;
@@ -109,10 +127,24 @@
 		margin: 50px 0;
 	}
 
-	.button_group.block .button{
+	.button_group.aboutGroup .button{
 			margin: 5px 0;
+			min-width: 150px;
 	}
-
+	.likebar{
+		padding: 0px;
+		margin: 0px 20px;
+		min-height: 60px;
+		margin-top: -5px;
+		float: left;
+	}
+	.likebar li{
+		display: inline-block;
+		vertical-align: middle;
+		margin-right: 0px;
+		margin-right: 10px;
+		width: 80px;
+	}
 	.button{
 		padding: 10px;
 		font-weight: bold;
@@ -128,6 +160,9 @@
 		padding: 15px 24px;
 		min-width: 100px;
 	
+	}
+	.button.big.socicon{
+		font-size: 10px;
 	}
 	.button .light{
 		font-size: .8em;
@@ -179,8 +214,18 @@
 	#videoSplash{
 		height: 700px;
 		position: relative;
+		z-index: -10;
 		padding: 0px;
 	}
+	#videoSplash iframe.frunt-responsive{
+		top:0;
+		left: 0;
+		bottom: 0;
+		right: 0;
+		margin: auto;
+		position: absolute;
+	}
+
 	.cmcm_frunt_group .step img{
 		width: 80px;
 		height: auto;
@@ -225,10 +270,20 @@
 	.step img{
 		width: 100%;
 		border: 1px solid #c0c0c0;
-		
 		height: auto;
 		border-radius: 20px;
 		margin: 20px 0;
+	}
+	.step img.screenCapture{
+		min-height: 150px;
+		background: #c0c0c0;
+	}
+	
+	.disclaimer{
+		margin-top: 10px;
+		font-size: 10px;
+		font-style: italic;
+		color: #999
 	}
 	
 	/* template gallery*/

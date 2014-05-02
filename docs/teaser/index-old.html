@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<title>CMCM | Coming Soon</title>
+		<meta name='description' content='The bestest content manager yet!'> 
+		<link rel="icon" href="http://cmcm.io/images/CMCM.ico" type="image/x-icon">
+		<meta property="og:image" content="http://cmcm.io/images/cmcm-200.jpg" />
+		<meta name="thumbnail" content="http://cmcm.io/images/cmcm-200.jpg" />
+		<script type="text/javascript" src='http://code.jquery.com/jquery-1.11.0.min.js'></script>
+
+		<style>
+		
+			@-webkit-keyframes rumble {
+			    0% {-webkit-transform: rotate(0deg);}
+			    25% {-webkit-transform: translate(2px, 0px) rotate(-3deg);}
+			    50% {-webkit-transform: translate(0px, -2px) rotate(0deg);}
+			    75% {-webkit-transform: translate(-2px, 0px) rotate(3deg);}
+			    100% {-webkit-transform: translate(0px, 2px) rotate(0deg);} 
+			}
+			
+			.rumble, .rumble-hover:hover, .rumble-active:active {
+			    -webkit-animation: rumble .25s infinite linear;
+			}
+			body,html{
+				margin: 0;
+				font-family: helvetica,arial,sans-serif;
+				padding: 0;
+				  -webkit-user-select: none;  /* Chrome all / Safari all */
+				  -moz-user-select: none;     /* Firefox all */
+				  -ms-user-select: none;      /* IE 10+ */
+				  cursor: pointer;
+			}
+			.teaser{
+				position: absolute;
+				margin: auto;
+				width: 150px;
+				height: 100px;
+				top: 0;left:0;right:0;bottom:0;
+			}
+			.teaser img, .teaser span{
+				vertical-align: middle;
+				font-weight: bold;
+				 transition: all .5s ease-out;
+				
+			}
+			.invert_blur{
+				 -webkit-filter: invert(100%) blur(5px);
+			}
+			.invert{
+				 -webkit-filter:  invert(100%);
+			}
+			.justforfun{
+				padding: 20px;
+				transition: all .5s ease-out;
+				
+			}
+			.me{
+				position: absolute;
+				top: 0;
+				font-size: 10px;
+				padding: 20px;
+				right: 0;
+			}
+			.container{
+				position: absolute;
+				bottom: 0px;
+				padding: 20px;
+			}
+			.container img, .container span{
+				vertical-align: middle;
+				font-size: 18px;
+			}
+			.cmcm{
+				height: 30px;
+				width: auto;
+			}
+			.frunt{
+				height: 20px;
+				width: auto;
+			}
+			.comingsoon{
+				position: absolute;
+				display: inline-block;
+				right: 0;
+				font-size: 12px;
+				bottom: 0;
+				padding: 20px;
+			}
+			a{
+				color: inherit;
+				text-decoration: inherit;
+			}
+		</style>
+	</head>
+	<body>
+		<div class='teaser rumble'>
+		<img  src='images/cmcm-logo.png'> <span>+</span>
+		<img  src='images/frunt-ico.png'>
+		</div>
+		<div class='container rumble-hover'>
+			<span class='cmcm'>CMCM + </span>
+			<img class='frunt' src='images/frunt-full-logo.png'>
+			
+		</div>
+		<span class='comingsoon rumble-hover'>Coming soon <3</span>
+		<span class='me rumble-hover'>2014 &copy; <a href='http://chris-malcolm.com'>Chris Malcolm</a></span>
+		<div class='justforfun'>
+			<object classid="clsid:D27CDB6E-AE6D-11cf-96B8-444553540000" codebase="http://download.macromedia.com/pub/shockwave/cabs/flash/swflash.cab#version=10,0,0,0" width="30" height="30">
+			<param name="movie" value="http://catsticker.com/js/audioplay/audioplay.swf?file=http://cmcm.io/mp3s/basenji-dawn.mp3&amp;auto=yes&amp;trackid=7&amp;nexttrack=8&amp;sendstop=yes&amp;repeat=1&amp;buttondir=http://catsticker.com/js/audioplay/buttons/negative_small&amp;bgcolor=0x333333&amp;mode=playpause">
+			<param name="quality" value="high">
+				<param name="wmode" value="transparent">
+					<embed src="http://catsticker.com/js/audioplay/audioplay.swf?file=http://cmcm.io/mp3s/basenji-dawn.mp3&amp;auto=yes&amp;trackid=7&amp;nexttrack=8&amp;sendstop=yes&amp;repeat=1&amp;buttondir=http://catsticker.com/js/audioplay/buttons/negative_small&amp;bgcolor=0x333333&amp;mode=playpause" quality="high" wmode="transparent" width="15" height="15" align="" type="application/x-shockwave-flash" pluginspage="http://www.macromedia.com/go/getflashplayer">
+			</object>
+		</div>
+	</body>
+		<script>
+		old = ["http://catsticker.com/mp3s/marvin-gay-trippyhoodboi.mp3"];
+		function rando(items){
+			item =  items[Math.floor(Math.random()*items.length)];
+			return item;
+		}
+		function flicker(amount){
+			timer = null;
+			i = !i;
+			switch (i){
+				default:
+				case 0:
+				case false:
+					$("body").css({
+						background : "#000"
+					});
+					$("body img, body span").addClass('invert_blur');
+					$(".justforfun").addClass('invert');
+					break;
+				case true:
+					$("body").css({
+						background : "none"
+					});
+					$("body img, body span, .justforfun").removeClass('invert_blur').removeClass('invert');
+					break;
+			}
+			console.log("i"+" "+i+" "+amount);
+			if (amount>0){
+			clearTimeout(timer);
+			timer = setTimeout(function(){
+				flicker(amount-1);	
+				}, rando([250, 180, 100]));
+			}
+		}
+		i = false;
+		flicker(1);
+		intervalTime = 17000;
+		flk = 2;
+		setInterval(function(){
+			flicker(flk);
+			intervalTime = 5000;
+			flk = 4;
+		}, intervalTime);
+		
+	</script>
+</html>

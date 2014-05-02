@@ -1,0 +1,123 @@
+{% block css %}
+<style>
+	#menu{
+		width: 150px;
+		-webkit-mask-image: inherit;
+		background: none;
+	}
+	#header{
+		padding: 30px;
+		text-align: left;
+		padding-right: 0px;
+		display: block;
+	}
+	
+	#container{
+		max-width: 1150px;
+		margin: 0px auto;
+	}
+	#content{
+		margin-left: 150px;
+		max-width: 1000px;
+	}
+	#mobileIcon{
+		display: none;
+	}
+	
+	#news{
+		font-size: 10px;
+		position: fixed;
+		color: #959595;
+		bottom: 20px;
+		width: 150px;
+		left: 0px;
+		
+	}
+	#news li{
+		list-style: none;
+		border-bottom: 1px solid #c0c0c0;
+		padding: 10px 0;
+	}
+	#news li:last-child{
+		border: 0;
+	}
+	
+	/* Smartphones (portrait and landscape) ----------- */
+@media only screen 
+and (min-width : 320px)
+and (max-width : 640px){	
+
+	#menu{
+		display: block;
+		margin: 0px;
+		width: 100%;
+		position: relative;
+		
+	}
+	#header{
+		display: block;
+		clear: both;
+		width: auto;
+		margin: 0px 10px;
+		text-align: left;
+	}
+	#content{
+		display: block;
+		width: 100%;
+		margin: 0px;
+	}
+	#news{
+		position: relative;
+		width: auto;
+		padding: 0px;
+		margin: 10px 50px;
+	}
+	#news li{
+		padding: 10px 0;
+		
+	}
+}
+
+/* iPads (portrait and landscape) ----------- */
+@media only screen 
+and (min-width : 641px) 
+and (max-width : 800px) {
+/* Styles */
+	#menu{
+		width: 150px;
+	}
+	#header{
+		display: block;
+		clear: both;
+		margin: 0px 10px;
+		text-align: left;
+	}
+	#content{
+		width: inherit;
+		margin-right: 0px;
+	
+	}
+	#container,
+	#menu{
+		height: 100%;
+	}
+}
+
+
+</style>
+{% endblock %}
+{% extends "partial/_scaffold.html" %}
+{% block content %}
+	<div id='splash'>
+	{{content}}
+	</div>
+	<ul id='news'>
+		{% for index, newsItem in news %}
+		<li><b> {{newsItem.added}}</b> / {{newsItem.title}}</li>
+		{% endfor %}
+	</ul>
+
+{% endblock %}
+
+{% block menu %}
+	{% endblock %}

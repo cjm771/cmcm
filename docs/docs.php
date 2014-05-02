@@ -30,6 +30,7 @@
 <html>
 	<head>
 		<title> CMCM - Frunt Docs</title>
+		<? include('chunks/meta.php')?>
 		<link rel='stylesheet' href='css/sunburst.css' />
 		<link rel='stylesheet' href='cmcm/assets/frunt/css/frunt.widgets.css' />
 		<link href="http://fonts.googleapis.com/css?family=Gudea:400,700,400italic" rel="stylesheet" type='text/css'>
@@ -70,7 +71,7 @@
 						After <a href='downloads.php'>downloading</a> the latest release, simply drag the files into the directory on your server via FTP or protocol of your choice! If you downloaded cmcm with a pre-made template, the admin panel can be accessed via <b><i>[your directory] </i>/cmcm</b>.
 					</p>
 					<p>
-						<i class='light'>*PHP is only required for editing files in the backend. You may design your site in whatever language of your choice. We provide Frunt, an SDK toolkit available in Javascript and PHP to provide useful utilities to access and manipulate your data.</i>
+						<i class='light'>*PHP is only required for editing files in the backend. v5.3 is needed for Frunt PHP Sdk. If you aren't using this, you can use an earlier version of PHP5. You may design your site in whatever language of your choice. We provide Frunt, an SDK toolkit available in Javascript and PHP to provide useful utilities to access and manipulate your data.</i>
 					</p>
 					<p>
 						<i class='light'>**cURL is needed for grabbing external Media thumbnails (YT, Vimeo, Soundcloud). If you don't have it, not the end of the world, but its pretty common so you probably have it. GD2 is required for creating shrinked thumbnails. It's also pretty common, so likely your host has it.</i>
@@ -160,6 +161,9 @@
 					<h2>Frunt / Setup</h2>
 					<p>
 					<b>What is Frunt?</b> Well once you upload your images, get your projects in CMCM just right..we still need to make a website for your visitors right? <b>Frunt is just the front-end toolkit bundled with CMCM, specifically designed to make visualizing your data easier!</b>
+					</p>
+					<p>
+						For a quick demo, check out the <a href='gallery/_widgetsdemo/'>widget demo gallery</a> to see the possible widgets you can create.
 					</p>
 					<div class='box'>
 						<b class='big'>"WHOA, I'm not a Web Developer, can't I just use a provided web template?" </b>
@@ -410,6 +414,9 @@
 						<p>
 							 <b>A widget takes care of the markup (html), the interactive (js) and initial stylings (css) of elements</b>...examples would include menus, slideshows, previewers, scrollers, modals (enlargement windows), and more. After including a widget, you can  of course add additional css to customize the look and feel of the widgets.
 						</p>
+											<p>
+						For a quick demo, check out the <a href='gallery/_widgetsdemo/'>widget demo gallery</a> to see the possible widgets you can create.
+					</p>
 							<h4>Requirements:</h4>
 						<p>
 							For frunt widget's you need to include the <b>frunt.widgets.js</b> and <b>frunt.widgets.css</b> files, regardless of the sdk. For js sdk only, you need to make sure your including the <b>twig.js</b> file.
@@ -1294,10 +1301,10 @@
 						<div class='box'>
 							<div style='margin-bottom:20px'><b>Within vs. Fill</b></div>
 							<div class='exampleParent' style='height: 100px; width: 40%;'>
-								<img src="../media/Boston City Flow.jpg" class='frunt-responsive' data-fit='within' >
+								<img src="cmcm/media/Boston City Flow.jpg" class='frunt-responsive' data-fit='within' >
 							</div>
 							<div class='exampleParent' style='height: 100px; width: 40%;'>
-								<img src="../media/Boston City Flow.jpg" class='frunt-responsive' data-fit='fill' >
+								<img src="cmcm/media/Boston City Flow.jpg" class='frunt-responsive' data-fit='fill' >
 							</div>
 						</div>
 						<p>

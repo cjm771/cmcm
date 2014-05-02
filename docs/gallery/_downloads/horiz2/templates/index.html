@@ -1,0 +1,48 @@
+{# <--- WE USE SCAFFOLD BELOW AS TEMPLATE (base for pages) ----> #}
+{% extends "partial/_scaffold.html" %}
+
+{# <------------ EXTRA CSS  -------------------> #}
+{% block css %}
+	<style>
+		#info_toggle{
+			display: none;
+		}
+		.frunt-layout-slideshow,
+		.frunt-layout-slideshow .frunt-slider{
+			height: 100%; 
+			
+		}
+		.news{
+			bottom: 0;
+			right :0;
+			padding: 20px;
+			position: absolute;
+			z-index: 40;
+			width: 300px;
+			color: #fff;
+			font-size : 10px;
+		}
+		.news li{
+			list-style: none;
+			text-align: right;
+			padding: 10px 0;
+			border-bottom: 1px solid rgba(255,255,255,.5);
+		}
+		
+	</style>
+{% endblock %}
+
+{# <------------ BELOW APPENDS TO TITLE TAG -------------------> #}
+{% block title %}
+	Home
+{% endblock %}
+
+{# <----- BELOW GOES INTO MAIN CONTENT BLOCK (#content) -------> #}
+{% block content %}
+	{{slideshow}}
+	<ul class='news'>
+	{% for index, item in news %}
+		<li><b>{{item.added}}</b> / {{item.title}}</li>
+	{% endfor %}
+	</ul>
+{% endblock %}

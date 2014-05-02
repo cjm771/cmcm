@@ -8,17 +8,20 @@
      ));
      
 
-     
      $project =  $frunt->getProject($_GET['id'], 'cleanUrl');
      $engine = $frunt->twig("chunks/");
      
+     //make encoded download links
+	  $project['download'] = base64_url_encode($project['download']);
+ 
+	     
      echo $engine->render("template.php", array(
      	"dir" => $extra,
      	"current" => "downloads.php",
      	"template" => $project,
      	"template_name" => $project['title'],
      	"template_info" => $frunt->widget("simpleList", $project, array(
-     		"ignore" => array("demo_url","title"),
+     		"ignore" => array("demo_url","title", "download"),
      		"custom_format" => array(
      			"widgets_used" => array(
      				"value" => function($v){
@@ -46,4 +49,7 @@
      	)),
      ));
 
+     function base64_url_encode($input) {
+	 return urlencode(strtr(base64_encode($input), '+/=', '-_,'));
+	}
 ?>

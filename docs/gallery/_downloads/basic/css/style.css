@@ -1,0 +1,402 @@
+/* layout */
+
+body, html{
+	margin: 0px !important;
+	padding: 0;
+	background: #fff;
+
+}
+.frunt-layout-vertical{
+	margin-top: 30px;
+}
+
+body,html,
+#container,
+#content,
+.frunt-slider{
+	height: 100% !important;
+}
+
+
+#content{
+	position: relative;
+	display: block;
+	margin: 0;
+	max-width: 1000px;
+	margin-left: 300px;
+	padding: 0;
+}
+
+.genericContainer{
+	padding-top: 125px;
+	margin-right: 100px;
+	font-size: 10px;
+	max-width: 700px;
+}
+.genericContainer p{
+	color: #888888;	
+}
+
+#splash{
+	background: #fff;
+	height: 100%;
+	position: fixed;
+	width: 100%;
+}
+
+/* header */
+
+#header{
+	padding: 30px 30px 40px  45px;
+}
+
+#header .site_title{
+	font-size: 24px;
+	margin-bottom: 2px;
+}
+#header .site_title a{
+	color: inherit;
+	text-decoration: inherit;
+	
+}
+#header .site_subtitle{
+	font-size: 14px;
+	margin-bottom: 10px;
+}
+#header .site_description{
+	font-size: 10px;
+	color: #999;
+}
+
+
+/* vertical scroll */
+
+.frunt-layout-vertical .slide{
+	width: auto;
+	background: #fff;
+	height: auto;
+	margin-bottom: 30px;
+}
+.frunt-layout-vertical .slide .caption{
+	position: relative;
+	display: block;
+	text-align: left;
+	background: none;
+	padding: none;
+	color: #000;
+	margin: 0px;
+	min-width: 250px;
+	max-width: 450px;
+}
+
+.slide > .frunt-preview-wpr iframe{
+	display: block;
+	margin: 0px auto;
+	width:100%;
+	height: 480px;
+}
+.slide > .frunt-preview-wpr{
+	min-width: 250px;
+	min-height: 100px;
+	background: #000;
+	margin-bottom: 10px;
+}
+
+.frunt-layout{
+	top: 0;
+	margin-bottom: 0px !important;
+	bottom : 0;
+	margin-right: 30px;
+}
+
+.frunt-layout .thumb_wpr .caption{
+
+	background: rgba(255,255,255,.9);
+}
+
+.frunt-layout-controls{
+	margin-top: 0px;
+	left:50px;
+	width: 200px;
+	position: fixed;
+	z-index: 100;
+	background: none;
+	bottom: 20px;
+	vertical-align: middle;
+	text-align: left;
+	margin-bottom: none;
+}
+
+.frunt-layout-controls .jump_to {
+}
+.frunt-layout-controls .jump_to img,
+.frunt-layout-controls .jump_to .noImage{
+	height: 30px;
+	width: 30px;
+	display: block;
+}
+
+.frunt-layout-controls .prev_next
+{
+	text-align: right;
+	display: block;
+	position: fixed;
+	bottom: 20px;
+	right: 100px;
+}
+.frunt-layout-controls .jump_to.dot{
+	display: block;
+	width: 9px;
+	height: 9px;
+	border-radius: 9px;
+	margin-bottom: 5px;
+}
+
+/* vertical menu */
+
+#menu{
+	display: block;
+	overflow: hidden;
+	position: fixed;
+	z-index: 20;
+	text-align: left;
+	margin: 0;
+	padding: 0;
+	height: 100%;
+	width: 300px;
+}
+
+.verticalMenu{
+	position: absolute;
+	top: 125px;
+	width: 280px;
+	height: 100%;
+	padding-top: 0px;
+	padding-bottom: 170px;
+	overflow: hidden;
+	-webkit-mask-image: -webkit-gradient(linear, left 90%, left bottom, from(rgba(0,0,0,1)), to(rgba(0,0,0,0)));
+}
+
+
+/* project info */
+
+.project_info{
+	background: #fff;
+	width: 100%;
+	text-overflow: ellipsis;
+	color: #000;
+	padding: 30px 0px 0px 0px;
+}
+.project_info .project_title{
+	text-transform: capitalize;
+	font-weight: bold;
+	vertical-align: bottom;
+	margin-bottom: 20px;
+	word-break: break-word;
+}
+.project_info .frunt-list .val{
+	font-size: 10px;
+	word-break: break-word;
+	padding: 5px 0;
+	padding-right: 50px;
+	display: block;
+
+}
+.frunt-list{
+	height: 100%;
+	overflow-y: hidden;
+	padding-bottom: 20px;
+}
+
+.frunt-list img{
+	max-width: 300px;
+	height: auto;
+	width: 100%;
+}
+/* misc */
+
+#mobileIcon{
+	display: none;
+	position: absolute;
+	top: 0;
+	right: 0;
+	margin: 10px;
+	z-index: 30;
+}
+#mobileIcon.hover{
+	background-color: #e5e5e5;
+}
+
+/* media queries */
+
+
+/* Smartphones (portrait and landscape) ----------- */
+@media only screen 
+and (min-width : 320px)
+and (max-width : 640px){
+
+	#content{
+		margin-left: 0px;
+	}
+	.genericContainer{
+		margin: 0 30px;
+		padding-top: 0px;
+	}
+	
+	/* Styles */
+	#mobileIcon{
+		background-color: rgba(255,255,255,.5);
+		display: block;
+	}
+	
+	.frunt-layout{
+		position: relative;
+		right:0;
+		left:0;
+		margin-top: 0px;
+		width: 100%;
+		margin: 0px;
+	}
+	.frunt-layout .frunt-layout-controls{
+		display: none;	
+	}
+	#menu{
+		position: relative;
+		height: auto;
+		width: 100%;
+	}
+	#header{
+		margin-top: 30px;
+		padding-left: 30px;
+	}
+	.verticalMenu{
+		position: relative;
+		bottom : 0;
+		
+		height: 100%;
+		top:0;
+		display: none;
+		width: auto;
+		z-index: 5;
+		border-bottom: 1px solid #dddddd;
+		margin: 0px 30px;
+		padding: 20px 10px;
+		border-top: 1px solid #dddddd;
+		-webkit-mask-image: inherit;
+	}
+	.project_info{
+		position: relative;
+		top:0;
+		left:0;
+		bottom:0;
+		float: none;
+		width: auto;
+		height: auto;
+		-webkit-mask-image: inherit;
+
+		margin: 0;
+		padding: 0px 30px;
+		padding-bottom: 20px;
+	}
+	.frunt-list{
+		height: auto;
+		overflow: auto;
+	}
+
+
+
+}
+
+/* iPads (portrait and landscape) ----------- */
+@media only screen 
+and (min-width : 641px) 
+and (max-width : 800px) {
+/* Styles */
+
+	#content{
+		margin-left: 0px;
+	}
+	.genericContainer{
+		margin: 0 45px;
+		padding-top: 0px;
+	}
+	#mobileIcon{
+		background-color: rgba(255,255,255,.5);
+		display: block;
+	}
+	#header{
+		margin-top: 30px;
+	}
+	#container{
+		position: relative;
+	}
+	.frunt-layout{
+		position: relative;
+		right:auto;
+		left:auto;
+		margin-top: 0px;
+		margin-right: 20px;
+		margin-left: 200px;
+	}
+	.frunt-layout .frunt-layout-controls{
+		-webkit-box-shadow: 0px -30px 15px 0px rgba(255, 255, 255, 0.75);
+		-moz-box-shadow:    0px -30px 15px 0px rgba(255, 255, 255, 0.75);
+		box-shadow:         0px -30px 15px 0px rgba(255, 255, 255, 0.75);
+		background: #fff;
+		padding: 20px;
+		margin-left: -30px;
+		margin-bottom: -20px;
+		width:35%;
+	}
+	.frunt-layout-controls .prev_next{
+		display: none;
+	}
+	#menu{
+		position: relative;
+		height: auto;
+		width: 100%;
+	}
+	.verticalMenu{
+		position: relative;
+		z-index: 300;
+		width: auto;
+		bottom : auto;
+		top:0;
+		display: none;
+		z-index: 5;
+		border-bottom: 1px solid #dddddd;
+		margin: 30px 45px 30px 45px;
+		padding: 20px 10px;
+		border-top: 1px solid #dddddd;
+		-webkit-mask-image: inherit;
+		
+	}
+	.project_info{
+		position: relative;
+		top:0;
+		left:0;
+		z-index: 20;
+		bottom:0;
+		float: left;
+		width: 35%;
+		height: auto;
+		-webkit-mask-image: inherit;
+		margin: 0 10px;
+		padding: 0px 30px;
+	}
+	.frunt-list{
+		height: auto;
+		overflow: auto;
+	
+	}
+	
+	.project_info .frunt-list .val{
+		padding-right: 0px;
+	}
+
+
+
+
+}
+
+

@@ -114,6 +114,13 @@ body, html{
 .frunt-layout-slideshow .frunt-slider{
 	height: 100%;
 }
+
+.frunt-layout-slideshow .frunt-slider .frunt-preview-wpr iframe.frunt-responsive{
+	top :0px;
+	height: auto;
+	bottom: 70px;
+}
+
 .frunt-layout-slideshow .frunt-layout-controls{
 	position: absolute;
 	bottom:0px;
@@ -219,6 +226,9 @@ html,body,#container,#content{
 	overflow: hidden;
 	display: none;
 	padding: 20px;
+}
+.project_info img{
+	width: 100%;
 }
 .project_info .project_title{
 	text-transform: capitalize;

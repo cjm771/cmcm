@@ -28,7 +28,7 @@ Get Started
 		<div class='step_group'>
 			<div class='step'>
 				<div class='step_img_wpr'>
-				<img data-original='{{dir}}images/upload.gif'>
+				<img class='screenCapture' data-original='{{dir}}images/upload.gif'>
 			</div>
 				<div class='step_txt_wpr'>
 					<div class='step_title'>
@@ -43,7 +43,7 @@ Get Started
 			<div class='step'>
 	
 				<div class='step_img_wpr'>
-					<img data-original='{{dir}}images/setup2.gif'>
+					<img class='screenCapture' data-original='{{dir}}images/setup2.gif'>
 				</div>
 				<div class='step_txt_wpr'>
 					<div class='step_title'>
@@ -56,7 +56,7 @@ Get Started
 			</div>
 			<div class='step'>
 				<div class='step_img_wpr'>
-					<img data-original='{{dir}}images/login.gif'>
+					<img class='screenCapture' data-original='{{dir}}images/login.gif'>
 				</div>
 				<div class='step_title'>
 				3. Login and Enjoy <3
@@ -84,7 +84,7 @@ Get Started
 		<div class='step_group'>
 			<div class='step'>
 				<div class='step_img_wpr'>
-				<img data-original='{{dir}}images/addproject.gif'>
+				<img class='screenCapture' data-original='{{dir}}images/addproject.gif'>
 			</div>
 				<div class='step_txt_wpr'>
 					<div class='step_title'>
@@ -98,7 +98,7 @@ Get Started
 			<div class='step'>
 	
 				<div class='step_img_wpr'>
-					<img data-original='{{dir}}images/uploadphotos.gif'>
+					<img class='screenCapture' data-original='{{dir}}images/uploadphotos.gif'>
 				</div>
 				<div class='step_txt_wpr'>
 					<div class='step_title'>
@@ -111,7 +111,7 @@ Get Started
 			</div>
 			<div class='step'>
 				<div class='step_img_wpr'>
-					<img data-original='{{dir}}images/uploadvideos.gif'>
+					<img class='screenCapture' data-original='{{dir}}images/uploadvideos.gif'>
 				</div>
 				<div class='step_title'>
 				3. Embed External Videos and Sounds*
@@ -139,7 +139,7 @@ Get Started
 		<div class='step_group'>
 			<div class='step'>
 				<div class='step_img_wpr'>
-				<img data-original='{{dir}}images/gototemplate.gif'>
+				<img class='screenCapture' data-original='{{dir}}images/gototemplate.gif'>
 			</div>
 				<div class='step_txt_wpr'>
 					<div class='step_title'>
@@ -153,7 +153,7 @@ Get Started
 			<div class='step'>
 	
 				<div class='step_img_wpr'>
-					<img data-original='{{dir}}images/edittemplate.gif'>
+					<img class='screenCapture' data-original='{{dir}}images/edittemplate.gif'>
 				</div>
 				<div class='step_txt_wpr'>
 					<div class='step_title'>
@@ -166,7 +166,7 @@ Get Started
 			</div>
 			<div class='step'>
 				<div class='step_img_wpr'>
-					<img data-original='{{dir}}images/templatechange.gif'>
+					<img class='screenCapture' data-original='{{dir}}images/templatechange.gif'>
 				</div>
 				<div class='step_title'>
 				3. The result!
@@ -193,7 +193,7 @@ Get Started
 		<div class='step_group'>
 			<div class='step'>
 				<div class='step_img_wpr'>
-				<img data-original='{{dir}}images/manageprojects2.gif'>
+				<img class='screenCapture' data-original='{{dir}}images/manageprojects2.gif'>
 			</div>
 				<div class='step_txt_wpr'>
 					<div class='step_title'>
@@ -207,7 +207,7 @@ Get Started
 			<div class='step'>
 	
 				<div class='step_img_wpr'>
-					<img data-original='{{dir}}images/sortby.gif'>
+					<img class='screenCapture' data-original='{{dir}}images/sortby.gif'>
 				</div>
 				<div class='step_txt_wpr'>
 					<div class='step_title'>
@@ -220,7 +220,7 @@ Get Started
 			</div>
 			<div class='step'>
 				<div class='step_img_wpr'>
-					<img data-original='{{dir}}images/changebydrop.gif'>
+					<img class='screenCapture' data-original='{{dir}}images/changebydrop.gif'>
 				</div>
 				<div class='step_title'>
 				3. Change attributes my draggin em'
@@ -246,7 +246,7 @@ Get Started
 		<div class='step_group'>
 			<div class='step'>
 				<div class='step_img_wpr'>
-				<img data-original='{{dir}}images/configoverview.gif'>
+				<img class='screenCapture' data-original='{{dir}}images/configoverview.gif'>
 			</div>
 				<div class='step_txt_wpr'>
 					<div class='step_title'>
@@ -261,7 +261,7 @@ Get Started
 			<div class='step'>
 	
 				<div class='step_img_wpr'>
-						<img data-original='{{dir}}images/useredit2.gif'>
+						<img class='screenCapture' data-original='{{dir}}images/useredit2.gif'>
 				</div>
 				<div class='step_txt_wpr'>
 					<div class='step_title'>
@@ -274,7 +274,7 @@ Get Started
 			</div>
 			<div class='step'>
 				<div class='step_img_wpr'>
-					<img data-original='{{dir}}images/changesrc.gif'>
+					<img class='screenCapture' data-original='{{dir}}images/changesrc.gif'>
 				</div>
 				<div class='step_title'>
 				3. Multiple Backends
@@ -296,14 +296,15 @@ Get Started
 		Front end? Meet <img class='frunt-logo' src='{{dir}}images/graphics_pack/frunt-white.png' />.
 		</div>
 		<p>
-		You get the backend now, right? Time to design the front for your wonderful visitors! We provide <a href='docs.php#frunt-setup'>frunt</a>, a <i>boostrapish</i> toolkit of functions and widgets to produce quck slideshows, menus, and other components on the fly. Check out the specific in the <a href='docs.php'>docs</a>, or start by just using one of our <a href='downloads.php#templates'>web templates</a>.</p>
+		You get the backend now, right? Time to design the front for your wonderful visitors! We provide <a href='docs.php#frunt-setup'>frunt</a>, a <i>boostrapish</i> toolkit of functions and widgets to produce quck slideshows, menus, and other components on the fly. Check out the specific in the <a href='docs.php#frunt-steup'>docs</a>, or start by just using one of our <a href='downloads.php#templates'>web templates</a>.</p>
+	
 		<p>
-		Currently the Frunt SDK is available in <b>PHP</b> and <b>JS</b>.
+		Currently the Frunt SDK is available in <b>PHP</b> and <b>JS</b>. View the <a href='gallery/_widgetsdemo/'>widget demo gallery</a>.
 		</p>
 		<div class='step_group'>
 			<div class='step'>
 				<div class='step_img_wpr'>
-				<img data-original='{{dir}}images/vert2.gif'>
+				<img class='screenCapture' data-original='{{dir}}images/vert2.gif'>
 			</div>
 				<div class='step_txt_wpr'>
 					<div class='step_title'>
@@ -318,7 +319,7 @@ Get Started
 			<div class='step'>
 	
 				<div class='step_img_wpr'>
-					<img data-original='{{dir}}images/horiz2.gif'>
+					<img class='screenCapture' data-original='{{dir}}images/horiz2.gif'>
 				</div>
 				<div class='step_txt_wpr'>
 					<div class='step_title'>
@@ -331,7 +332,7 @@ Get Started
 			</div>
 			<div class='step'>
 				<div class='step_img_wpr'>
-					<img data-original='{{dir}}images/full2.gif'>
+					<img class='screenCapture' data-original='{{dir}}images/full2.gif'>
 				</div>
 				<div class='step_title'>
 				Full Page

@@ -1,8 +1,8 @@
 {
 		"mediaFolder": "media/",
-		"title": "Chris Malcolm",
+		"title": "Bob Somebody",
 		"subtitle": "Architecture Design",
-		"description": "This is for neils site BLAM!!! woohoo yeahh",
+		"description": "Architecture, Design, and Etc.",
 		"sort": {
 				"by": "year",
 				"direction": "ascending",
@@ -168,6 +168,48 @@
 								}
 						}
 				},
+				"PROJ_14": {
+						"id": 14,
+						"published": 1,
+						"added": "13 February 2014 - 07:03 pm",
+						"cleanUrl": "super-awesome-project-1",
+						"title": "Super Awesome project II",
+						"coverImage": "VmlsbGEtYXZhNGNlc3RvX2JpZyAoMSkuanBn",
+						"year": "2001",
+						"type_of_project": "",
+						"description": "w'&quot;&quot;''''eeeee&quot; &quot;''weffdvgfd",
+						"featured": 0,
+						"media": {
+								"aW1hZ2VzICgxKS5qcGc-": {
+										"src": "media/images (1).jpg",
+										"visible": 1,
+										"type": "image",
+										"thumb": "media/thumbnail/images (1).jpg",
+										"caption": "OMA"
+								},
+								"b21hX3NhbnRhX21vbmljYV9lbnRyeS0wMS01MzB4MjY1ICgxKS5qcGc-": {
+										"src": "media/oma_santa_monica_entry-01-530x265 (1).jpg",
+										"visible": 1,
+										"type": "image",
+										"thumb": "media/thumbnail/oma_santa_monica_entry-01-530x265 (1).jpg",
+										"caption": "OMA"
+								},
+								"VmlsbGEtYXZhNGNlc3RvX2JpZyAoMSkuanBn": {
+										"src": "media/Villa-ava4cesto_big (1).jpg",
+										"visible": 1,
+										"type": "image",
+										"thumb": "media/thumbnail/Villa-ava4cesto_big (1).jpg",
+										"caption": "OMA"
+								},
+								"dmlsbGFfbm1fbmV3eW9ya191bnN0dWRpbzA3XzYgKDEpLmpwZw--": {
+										"src": "media/villa_nm_newyork_unstudio07_6 (1).jpg",
+										"visible": 1,
+										"type": "image",
+										"thumb": "media/thumbnail/villa_nm_newyork_unstudio07_6 (1).jpg",
+										"caption": "UNStudio"
+								}
+						}
+				},
 				"PROJ_10": {
 						"id": 10,
 						"cleanUrl": "xcz",
@@ -191,107 +233,6 @@
 										"type": "image",
 										"caption": "",
 										"thumb": "media/thumbnail/(5)spirn-14.jpg"
-								}
-						}
-				},
-				"PROJ_0": {
-						"id": 0,
-						"published": 1,
-						"added": "13 February 2014 - 07:08 pm",
-						"cleanUrl": "super-awesome-project",
-						"title": "Super Awesome project",
-						"coverImage": "T01BIC4gVmlsbGEgUiAoMykuanBn",
-						"year": "2001",
-						"type_of_project": "installation",
-						"description": "w'&quot;&quot;''''eeeee&quot; &quot;''weffdvgfd&lt;b&gt;Bold&lt;/b&gt; Text...\ndsfddsf\nf\nsdfdfsdfdsfsd &lt;u&gt;Underline&lt;/u&gt;",
-						"media": {
-								"T01BIC4gVmlsbGEgUiAoMykuanBn": {
-										"src": "media/OMA . Villa R (3).jpg",
-										"visible": "1",
-										"type": "image",
-										"thumb": "media/thumbnail/(9)OMA . Villa R (3).jpg",
-										"caption": "dasdasd"
-								},
-								"T01BIC4gVmlsbGEgUiAoNSkuanBn": {
-										"src": "media/OMA . Villa R (5).jpg",
-										"visible": "1",
-										"type": "image",
-										"thumb": "media/thumbnail/(10)OMA . Villa R (5).jpg",
-										"caption": "sadsada"
-								},
-								"T01BIC4gVmlsbGEgUiAoMikuanBn": {
-										"src": "media/OMA . Villa R (2).jpg",
-										"visible": "1",
-										"type": "image",
-										"thumb": "media/thumbnail/(9)OMA . Villa R (2).jpg",
-										"caption": "sadas"
-								},
-								"T01BIC4gVmlsbGEgUiAoMSkuanBn": {
-										"src": "media/OMA . Villa R (1).jpg",
-										"visible": "1",
-										"type": "image",
-										"thumb": "media/thumbnail/(9)OMA . Villa R (1).jpg",
-										"caption": "dasdsa"
-								}
-						}
-				},
-				"PROJ_14": {
-						"id": 14,
-						"published": 1,
-						"added": "13 February 2014 - 07:03 pm",
-						"cleanUrl": "super-awesome-project-1",
-						"title": "Super Awesome project",
-						"coverImage": "T01BIC4gVmlsbGEgUiAoNSkuanBn",
-						"year": "2001",
-						"type_of_project": "",
-						"description": "w'&quot;&quot;''''eeeee&quot; &quot;''weffdvgfd",
-						"media": {
-								"T01BIC4gVmlsbGEgUiAoNSkuanBn": {
-										"src": "media/OMA . Villa R (5).jpg",
-										"visible": "1",
-										"type": "image",
-										"thumb": "media/thumbnail/(11)OMA . Villa R (5).jpg",
-										"caption": "sadsada"
-								},
-								"T01BIC4gVmlsbGEgUiAoMykuanBn": {
-										"src": "media/OMA . Villa R (3).jpg",
-										"visible": "1",
-										"type": "image",
-										"thumb": "media/thumbnail/(10)OMA . Villa R (3).jpg",
-										"caption": "dasdasd"
-								},
-								"T01BIC4gVmlsbGEgUiAoMikuanBn": {
-										"src": "media/OMA . Villa R (2).jpg",
-										"visible": "1",
-										"type": "image",
-										"thumb": "media/thumbnail/(10)OMA . Villa R (2).jpg",
-										"caption": "sadas"
-								},
-								"T01BIC4gVmlsbGEgUiAoMSkuanBn": {
-										"src": "media/OMA . Villa R (1).jpg",
-										"visible": "1",
-										"type": "image",
-										"thumb": "media/thumbnail/(10)OMA . Villa R (1).jpg",
-										"caption": "dasdsa"
-								}
-						}
-				},
-				"PROJ-5": {
-						"id": -5,
-						"cleanUrl": "test-project-6",
-						"published": 1,
-						"added": "15 February 2014 - 06:28 pm",
-						"title": "Not Test Project",
-						"coverImage": "blahblah",
-						"year": "2002",
-						"description": "This is a Description",
-						"media": {
-								"blahblah": {
-										"src": "media/image-005.jpg",
-										"visible": 1,
-										"type": "image",
-										"caption": "This is image 1",
-										"thumb": "media/thumbnail/(5)image-005.jpg"
 								}
 						}
 				},
@@ -356,6 +297,25 @@
 								}
 						}
 				},
+				"PROJ-5": {
+						"id": -5,
+						"cleanUrl": "test-project-6",
+						"published": 1,
+						"added": "15 February 2014 - 06:28 pm",
+						"title": "Not Test Project",
+						"coverImage": "blahblah",
+						"year": "2002",
+						"description": "This is a Description",
+						"media": {
+								"blahblah": {
+										"src": "media/image-005.jpg",
+										"visible": 1,
+										"type": "image",
+										"caption": "This is image 1",
+										"thumb": "media/thumbnail/(5)image-005.jpg"
+								}
+						}
+				},
 				"PROJ_7": {
 						"id": 7,
 						"cleanUrl": "hahahaha",
@@ -367,6 +327,48 @@
 						"description": "sadasdas",
 						"media": {
 								
+						}
+				},
+				"PROJ_0": {
+						"id": 0,
+						"published": 1,
+						"added": "13 February 2014 - 07:08 pm",
+						"cleanUrl": "super-awesome-project",
+						"title": "Super Awesome project",
+						"coverImage": "dmlsbGFfbm1fbmV3eW9ya191bnN0dWRpbzA3XzYuanBn",
+						"year": "2002",
+						"type_of_project": "installation",
+						"description": "w'&quot;&quot;''''eeeee&quot; &quot;''weffdvgfd&lt;b&gt;Bold&lt;/b&gt; Text...\ndsfddsf\nf\nsdfdfsdfdsfsd &lt;u&gt;Underline&lt;/u&gt;",
+						"featured": 0,
+						"media": {
+								"dmlsbGFfbm1fbmV3eW9ya191bnN0dWRpbzA3XzYuanBn": {
+										"src": "media/villa_nm_newyork_unstudio07_6.jpg",
+										"visible": 1,
+										"type": "image",
+										"thumb": "media/thumbnail/villa_nm_newyork_unstudio07_6.jpg",
+										"caption": "UNStudio"
+								},
+								"aW1hZ2VzLmpwZw--": {
+										"src": "media/images.jpg",
+										"visible": 1,
+										"type": "image",
+										"thumb": "media/thumbnail/images.jpg",
+										"caption": "OMA"
+								},
+								"b21hX3NhbnRhX21vbmljYV9lbnRyeS0wMS01MzB4MjY1LmpwZw--": {
+										"src": "media/oma_santa_monica_entry-01-530x265.jpg",
+										"visible": 1,
+										"type": "image",
+										"thumb": "media/thumbnail/oma_santa_monica_entry-01-530x265.jpg",
+										"caption": "OMA"
+								},
+								"VmlsbGEtYXZhNGNlc3RvX2JpZy5qcGc-": {
+										"src": "media/Villa-ava4cesto_big.jpg",
+										"visible": 1,
+										"type": "image",
+										"thumb": "media/thumbnail/Villa-ava4cesto_big.jpg",
+										"caption": "OMA"
+								}
 						}
 				},
 				"PROJ-6": {
@@ -391,28 +393,23 @@
 				},
 				"PROJ_12": {
 						"id": 12,
-						"cleanUrl": "biiiitch",
 						"published": 1,
 						"added": "13 February 2014 - 07:51 pm",
-						"title": "biiiitch",
+						"cleanUrl": "biiiitch",
+						"title": "red indigo",
 						"coverImage": "",
 						"year": "2003",
+						"type_of_project": "",
 						"description": "puhlease",
+						"featured": 0,
 						"media": {
-								
-						}
-				},
-				"PROJ_8": {
-						"id": 8,
-						"cleanUrl": "sadsad",
-						"published": 1,
-						"added": "13 February 2014 - 07:24 pm",
-						"title": "sadsad",
-						"coverImage": "",
-						"year": "2003",
-						"description": "hasdahsd",
-						"media": {
-								
+								"cmVkaW5kaWdvXzI1NzExNTVjLmpwZw--": {
+										"src": "media/redindigo_2571155c.jpg",
+										"visible": 1,
+										"type": "image",
+										"thumb": "media/thumbnail/redindigo_2571155c.jpg",
+										"caption": ""
+								}
 						}
 				},
 				"PROJ_25": {
@@ -476,6 +473,19 @@
 								}
 						},
 						"type_of_project": "software"
+				},
+				"PROJ_8": {
+						"id": 8,
+						"cleanUrl": "sadsad",
+						"published": 1,
+						"added": "13 February 2014 - 07:24 pm",
+						"title": "sadsad",
+						"coverImage": "",
+						"year": "2003",
+						"description": "hasdahsd",
+						"media": {
+								
+						}
 				},
 				"PROJ_28": {
 						"id": 28,
@@ -611,19 +621,6 @@
 						"cleanUrl": "dsadsa",
 						"coverImage": "",
 						"type_of_project": "product design"
-				},
-				"PROJ_3": {
-						"id": 3,
-						"cleanUrl": "soooo-1",
-						"published": 1,
-						"added": "13 February 2014 - 07:18 pm",
-						"title": "soooo",
-						"coverImage": "",
-						"year": "2013",
-						"description": "hey..",
-						"media": {
-								
-						}
 				},
 				"PROJ_22": {
 						"id": 22,
@@ -796,6 +793,19 @@
 								}
 						},
 						"type_of_project": "installation"
+				},
+				"PROJ_3": {
+						"id": 3,
+						"cleanUrl": "soooo-1",
+						"published": 1,
+						"added": "13 February 2014 - 07:18 pm",
+						"title": "soooo",
+						"coverImage": "",
+						"year": "2013",
+						"description": "hey..",
+						"media": {
+								
+						}
 				},
 				"PROJ_24": {
 						"id": 24,
@@ -1136,13 +1146,15 @@
 				},
 				"PROJ_26": {
 						"id": 26,
-						"cleanUrl": "hi-yoooo",
 						"published": "1",
 						"added": "06 March 2014 - 08:57 pm",
-						"title": "hi yoooo&lt;b&gt; &quot;'dasds'&quot;&lt;asd&gt;d'&quot;dasas'&quot;&quot;'''''sad'''&lt;/b&gt;",
+						"cleanUrl": "hi-yoooo",
+						"title": "hi yoooo",
 						"coverImage": "",
 						"year": "2018",
+						"type_of_project": "",
 						"description": "xzcxzc&lt;sdasd&gt;&lt;/dasdas&gt;sdasdsadkdmasdkasdas\ndasd&quot;&quot;'dsa'dsad&quot;&quot;'sdsa'\nasd\nasdasdasda",
+						"featured": 0,
 						"media": {
 								
 						}

@@ -12,7 +12,7 @@
 	<div class='featureBox'>
 		<div><b>Requirements <i class='light'>(For admin panel)</i>:</b></div>
 			<ul >
-				<li>Server-side: Server with PHP 5</li>
+				<li>Server-side: Server with PHP 5.3 or newer</li>
 				<li>Client-side: A Modern Browser (>IE8,Chrome,Safari,Firefox,etc)</li>
 			</ul>
 	</div>
