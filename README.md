@@ -9,7 +9,7 @@ Please check out http://cmcm.io for documentation,demos, and more.
 -----
 Server with PHP 5.3 or newer
 
-###What to Download*
+###What to Download
 -----
 __cmcm_dev__ - Holds latest cmcm in developement. (includes media files)
 
