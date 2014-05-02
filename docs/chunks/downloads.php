@@ -16,12 +16,12 @@ Downloads
 			Download the Latest CMCM.
 		</div>
 			<p>
-				Get the latest release of CMCM. To get started, drag the cmcm folder into your server and point your browser to that url.
+				Get the latest release of CMCM. To get started, drag the cmcm folder into your server and point your browser to that url.  Please note, that this is just cmcm standalone, no frontend or web template is included. 
 			</p>
 			<p style='padding: 20px 0'>
-				<div class='button big'>
+				<a class='button big' href='https://github.com/cjm771/cmcm/releases/download/1.0/cmcm.zip'>
 					Download CMCM <i class='light'>v1.0</i>
-				</div>
+				</a>
 			</p>
 	</div>
 </div>

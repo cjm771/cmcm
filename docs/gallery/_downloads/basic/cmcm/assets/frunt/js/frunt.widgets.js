@@ -1,18 +1,3 @@
-/*
- * Frunt.widgets v1.0 for use with CMCM
- * http://chris-malcolm.com/projects/cmcm
- *
- * Copyright 2014, Chris Malcolm
- * http://chris-malcolm.com/
- *
- * Licensed under the MIT license:
- * http://www.opensource.org/licenses/MIT
- *
- * Used in partner with the frunt lib (All SDKs). Necessary js file to make widgets interactive.
- *
- */
- 
-
  var cmcm = (cmcm!=undefined) ? cmcm : {}; 
  
   
@@ -227,6 +212,12 @@
 		},
 		slideshow_goto : function(el, id, direction){
 			currentSlide =  slider.find(".slide:eq("+(slider.attr("data-current"))+")");
+			
+			//reset old incase its an iframe playing
+			/*
+			backup = currentSlide.clone(1,1);
+			currentSlide.replaceWith(backup);
+			*/
 			documentScroll = slider.attr("data-document-scroll");
 			
 			direction = (direction==undefined) ? "left" : direction;
@@ -271,8 +262,10 @@
 				}
 				if (!documentScroll)
 					slider.find(".frunt-slider").animate(change, duration);
-				else
-					$("body").animate(change, duration);
+				else{
+					//chrome,ff
+					$("body, html").animate(change, duration);
+				}
 				break;
 			case "fade":
 				active = slider.find(".slide:eq("+(slider.attr("data-current"))+")");
@@ -881,6 +874,7 @@
 							 ratio = [img.width, img.height];
 							 $(img).attr("data-ratio", JSON.stringify(ratio));
 							 $(img).addClass("frunt-responsive");
+							 //$(img).attr("data-=", true);
 						});
 					}
 					
@@ -934,14 +928,28 @@
 					     			ret.attr("data-sync-parent", mediaObj.opts.syncParent);
 					     		}
 					     	}
-				     		ret.show();
-				     		thumb.replaceWith(ret);
-				     		$(this).hide();
-				     	
+					     	
+					     	//ret.on("load", function(){
+					     		ret.show();
+					     		thumb.replaceWith(ret);
+					     		$(this).hide();
+					     	//});
+					     	
 					     	that.onResize();
 					     
 						});
 					}else if(mediaObj.opts.mode=="modal"){
+						/*
+						icon.on("click", function(e){
+							e.stopPropagation();
+							thumb = $(this).closest(".frunt-preview-wpr").find('.frunt-preview-thumb');
+							modalContent = that.mediaTypes[mediaObj.type].preview(mediaObj);
+							that.modal({
+								subject : thumb.attr("title"),
+								description : modalContent
+							});
+						});
+						*/
 						link = $("<a  class='"+iconTypes[mediaObj.type]+" "+mediaObj.type+"_icon frunt-absCenter frunt-32 frunt-iconBox frunt-clickable frunt-modal' href=''></a>");
 						link.attr("href", mediaObj.src);
 						link.attr("title",  thumb.attr("title"));
@@ -1052,11 +1060,16 @@
 							setTimeout(function(){
 								$(".frunt-modal-content .description_wpr.old").remove();
 							}, 500);
+							 
+							//$(this).append(descriptionWrapper.fadeIn());
+							//modalShow(0);
 						});
 						
 						 
 					 });
 				}else if ($(new_content).is("iframe")){
+					//$("body").append(modal_bg);
+					
 					modal_content.find(".description_wpr").addClass("old");
 					modal_content.find(".description_wpr").css("opacity", 0);
 					descriptionWrapper = $("<span class='description_wpr'></span>");
@@ -1195,7 +1208,8 @@
 			
 					modal_content.css({
 						width : dims.width+"px",
-						height : dims.height+"px"
+						height : dims.height+"px",
+					//	border : "none"
 					});
 				
 				modalShow();

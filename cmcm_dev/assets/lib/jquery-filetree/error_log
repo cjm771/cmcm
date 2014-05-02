@@ -1,3 +1,0 @@
-[03-Mar-2014 20:15:46 UTC] PHP Warning:  scandir(/home/) [<a href='function.scandir'>function.scandir</a>]: failed to open dir: Permission denied in /home/chrismal/public_html/projects/cmcm/lib/jquery-filetree/jqueryFileTree.php on line 22
-[03-Mar-2014 20:15:46 UTC] PHP Warning:  scandir() [<a href='function.scandir'>function.scandir</a>]: (errno 13): Permission denied in /home/chrismal/public_html/projects/cmcm/lib/jquery-filetree/jqueryFileTree.php on line 22
-[03-Mar-2014 20:15:46 UTC] PHP Warning:  natcasesort() expects parameter 1 to be array, boolean given in /home/chrismal/public_html/projects/cmcm/lib/jquery-filetree/jqueryFileTree.php on line 23

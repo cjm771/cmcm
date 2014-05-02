@@ -11,7 +11,7 @@ Server with PHP 5.3 or newer
 
 ###What to Download
 -----
-__cmcm_dev__ - Holds latest cmcm in developement. (includes media files)
+__cmcm_dev__ - Holds dev files( includes media / data files)
 
 __cmcm/__  - Holds latest cmcm release. (DOWNLOAD THIS ONE!)
 

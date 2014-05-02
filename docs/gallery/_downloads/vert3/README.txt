@@ -55,10 +55,16 @@ http://www.surpasshosting.com/hosting-shared-solutions.php/echo/33758
 
 Q. How do I transfer to my server?
 ---------------------------------
-Get an FTP application, and use the credentials provided by your server. I'd use Fetch (OS X) or Filezilla (OS X / Win ).
+
+A. Get an FTP application, and use the credentials provided by your server. I'd use Fetch (OS X) or Filezilla (OS X / Win ).
+
+Q. Why do my images take so long to load?
+-----------------------------------------
+
+A. Likely they're too big. Remember to shrink your images down to web format. Save for web.. in photoshop or I recommend 'shrink-o-matic', a small app, to shrink in batch.
 
 
-Q. My projects page sisn't working!
+Q. My projects page isn't working!
 -----------------------------------
 
 A. Likely you didn't transfer over the '.htaccess' file..a hidden file the server uses to make pretty urls. We rewrite project.php?id=[cleanURL] to act become the url [site]/projects/[cleanUrl attribute]. Copy that file over OR create a '.htaccess' files with the following 2 lines:

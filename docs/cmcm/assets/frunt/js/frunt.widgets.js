@@ -262,8 +262,10 @@
 				}
 				if (!documentScroll)
 					slider.find(".frunt-slider").animate(change, duration);
-				else
-					$("body").animate(change, duration);
+				else{
+					//chrome,ff
+					$("body, html").animate(change, duration);
+				}
 				break;
 			case "fade":
 				active = slider.find(".slide:eq("+(slider.attr("data-current"))+")");

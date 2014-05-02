@@ -50,15 +50,21 @@ Q. Wait I don't have hosting or a server
 ---------------------------------------
 
 A. If you don't want to invest just yet, try a free host that offers php 5.3.
-Try googling 'free php hosting'. There are tons online, It may take a few tries to find a good one. bytehost is ok, just a little slow. redhat's openshift is free, great and scalable, but for more advanced users. Once you get comfortable, consider buying a domain name and paid hosting. I use surpasshosting.com shared hosting to host, if you would like the same:
+Try googling 'free php hosting'. There are tons online, It may take a few tries to find a good one. bytehost is ok, just a little slow. Once you get comfortable, consider buying a domain name and paid hosting. I use surpasshosting.com shared hosting to host, if you would like the same:
 http://www.surpasshosting.com/hosting-shared-solutions.php/echo/33758
 
 Q. How do I transfer to my server?
 ---------------------------------
-Get an FTP application, and use the credentials provided by your server. I'd use Fetch (OS X) or Filezilla (OS X / Win ).
+
+A. Get an FTP application, and use the credentials provided by your server. I'd use Fetch (OS X) or Filezilla (OS X / Win ).
+
+Q. Why do my images take so long to load?
+-----------------------------------------
+
+A. Likely they're too big. Remember to shrink your images down to web format. Save for web.. in photoshop or I recommend 'shrink-o-matic', a small app, to shrink in batch.
 
 
-Q. My projects page sisn't working!
+Q. My projects page isn't working!
 -----------------------------------
 
 A. Likely you didn't transfer over the '.htaccess' file..a hidden file the server uses to make pretty urls. We rewrite project.php?id=[cleanURL] to act become the url [site]/projects/[cleanUrl attribute]. Copy that file over OR create a '.htaccess' files with the following 2 lines:
