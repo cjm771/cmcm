@@ -56,7 +56,7 @@ $(document).ready(function(){
   controls preload="auto" width=100% height="100%"
   poster="images/CMCM-BIG-youtube-art.jpg"
   data-setup='{"example_option":true}' autoplay loop>
- <source src="videos/CMCM.mp4" type='video/mp4'/>
+ <source src="videos/CMCM.m4v" type='video/mp4'/>
 </video>
 </div>
 <div class='bar black center'>
